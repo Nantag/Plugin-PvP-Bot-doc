@@ -1,6 +1,7 @@
 # PvpBot Wiki
 
-Documentation for PvpBot: installation, commands, selectors, every setting and the main features. The site is static
+Documentation for PvpBot: installation, commands, selectors, every setting and the main features. Download the
+plugin from [Modrinth](https://modrinth.com/plugin/pvp-bot-plugin-pvpbp). The site is static
 and GitHub Pages serves it as is.
 
 ## Layout

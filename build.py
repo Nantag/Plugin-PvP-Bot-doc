@@ -186,7 +186,7 @@ def page_html(p, pages, body, toc):
 {body}
 </article>
 {pager}
-<div class="foot">PvpBot Wiki · for Paper and Spigot 1.21.11 / 26.2</div>
+<div class="foot">PvpBot Wiki · for Paper and Spigot 1.21.11 / 26.2 · <a href="https://modrinth.com/plugin/pvp-bot-plugin-pvpbp">Download on Modrinth</a></div>
 </main>
 <aside class="toc">{toc_html}</aside>
 </div>
