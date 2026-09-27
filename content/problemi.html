@@ -1,0 +1,76 @@
+---
+title: Problemi comuni
+section: Aiuto
+order: 10
+icon: 🩺
+lead: Le cause più frequenti quando un bot non si muove, non prende danni o non attacca, e come risolverle.
+---
+<div class="callout tip"><span class="t">Primo passo, sempre</span>
+<code>/pvpbot diagnose &lt;bot&gt;</code> controlla il bot e ti dice cosa lo blocca: modalità di gioco, immunità ai
+danni, plugin di login, plugin che cancellano i danni, il movimento o il knockback, e l'ultimo knockback ricevuto.</div>
+
+<h2>Il bot saltella sul posto e non si muove</h2>
+<p>È quasi sempre un <strong>plugin di login</strong> (AuthMe, LoginTo…). Un bot non può scrivere <code>/login</code>,
+quindi il plugin lo tiene bloccato.</p>
+<ol>
+  <li>Controlla che <code>auth-autologin</code> sia <code>true</code> (lo è di default): registra i bot come già
+  autenticati.</li>
+  <li>Se il tuo plugin di login non è tra quelli riconosciuti, <code>/pvpbot diagnose</code> lo mostra. In quel caso
+  configura il plugin di login perché ignori i giocatori con i nomi dei bot, oppure disattivalo per provare.</li>
+</ol>
+
+<h2>Il bot non prende danni</h2>
+<ul>
+  <li><strong>Flag di invulnerabilità:</strong> alcuni plugin di login lo mettono e non lo tolgono più. Con
+  <code>force-vulnerable: true</code> (predefinito) PvpBot lo toglie. <code>diagnose</code> ti dice se è questo il caso.</li>
+  <li><strong>Protezione di regione o PvP spento:</strong> WorldGuard, zone sicure e simili cancellano i danni. Meglio
+  spostare lo scontro fuori dalla zona protetta. Come ultima risorsa c'è <code>/pvpbot set bypass-damage-protection
+  true</code>, che però scavalca <em>tutte</em> le protezioni, comprese quelle legittime.</li>
+  <li><strong>Modalità di gioco:</strong> un bot in creativa o spettatore non prende danni.</li>
+</ul>
+
+<h2>Il bot non mi attacca</h2>
+<ul>
+  <li>È appena nato: aspetta <code>spawn-grace</code> secondi, poi ti studia per <code>reaction-ticks</code>.</li>
+  <li>Non ti vede: con <code>detection</code> attivo deve avere la linea di vista. Accovacciato o invisibile ti nota da
+  più vicino.</li>
+  <li>Sei in creativa o spettatore (<code>attack-invincible</code> è spento).</li>
+  <li>Un preset lo ha reso passivo (<code>/pvpbot preset</code> mostra quale è attivo), oppure
+  <code>auto-target</code> o <code>target-players</code> sono spenti, anche solo per la sua fazione
+  (<code>/pvpbot faction info</code>).</li>
+  <li>Siete alleati o in pace: vedi <a href="fazioni.html">Fazioni</a>.</li>
+  <li>È in pausa, nascosto o in ritirata.</li>
+</ul>
+
+<h2>Il bot combatte a pugni</h2>
+<p>Non ha armi. Dagli un <a href="kit-e-preset.html">kit</a> o <code>/pvpbot givebow &lt;bot&gt;</code>.
+<code>auto-equip</code> deve essere attivo perché impugni da solo l'arma migliore.</p>
+
+<h2>Lag con tanti bot</h2>
+<ul>
+  <li>Alza <code>target-scan-interval</code> (per esempio da 10 a 20): la ricerca di bersagli è la cosa più costosa che
+  fa un bot. Quando il bersaglio muore o se ne va, il bot cerca comunque subito.</li>
+  <li>Abbassa <code>max-target-distance</code>.</li>
+  <li>Spegni <code>wander</code> per i bot che non devono muoversi, o mettili in pausa.</li>
+</ul>
+
+<h2>Statistiche o velocità strane dopo un boss o un oggetto</h2>
+<p>Un altro plugin ha aggiunto un modificatore di attributo (vita, velocità, danno) e non l'ha tolto.
+<code>/pvpbot resetattr &lt;giocatore|bot&gt;</code> toglie tutti i modificatori e rimette i valori base corretti per un
+giocatore. Funziona anche sui giocatori veri.</p>
+
+<h2>La cartella del mondo si riempie di file dei bot</h2>
+<p>I bot sono giocatori veri, quindi il server salva per loro dati, statistiche e progressi come per chiunque.
+<code>/pvpbot clearplayerdata</code> cancella quei file per i bot che non esistono più. Non tocca i bot attivi, né kit,
+fazioni, script o configurazione.</p>
+
+<h2>Il plugin parte ma non funziona niente</h2>
+<ul>
+  <li>Controlla di aver messo il jar giusto per piattaforma e versione (vedi <a href="installazione.html">Installazione</a>).</li>
+  <li>Guarda la console all'avvio. Un <code>kits.yml</code> copiato da un altro server può non caricarsi: PvpBot parte
+  comunque senza kit e lo scrive in console.</li>
+</ul>
+
+<h2>I compagni non vengono messi da parte</h2>
+<p>Controlla <code>companions.holding-world</code>: deve essere il nome di un mondo che esiste sul tuo server. Vedi
+<a href="compagni.html#quando-il-proprietario-esce">Compagni</a>.</p>

@@ -1,0 +1,165 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Movimento e ordini · PvpBot Wiki</title>
+<meta name="description" content="Come si muovono i bot, cosa possono fare ai blocchi e gli ordini per posizionarli.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22%3E%3Ctext y=%22.9em%22 font-size=%2290%22%3E%E2%9A%94%EF%B8%8F%3C/text%3E%3C/svg%3E">
+<link rel="stylesheet" href="assets/style.css">
+<script>try{var t=localStorage.getItem('pvpbot-theme');if(t)document.documentElement.setAttribute('data-theme',t)}catch(e){}</script>
+</head>
+<body>
+<header class="topbar">
+  <button class="icon-btn menu-btn" id="menu" aria-label="Menu">☰</button>
+  <a class="brand" href="index.html"><span class="logo">⚔</span>PvpBot <small>Wiki</small></a>
+  <div class="search">
+    <span class="icon">⌕</span>
+    <input id="q" type="search" placeholder="Cerca nella wiki…" autocomplete="off" aria-label="Cerca">
+    <kbd>/</kbd>
+    <div class="results" id="results"></div>
+  </div>
+  <button class="icon-btn" id="theme" aria-label="Tema chiaro o scuro">☾</button>
+</header>
+<div class="layout">
+<nav class="sidebar">
+<h4>Introduzione</h4>
+<a href="index.html"><span class="ico">🏠</span>Home</a>
+<a href="installazione.html"><span class="ico">📦</span>Installazione</a>
+<a href="guida-rapida.html"><span class="ico">🚀</span>Guida rapida</a>
+<h4>Riferimento</h4>
+<a href="comandi.html"><span class="ico">⌨️</span>Comandi</a>
+<a href="selettori.html"><span class="ico">🎯</span>Selettori</a>
+<a href="impostazioni.html"><span class="ico">⚙️</span>Impostazioni</a>
+<h4>Funzioni</h4>
+<a href="combattimento.html"><span class="ico">⚔️</span>Combattimento</a>
+<a href="fazioni.html"><span class="ico">🏳️</span>Fazioni</a>
+<a href="kit-e-preset.html"><span class="ico">🎒</span>Kit e preset</a>
+<a href="movimento.html" class="active"><span class="ico">🧭</span>Movimento e ordini</a>
+<a href="script.html"><span class="ico">📜</span>Script</a>
+<a href="compagni.html"><span class="ico">🐺</span>Compagni</a>
+<a href="skin.html"><span class="ico">🎭</span>Skin e nomi</a>
+<a href="ghost.html"><span class="ico">👻</span>Ghost</a>
+<h4>Aiuto</h4>
+<a href="problemi.html"><span class="ico">🩺</span>Problemi comuni</a>
+<a href="spigot.html"><span class="ico">🔧</span>Edizione Spigot</a>
+</nav>
+<main class="content">
+<article>
+<div class="crumb">Funzioni</div><h1>Movimento e ordini</h1><p class="lead">Come si muovono i bot, cosa possono fare ai blocchi e gli ordini per posizionarli.</p>
+<h2 id="come-camminano">Come camminano<a class="anchor" href="#come-camminano" aria-hidden="true">#</a></h2>
+<p>I bot non si teletrasportano a piccoli passi: premono i "tasti" come un giocatore e lasciano fare la fisica vanilla.
+Per questo collidono, prendono knockback e cadono come un giocatore vero.</p>
+<ul>
+  <li><strong>Pathfinding A*</strong> attorno agli ostacoli, pesato in modo da trovare anche i giri lunghi (attorno a un
+  muro largo, fuori da una trappola a U).</li>
+  <li><strong>Linea diretta:</strong> se la strada è libera cammina dritto verso il bersaglio, così segue chi si muove
+  tick per tick invece di un percorso vecchio.</li>
+  <li><strong>Percorsi lisciati:</strong> taglia in diagonale sul terreno aperto e guarda dove cammina.</li>
+  <li>Scende dai dislivelli previsti invece di costruirci sopra un ponte, sale e scende le scale a pioli, gira attorno
+  alle porte di ferro chiuse.</li>
+  <li><strong>Bunny hop</strong> (<code>bhop</code>) solo sui rettilinei lunghi, con un ritmo diverso per ogni bot,
+  così una squadra non salta a tempo.</li>
+  <li><strong>Barche:</strong> sale su una barca, la piazza se serve e la guida per attraversare l'acqua.</li>
+  <li><strong>Vagare</strong> (<code>wander</code>): gira per la zona quando non ha niente da fare.</li>
+  <li><code>speed</code> regola la velocità (1.0 = sprint).</li>
+</ul>
+
+<h2 id="costruzione">Costruzione<a class="anchor" href="#costruzione" aria-hidden="true">#</a></h2>
+<p>Con <code>building</code> attivo un bot può:</p>
+<ul>
+  <li><strong>fare un ponte</strong> su un vuoto (<code>building-bridge</code>) con i blocchi che ha, o con una wind
+  charge se non ne ha;</li>
+  <li><strong>salire a pilastro</strong> verso un bersaglio irraggiungibile più in alto (<code>building-pillar</code>,
+  al massimo <code>building-max-pillar</code> blocchi);</li>
+  <li><strong>scavare coperture morbide</strong> (<code>building-clear-soft</code>): terra, sabbia, ghiaia, argilla,
+  foglie, sottobosco, ragnatele.</li>
+</ul>
+<p>Non rompe mai pietra, minerali, costruzioni o contenitori. Ogni modifica passa per gli eventi normali, quindi
+WorldGuard, GriefPrevention, i plugin di claim e i logger la vedono e possono bloccarla. Il ritmo è limitato da
+<code>building-cooldown</code> e <code>building-budget</code> (blocchi al minuto).</p>
+
+<h2 id="seguire">Seguire<a class="anchor" href="#seguire" aria-hidden="true">#</a></h2>
+<pre><code>/pvpbot follow Marco Steve
+/pvpbot follow latest Steve circle
+/pvpbot follow stop all</code></pre>
+<p>Formazioni: <code>behind</code>, <code>circle</code>, <code>open_circle</code> (vedi
+<a href="fazioni.html#seguire-in-gruppo">Fazioni</a>). È una scorta, non un guinzaglio: chi segue combatte se attaccato e
+poi torna.</p>
+
+<h2 id="guardia">Guardia<a class="anchor" href="#guardia" aria-hidden="true">#</a></h2>
+<pre><code>/pvpbot guard faction guardie 15
+/pvpbot guard Marco 10 100 64 -200
+/pvpbot guard stop all</code></pre>
+<p>I bot presidiano un punto (la tua posizione, o le coordinate date) e attaccano chi entra nel raggio. Ognuno pattuglia
+la propria parte del perimetro. Se uno scontro li porta troppo lontano mollano e tornano al posto: così non inseguono
+qualcuno in una caverna per poi perdersi.</p>
+
+<h2 id="pattuglie">Pattuglie<a class="anchor" href="#pattuglie" aria-hidden="true">#</a></h2>
+<pre><code>/pvpbot path create mura
+/pvpbot path add mura
+/pvpbot path add mura
+/pvpbot path add mura
+/pvpbot path assign faction guardie mura</code></pre>
+<p>Ogni <code>path add</code> aggiunge il punto in cui ti trovi, quindi il percorso si costruisce camminandoci.
+All'ultimo punto i bot tornano indietro invece di saltare al primo. <code>path list mura</code> mostra i punti,
+<code>path remove mura 2</code> ne toglie uno, <code>path stop</code> ferma la pattuglia.</p>
+
+<h2 id="ritirata">Ritirata<a class="anchor" href="#ritirata" aria-hidden="true">#</a></h2>
+<pre><code>/pvpbot retreat faction banditi
+/pvpbot retreat all to Steve
+/pvpbot retreat stop all</code></pre>
+<p>Senza <code>to</code> ognuno scappa in una direzione diversa, così la squadra si sparpaglia. Con <code>to</code> si
+raggruppano su un giocatore (seguendolo mentre si muove) o su delle coordinate.</p>
+<p>La ritirata vale più di follow, guard e attack. Il bot risponde solo a chi lo ha appena colpito o a chi gli è
+addosso. Dura finché non la annulli, oppure finché non dai <code>stop</code> o un nuovo <code>attack</code>.</p>
+<p>La ritirata automatica per poca vita si regola con <code>retreat</code> e <code>retreat-health</code>.</p>
+
+<h2 id="nascondersi">Nascondersi<a class="anchor" href="#nascondersi" aria-hidden="true">#</a></h2>
+<pre><code>/pvpbot hide latest
+/pvpbot hide stop latest</code></pre>
+<ul>
+  <li><strong>Con una pozione di invisibilità</strong> (da bere o splash): la usa e si toglie l'armatura, che si
+  vedrebbe fluttuare, poi la rimette alla fine. Si muove a piena velocità.</li>
+  <li><strong>Senza pozione:</strong> si accovaccia e tiene l'armatura.</li>
+</ul>
+<p>Un bot nascosto non cerca scontri ma esegue gli ordini: segue, si ritira, tiene la posizione. Esce allo scoperto e
+combatte appena un nemico gli è vicino e lo vede.</p>
+
+<h2 id="tether">Tether (guinzaglio)<a class="anchor" href="#tether" aria-hidden="true">#</a></h2>
+<pre><code>/pvpbot tether Prigioniero Capo faction guardie 15
+/pvpbot tether info Prigioniero
+/pvpbot tether stop Prigioniero</code></pre>
+<p>La scorta segue il bersaglio e controlla che resti entro il raggio (predefinito 20) dal leader.</p>
+<ol>
+  <li>Se esce dal raggio riceve <strong>un avvertimento</strong>: un colpo vero ma debole (mezzo cuore) che lo spinge
+  verso il leader.</li>
+  <li>Se rientra, l'avvertimento si azzera.</li>
+  <li>Se entro <strong>5 secondi</strong> non è rientrato, tutta la scorta lo attacca sul serio, come con
+  <code>/pvpbot attack</code>, finché non usi <code>tether stop</code>.</li>
+</ol>
+
+<h2 id="pausa">Pausa<a class="anchor" href="#pausa" aria-hidden="true">#</a></h2>
+<pre><code>/pvpbot pause all
+/pvpbot resume faction banditi</code></pre>
+<p>Un bot in pausa resta nel mondo, cade e prende danni, ma non fa nulla. Serve a sistemare una scena senza che i bot
+vadano in giro o inizino a combattere. <code>/pvpbot pause</code> senza argomenti elenca chi è in pausa.</p>
+
+<h2 id="teletrasporto">Teletrasporto<a class="anchor" href="#teletrasporto" aria-hidden="true">#</a></h2>
+<pre><code>/pvpbot tp all Steve
+/pvpbot tp portal ground faction banditi Steve 40
+/pvpbot tp pearl latest 100 70 -300
+/pvpbot tp rift big overfaction nord Steve</code></pre>
+<p><code>tp</code> semplice è istantaneo. <code>portal</code>, <code>pearl</code> e <code>rift</code> fanno arrivare la
+squadra in modo scenografico, sparsa entro un raggio (predefinito 100) attorno alla destinazione. I dettagli sono su
+<a href="comandi.html#teletrasporto-di-squadra">Comandi</a>.</p>
+</article>
+<nav class="pager"><a class="prev" href="kit-e-preset.html"><small>← Precedente</small>Kit e preset</a><a class="next" href="script.html"><small>Successiva →</small>Script</a></nav>
+<div class="foot">PvpBot Wiki · per Paper 26.2 e Spigot 1.21.11 / 26.2</div>
+</main>
+<aside class="toc"><h5>In questa pagina</h5><a href="#come-camminano">Come camminano</a><a href="#costruzione">Costruzione</a><a href="#seguire">Seguire</a><a href="#guardia">Guardia</a><a href="#pattuglie">Pattuglie</a><a href="#ritirata">Ritirata</a><a href="#nascondersi">Nascondersi</a><a href="#tether">Tether (guinzaglio)</a><a href="#pausa">Pausa</a><a href="#teletrasporto">Teletrasporto</a></aside>
+</div>
+<script src="assets/search-index.js"></script>
+<script src="assets/app.js"></script>
+</body>
+</html>

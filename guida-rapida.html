@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Guida rapida · PvpBot Wiki</title>
+<meta name="description" content="Dal primo bot a una piccola guerra tra fazioni, in pochi comandi.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22%3E%3Ctext y=%22.9em%22 font-size=%2290%22%3E%E2%9A%94%EF%B8%8F%3C/text%3E%3C/svg%3E">
+<link rel="stylesheet" href="assets/style.css">
+<script>try{var t=localStorage.getItem('pvpbot-theme');if(t)document.documentElement.setAttribute('data-theme',t)}catch(e){}</script>
+</head>
+<body>
+<header class="topbar">
+  <button class="icon-btn menu-btn" id="menu" aria-label="Menu">☰</button>
+  <a class="brand" href="index.html"><span class="logo">⚔</span>PvpBot <small>Wiki</small></a>
+  <div class="search">
+    <span class="icon">⌕</span>
+    <input id="q" type="search" placeholder="Cerca nella wiki…" autocomplete="off" aria-label="Cerca">
+    <kbd>/</kbd>
+    <div class="results" id="results"></div>
+  </div>
+  <button class="icon-btn" id="theme" aria-label="Tema chiaro o scuro">☾</button>
+</header>
+<div class="layout">
+<nav class="sidebar">
+<h4>Introduzione</h4>
+<a href="index.html"><span class="ico">🏠</span>Home</a>
+<a href="installazione.html"><span class="ico">📦</span>Installazione</a>
+<a href="guida-rapida.html" class="active"><span class="ico">🚀</span>Guida rapida</a>
+<h4>Riferimento</h4>
+<a href="comandi.html"><span class="ico">⌨️</span>Comandi</a>
+<a href="selettori.html"><span class="ico">🎯</span>Selettori</a>
+<a href="impostazioni.html"><span class="ico">⚙️</span>Impostazioni</a>
+<h4>Funzioni</h4>
+<a href="combattimento.html"><span class="ico">⚔️</span>Combattimento</a>
+<a href="fazioni.html"><span class="ico">🏳️</span>Fazioni</a>
+<a href="kit-e-preset.html"><span class="ico">🎒</span>Kit e preset</a>
+<a href="movimento.html"><span class="ico">🧭</span>Movimento e ordini</a>
+<a href="script.html"><span class="ico">📜</span>Script</a>
+<a href="compagni.html"><span class="ico">🐺</span>Compagni</a>
+<a href="skin.html"><span class="ico">🎭</span>Skin e nomi</a>
+<a href="ghost.html"><span class="ico">👻</span>Ghost</a>
+<h4>Aiuto</h4>
+<a href="problemi.html"><span class="ico">🩺</span>Problemi comuni</a>
+<a href="spigot.html"><span class="ico">🔧</span>Edizione Spigot</a>
+</nav>
+<main class="content">
+<article>
+<div class="crumb">Introduzione</div><h1>Guida rapida</h1><p class="lead">Dal primo bot a una piccola guerra tra fazioni, in pochi comandi.</p>
+<p>Tutti i comandi qui sotto richiedono <code>pvpbot.admin</code> (gli op ce l'hanno). Puoi scrivere <code>/bot</code>
+al posto di <code>/pvpbot</code>.</p>
+
+<h2 id="1-il-primo-bot">1. Il primo bot<a class="anchor" href="#1-il-primo-bot" aria-hidden="true">#</a></h2>
+<pre><code>/pvpbot spawn Marco</code></pre>
+<p>Compare un bot di nome <code>Marco</code> dove sei tu. Se esiste un account Minecraft con quel nome, il bot ne indossa
+la skin; altrimenti ne prende una casuale (vedi <a href="skin.html">Skin e nomi</a>). Senza nome, ne viene generato uno.</p>
+<p>Appena nato, il bot ti lascia in pace per qualche secondo (<code>spawn-grace</code>), poi ti studia un attimo
+(<code>reaction-ticks</code>) prima di attaccarti.</p>
+
+<h2 id="2-dargli-qualcosa-in-mano">2. Dargli qualcosa in mano<a class="anchor" href="#2-dargli-qualcosa-in-mano" aria-hidden="true">#</a></h2>
+<p>Un bot appena creato ha l'inventario vuoto e combatte a pugni. Il modo più rapido è salvare il tuo inventario come kit
+e darglielo:</p>
+<pre><code>/pvpbot kit save diamante
+/pvpbot kit give diamante Marco</code></pre>
+<p>Il bot indossa da solo l'armatura migliore e impugna l'arma migliore che ha (<code>auto-equip</code>).</p>
+
+<h2 id="3-farlo-combattere">3. Farlo combattere<a class="anchor" href="#3-farlo-combattere" aria-hidden="true">#</a></h2>
+<pre><code>/pvpbot attack Marco Steve
+/pvpbot spawn Luca
+/pvpbot fight Marco Luca
+/pvpbot stop Marco</code></pre>
+<p><code>attack</code> manda Marco a caccia di Steve, <code>fight</code> mette due bot l'uno contro l'altro (anche se
+<code>bot-vs-bot</code> è spento), <code>stop</code> annulla l'ordine.</p>
+
+<h2 id="4-tanti-bot-insieme">4. Tanti bot insieme<a class="anchor" href="#4-tanti-bot-insieme" aria-hidden="true">#</a></h2>
+<pre><code>/pvpbot spawn 10
+/pvpbot kit give diamante latest
+/pvpbot follow latest Steve circle</code></pre>
+<p>Crea 10 bot con nomi generati (al massimo 50 per volta), dà a tutti il kit e li mette a scortare Steve in cerchio.
+<code>latest</code> è un <a href="selettori.html">selettore</a>: indica tutto quello che ha creato l'ultimo
+<code>spawn</code>, così non devi scrivere dieci nomi.</p>
+
+<h2 id="5-due-fazioni-in-guerra">5. Due fazioni in guerra<a class="anchor" href="#5-due-fazioni-in-guerra" aria-hidden="true">#</a></h2>
+<pre><code>/pvpbot faction create rossi
+/pvpbot faction create blu
+/pvpbot spawn 5
+/pvpbot faction join rossi latest
+/pvpbot spawn 5
+/pvpbot faction join blu latest
+/pvpbot faction hostile rossi blu</code></pre>
+<p>I bot delle due fazioni ora si attaccano a vista. I giocatori veri stanno automaticamente nella fazione
+<code>player</code>. Tutto su <a href="fazioni.html">Fazioni</a>.</p>
+
+<h2 id="6-cambiare-la-difficolta">6. Cambiare la difficoltà<a class="anchor" href="#6-cambiare-la-difficolta" aria-hidden="true">#</a></h2>
+<pre><code>/pvpbot preset casual
+/pvpbot preset sweaty
+/pvpbot preset off</code></pre>
+<p><code>casual</code> rende i bot lenti e distratti, <code>sweaty</code> accende tutto con riflessi rapidi,
+<code>off</code> torna a <code>config.yml</code> com'è scritto. Oppure una singola impostazione: <code>/pvpbot set skill 70</code>. L'elenco completo è su
+<a href="impostazioni.html">Impostazioni</a>.</p>
+
+<h2 id="7-pulire">7. Pulire<a class="anchor" href="#7-pulire" aria-hidden="true">#</a></h2>
+<pre><code>/pvpbot remove Marco
+/pvpbot removeall</code></pre>
+
+<div class="callout tip"><span class="t">Prossimi passi</span>
+Salva questa sequenza come <a href="script.html">script</a> e rilanciala con un solo comando, oppure affida un bot a un
+giocatore con <code>/pvpbot owner set</code> (vedi <a href="compagni.html">Compagni</a>).</div>
+</article>
+<nav class="pager"><a class="prev" href="installazione.html"><small>← Precedente</small>Installazione</a><a class="next" href="comandi.html"><small>Successiva →</small>Comandi</a></nav>
+<div class="foot">PvpBot Wiki · per Paper 26.2 e Spigot 1.21.11 / 26.2</div>
+</main>
+<aside class="toc"><h5>In questa pagina</h5><a href="#1-il-primo-bot">1. Il primo bot</a><a href="#2-dargli-qualcosa-in-mano">2. Dargli qualcosa in mano</a><a href="#3-farlo-combattere">3. Farlo combattere</a><a href="#4-tanti-bot-insieme">4. Tanti bot insieme</a><a href="#5-due-fazioni-in-guerra">5. Due fazioni in guerra</a><a href="#6-cambiare-la-difficolta">6. Cambiare la difficoltà</a><a href="#7-pulire">7. Pulire</a></aside>
+</div>
+<script src="assets/search-index.js"></script>
+<script src="assets/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kit e preset · PvpBot Wiki</title>
+<meta name="description" content="Equipaggiamenti salvati da dare ai bot, e profili di comportamento da applicare a tutto il server in un comando.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22%3E%3Ctext y=%22.9em%22 font-size=%2290%22%3E%E2%9A%94%EF%B8%8F%3C/text%3E%3C/svg%3E">
+<link rel="stylesheet" href="assets/style.css">
+<script>try{var t=localStorage.getItem('pvpbot-theme');if(t)document.documentElement.setAttribute('data-theme',t)}catch(e){}</script>
+</head>
+<body>
+<header class="topbar">
+  <button class="icon-btn menu-btn" id="menu" aria-label="Menu">☰</button>
+  <a class="brand" href="index.html"><span class="logo">⚔</span>PvpBot <small>Wiki</small></a>
+  <div class="search">
+    <span class="icon">⌕</span>
+    <input id="q" type="search" placeholder="Cerca nella wiki…" autocomplete="off" aria-label="Cerca">
+    <kbd>/</kbd>
+    <div class="results" id="results"></div>
+  </div>
+  <button class="icon-btn" id="theme" aria-label="Tema chiaro o scuro">☾</button>
+</header>
+<div class="layout">
+<nav class="sidebar">
+<h4>Introduzione</h4>
+<a href="index.html"><span class="ico">🏠</span>Home</a>
+<a href="installazione.html"><span class="ico">📦</span>Installazione</a>
+<a href="guida-rapida.html"><span class="ico">🚀</span>Guida rapida</a>
+<h4>Riferimento</h4>
+<a href="comandi.html"><span class="ico">⌨️</span>Comandi</a>
+<a href="selettori.html"><span class="ico">🎯</span>Selettori</a>
+<a href="impostazioni.html"><span class="ico">⚙️</span>Impostazioni</a>
+<h4>Funzioni</h4>
+<a href="combattimento.html"><span class="ico">⚔️</span>Combattimento</a>
+<a href="fazioni.html"><span class="ico">🏳️</span>Fazioni</a>
+<a href="kit-e-preset.html" class="active"><span class="ico">🎒</span>Kit e preset</a>
+<a href="movimento.html"><span class="ico">🧭</span>Movimento e ordini</a>
+<a href="script.html"><span class="ico">📜</span>Script</a>
+<a href="compagni.html"><span class="ico">🐺</span>Compagni</a>
+<a href="skin.html"><span class="ico">🎭</span>Skin e nomi</a>
+<a href="ghost.html"><span class="ico">👻</span>Ghost</a>
+<h4>Aiuto</h4>
+<a href="problemi.html"><span class="ico">🩺</span>Problemi comuni</a>
+<a href="spigot.html"><span class="ico">🔧</span>Edizione Spigot</a>
+</nav>
+<main class="content">
+<article>
+<div class="crumb">Funzioni</div><h1>Kit e preset</h1><p class="lead">Equipaggiamenti salvati da dare ai bot, e profili di comportamento da applicare a tutto il server in un comando.</p>
+<h2 id="kit">Kit<a class="anchor" href="#kit" aria-hidden="true">#</a></h2>
+<p>Un kit è una fotografia di un inventario: hotbar, inventario, armatura e mano secondaria. Incantesimi, nomi e
+componenti degli oggetti restano intatti.</p>
+<pre><code>/pvpbot kit save diamante
+/pvpbot kit save mazza Marco
+/pvpbot kit list
+/pvpbot kit delete diamante</code></pre>
+<p>Il primo comando salva il tuo inventario, il secondo quello del bot <code>Marco</code>.</p>
+
+<h3 id="dare-un-kit">Dare un kit<a class="anchor" href="#dare-un-kit" aria-hidden="true">#</a></h3>
+<pre><code>/pvpbot kit give diamante Marco
+/pvpbot kit give diamante Steve
+/pvpbot kit give diamante latest
+/pvpbot kit givefaction diamante banditi</code></pre>
+<ul>
+  <li><code>give</code> accetta un bot, un giocatore vero (comodo per allenarsi ad armi pari) o un
+  <a href="selettori.html">selettore</a>.</li>
+  <li><code>givefaction</code> accetta il nome di una fazione o un selettore.</li>
+  <li>Il kit <strong>sostituisce</strong> quello che il destinatario aveva addosso.</li>
+</ul>
+<p>Per dare kit diversi a caso dentro una fazione, usa le <a href="fazioni.html#kit-casuali-per-fazione">tabelle di kit
+per fazione</a>.</p>
+
+<div class="callout warn"><span class="t">Spostare kits.yml tra server</span>
+Gli oggetti vengono salvati con il formato del server che li ha creati. Un <code>kits.yml</code> copiato da un server con
+una build diversa può non caricarsi: in quel caso PvpBot parte comunque senza kit e lo scrive in console. Rifai i kit sul
+server nuovo.</div>
+
+<h2 id="preset">Preset<a class="anchor" href="#preset" aria-hidden="true">#</a></h2>
+<p>Un preset è un insieme di <a href="impostazioni.html">impostazioni</a> con un nome, da applicare a tutti i bot del
+server in un colpo solo.</p>
+<pre><code>/pvpbot preset
+/pvpbot preset sweaty
+/pvpbot preset off</code></pre>
+<p>Senza nome mostra il preset attivo e quelli disponibili. Con un nome lo applica. <code>off</code> torna a
+<code>config.yml</code> com'è scritto.</p>
+<p>Il preset sta sopra <code>config.yml</code> ma sotto le impostazioni delle fazioni. Una fazione regolata a mano resta
+com'è quando cambi preset.</p>
+
+<h3 id="preset-inclusi">Preset inclusi<a class="anchor" href="#preset-inclusi" aria-hidden="true">#</a></h3>
+<div class="table-wrap"><table>
+<thead><tr><th>Preset</th><th>Per cosa</th><th>Cosa imposta</th></tr></thead>
+<tbody>
+<tr><td><code>casual</code></td><td>Principianti, bot lenti e distratti.</td><td>skill 25, miss-chance 30, mistake-chance 35, attack-cooldown 18, reaction-ticks 60; niente critici, perle e ragnatele.</td></tr>
+<tr><td><code>normal</code></td><td>Il comportamento predefinito, come preset.</td><td>skill 50, miss-chance 10, mistake-chance 12, attack-cooldown 12, reaction-ticks 30, critici.</td></tr>
+<tr><td><code>sweaty</code></td><td>Tutto attivo e reattivo, ma sempre umano.</td><td>skill 85, miss-chance 3, mistake-chance 5, attack-cooldown 10, ping 25 ms, reaction-ticks 8; critici, ascia contro scudo, pozioni di buff, ragnatele, lancio con perla, scambio arma, elytra mace e cart PvP.</td></tr>
+<tr><td><code>passive</code></td><td>Scene e manichini da allenamento.</td><td>Non cercano bersagli, non girano, niente bot contro bot; rispondono solo se colpiti.</td></tr>
+</tbody></table></div>
+<p>Quello che un preset non nomina viene preso da <code>config.yml</code>.</p>
+
+<h3 id="crearne-uno">Crearne uno<a class="anchor" href="#crearne-uno" aria-hidden="true">#</a></h3>
+<pre><code>/pvpbot set skill 70
+/pvpbot set pearls false
+/pvpbot preset save torneo
+/pvpbot preset torneo</code></pre>
+<p><code>preset save</code> salva i valori in uso <em>adesso</em>, compreso il preset già attivo. Per modificare un preset:
+applicalo, cambia quello che vuoi con <code>/pvpbot set</code> e risalvalo con lo stesso nome.
+<code>/pvpbot preset delete &lt;nome&gt;</code> lo cancella.</p>
+<p>I preset stanno in <code>config.yml</code> sotto <code>presets:</code> e si possono anche scrivere a mano, usando gli
+stessi nomi di <code>/pvpbot set</code>.</p>
+</article>
+<nav class="pager"><a class="prev" href="fazioni.html"><small>← Precedente</small>Fazioni</a><a class="next" href="movimento.html"><small>Successiva →</small>Movimento e ordini</a></nav>
+<div class="foot">PvpBot Wiki · per Paper 26.2 e Spigot 1.21.11 / 26.2</div>
+</main>
+<aside class="toc"><h5>In questa pagina</h5><a href="#kit">Kit</a><a href="#dare-un-kit" class="sub">Dare un kit</a><a href="#preset">Preset</a><a href="#preset-inclusi" class="sub">Preset inclusi</a><a href="#crearne-uno" class="sub">Crearne uno</a></aside>
+</div>
+<script src="assets/search-index.js"></script>
+<script src="assets/app.js"></script>
+</body>
+</html>

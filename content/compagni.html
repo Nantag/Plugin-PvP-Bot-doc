@@ -1,0 +1,48 @@
+---
+title: Compagni
+section: Funzioni
+order: 60
+icon: 🐺
+lead: Affida un bot a un giocatore normale, che lo comanda scrivendo in chat.
+---
+<h2>Affidare un bot</h2>
+<pre><code>/pvpbot owner set Fido Steve
+/pvpbot owner list Steve
+/pvpbot owner clear Fido</code></pre>
+<p>Da quel momento Steve (anche senza permessi) può dare ordini a <code>Fido</code> scrivendo in chat, come farebbe con un
+compagno di squadra. Il giocatore deve essere online quando lo imposti.</p>
+
+<h2>Ordini in chat</h2>
+<p>Un messaggio diventa un ordine solo se chi lo scrive possiede almeno un bot in gioco, e il messaggio contiene la parola
+<strong>bot</strong> (o <strong>bots</strong>) e uno degli ordini qui sotto. Gli ordini non compaiono in chat per gli
+altri. Tutto il resto passa normalmente, quindi puoi parlare di bot senza dare ordini per sbaglio.</p>
+<div class="table-wrap"><table>
+<thead><tr><th>Scrivi</th><th>Sinonimi</th><th>Effetto</th></tr></thead>
+<tbody>
+<tr><td><code>bot follow</code></td><td>come, heel, escort</td><td>Ti segue.</td></tr>
+<tr><td><code>bot guard</code></td><td>defend, post, hold</td><td>Presidia il punto in cui sei, entro 10 blocchi.</td></tr>
+<tr><td><code>bot stay</code></td><td>wait, freeze</td><td>Si ferma dov'è (in pausa).</td></tr>
+<tr><td><code>bot stop</code></td><td>halt, disengage, shutdown</td><td>Si ferma e non risponde nemmeno se colpito.</td></tr>
+<tr><td><code>bot free</code></td><td>release, dismiss, roam, unleash</td><td>Annulla gli ordini: torna libero.</td></tr>
+<tr><td><code>bot attack &lt;nome&gt;</code></td><td>kill, fight, hunt</td><td>Attacca quel giocatore o bot.</td></tr>
+<tr><td><code>bot cancel</code></td><td>forget, calm, truce</td><td>Lascia perdere chi sta combattendo, senza smettere di seguirti o di fare la guardia.</td></tr>
+<tr><td><code>bot summon</code></td><td>teleport, warp</td><td>Si teletrasporta da te e annulla l'ordine in cui era bloccato. Una volta ogni 10 secondi.</td></tr>
+<tr><td><code>bot status</code></td><td>where, list</td><td>Dice dove sono i tuoi bot e cosa stanno facendo.</td></tr>
+<tr><td><code>bot help</code></td><td></td><td>Riepilogo degli ordini.</td></tr>
+</tbody></table></div>
+<p>Senza nomi obbediscono tutti i tuoi bot. Per dare un ordine a uno solo, scrivi anche il suo nome:
+<code>bot Fido stay</code>.</p>
+
+<h2>Autodifesa</h2>
+<p>I compagni rispondono sempre a chi li colpisce, anche se l'impostazione <code>revenge</code> del server è spenta. Fanno
+eccezione i colpi del proprietario e gli ordini <code>bot stop</code>.</p>
+
+<h2>Quando il proprietario esce</h2>
+<p>Quando il proprietario si disconnette, i suoi bot non vengono rimossi. Vengono parcheggiati in alto sopra lo spawn del
+mondo <code>companions.holding-world</code> e messi in pausa, con vita, inventario e fazione intatti. Tornano solo quando
+il proprietario scrive <code>bot summon</code>: rientrare nel server non basta.</p>
+<pre><code>companions:
+  holding-world: test_world</code></pre>
+<div class="callout warn"><span class="t">Imposta il mondo giusto</span>
+Il valore predefinito è <code>test_world</code>. Se sul tuo server non esiste un mondo con quel nome, i bot restano dove
+sono e la console lo segnala: cambialo in <code>config.yml</code> con il nome di un mondo che hai.</div>

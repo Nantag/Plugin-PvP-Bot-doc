@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Installazione · PvpBot Wiki</title>
+<meta name="description" content="Quale jar usare, cosa serve al server e quali plugin vanno d&#x27;accordo con PvpBot.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22%3E%3Ctext y=%22.9em%22 font-size=%2290%22%3E%E2%9A%94%EF%B8%8F%3C/text%3E%3C/svg%3E">
+<link rel="stylesheet" href="assets/style.css">
+<script>try{var t=localStorage.getItem('pvpbot-theme');if(t)document.documentElement.setAttribute('data-theme',t)}catch(e){}</script>
+</head>
+<body>
+<header class="topbar">
+  <button class="icon-btn menu-btn" id="menu" aria-label="Menu">☰</button>
+  <a class="brand" href="index.html"><span class="logo">⚔</span>PvpBot <small>Wiki</small></a>
+  <div class="search">
+    <span class="icon">⌕</span>
+    <input id="q" type="search" placeholder="Cerca nella wiki…" autocomplete="off" aria-label="Cerca">
+    <kbd>/</kbd>
+    <div class="results" id="results"></div>
+  </div>
+  <button class="icon-btn" id="theme" aria-label="Tema chiaro o scuro">☾</button>
+</header>
+<div class="layout">
+<nav class="sidebar">
+<h4>Introduzione</h4>
+<a href="index.html"><span class="ico">🏠</span>Home</a>
+<a href="installazione.html" class="active"><span class="ico">📦</span>Installazione</a>
+<a href="guida-rapida.html"><span class="ico">🚀</span>Guida rapida</a>
+<h4>Riferimento</h4>
+<a href="comandi.html"><span class="ico">⌨️</span>Comandi</a>
+<a href="selettori.html"><span class="ico">🎯</span>Selettori</a>
+<a href="impostazioni.html"><span class="ico">⚙️</span>Impostazioni</a>
+<h4>Funzioni</h4>
+<a href="combattimento.html"><span class="ico">⚔️</span>Combattimento</a>
+<a href="fazioni.html"><span class="ico">🏳️</span>Fazioni</a>
+<a href="kit-e-preset.html"><span class="ico">🎒</span>Kit e preset</a>
+<a href="movimento.html"><span class="ico">🧭</span>Movimento e ordini</a>
+<a href="script.html"><span class="ico">📜</span>Script</a>
+<a href="compagni.html"><span class="ico">🐺</span>Compagni</a>
+<a href="skin.html"><span class="ico">🎭</span>Skin e nomi</a>
+<a href="ghost.html"><span class="ico">👻</span>Ghost</a>
+<h4>Aiuto</h4>
+<a href="problemi.html"><span class="ico">🩺</span>Problemi comuni</a>
+<a href="spigot.html"><span class="ico">🔧</span>Edizione Spigot</a>
+</nav>
+<main class="content">
+<article>
+<div class="crumb">Introduzione</div><h1>Installazione</h1><p class="lead">Quale jar usare, cosa serve al server e quali plugin vanno d'accordo con PvpBot.</p>
+<h2 id="requisiti">Requisiti<a class="anchor" href="#requisiti" aria-hidden="true">#</a></h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Server</th><th>Versione</th><th>Java</th><th>Jar</th></tr></thead>
+<tbody>
+<tr><td>Paper</td><td>26.2</td><td>25 o più</td><td>edizione Paper</td></tr>
+<tr><td>Paper</td><td>1.21.11</td><td>21 o più</td><td>edizione Paper (build 1.21.11)</td></tr>
+<tr><td>Spigot</td><td>26.2</td><td>25 o più</td><td>edizione Spigot 26.2</td></tr>
+<tr><td>Spigot</td><td>1.21.11</td><td>21 o più</td><td>edizione Spigot 1.21.11</td></tr>
+</tbody></table></div>
+<p>Ogni jar funziona solo sulla sua piattaforma e versione: PvpBot usa gli interni del server per creare i bot, quindi un
+jar per Paper non parte su Spigot e viceversa. Le funzioni sono identiche in tutte le edizioni (vedi
+<a href="spigot.html">Edizione Spigot</a>).</p>
+
+<h2 id="passaggi">Passaggi<a class="anchor" href="#passaggi" aria-hidden="true">#</a></h2>
+<ol>
+  <li>Ferma il server.</li>
+  <li>Copia il jar giusto nella cartella <code>plugins/</code>.</li>
+  <li>Avvia il server. PvpBot crea <code>plugins/PvpBot/config.yml</code> con tutte le impostazioni commentate.</li>
+  <li>Da op, scrivi <code>/pvpbot spawn</code>: se compare un bot, è tutto a posto.</li>
+</ol>
+<div class="callout tip"><span class="t">Aggiornare da una versione vecchia</span>
+Non serve cancellare <code>config.yml</code>. Le impostazioni nuove che mancano nel file usano il loro valore predefinito;
+<code>/pvpbot settings</code> le segna con <code>*</code> finché non le cambi con <code>/pvpbot set</code>.</div>
+
+<h2 id="permessi">Permessi<a class="anchor" href="#permessi" aria-hidden="true">#</a></h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Permesso</th><th>Predefinito</th><th>Cosa dà</th></tr></thead>
+<tbody>
+<tr><td><code>pvpbot.admin</code></td><td>op</td><td>Tutti i comandi <code>/pvpbot</code> (alias <code>/bot</code>) e <code>/ghost</code>.</td></tr>
+</tbody></table></div>
+<p>I giocatori normali non hanno bisogno di permessi per comandare i bot che gli hai affidato: lo fanno scrivendo in chat
+(vedi <a href="compagni.html">Compagni</a>).</p>
+
+<h2 id="file-del-plugin">File del plugin<a class="anchor" href="#file-del-plugin" aria-hidden="true">#</a></h2>
+<p>Tutto sta in <code>plugins/PvpBot/</code>:</p>
+<div class="table-wrap"><table>
+<thead><tr><th>File</th><th>Contenuto</th></tr></thead>
+<tbody>
+<tr><td><code>config.yml</code></td><td>Impostazioni, preset, skin, tabelle di nomi, mondo dei compagni.</td></tr>
+<tr><td><code>bots.yml</code></td><td>I bot attivi, rimessi in gioco al riavvio se <code>bots-relog</code> è attivo.</td></tr>
+<tr><td><code>factions.yml</code></td><td>Fazioni, membri, relazioni, leader, overfazioni, impostazioni e tabelle di kit per fazione.</td></tr>
+<tr><td><code>kits.yml</code></td><td>I kit salvati.</td></tr>
+<tr><td><code>scripts.yml</code></td><td>Gli script salvati.</td></tr>
+<tr><td><code>paths.yml</code></td><td>I percorsi di pattuglia.</td></tr>
+<tr><td><code>ownership.yml</code></td><td>Quale giocatore possiede quale bot.</td></tr>
+<tr><td><code>skin-cache.yml</code></td><td>Le skin già scaricate, così i riavvii non rifanno le richieste a Mojang.</td></tr>
+<tr><td><code>ghost-recordings/</code></td><td>I percorsi registrati con <code>/ghost record</code>.</td></tr>
+</tbody></table></div>
+<p>Dopo aver modificato un file a mano, usa <code>/pvpbot reload</code>.</p>
+
+<h2 id="plugin-compatibili">Plugin compatibili<a class="anchor" href="#plugin-compatibili" aria-hidden="true">#</a></h2>
+<h3 id="skinsrestorer">SkinsRestorer<a class="anchor" href="#skinsrestorer" aria-hidden="true">#</a></h3>
+<p>Facoltativo. Se è installato, PvpBot registra la skin scaricata direttamente nel suo archivio, così SkinsRestorer non
+la sovrascrive con quella predefinita quando il bot entra.</p>
+<h3 id="plugin-di-login-authme-loginto">Plugin di login (AuthMe, LoginTo)<a class="anchor" href="#plugin-di-login-authme-loginto" aria-hidden="true">#</a></h3>
+<p>Un bot non può scrivere <code>/login</code>, quindi i plugin di login lo terrebbero bloccato per sempre (di solito si
+vede un bot che saltella sul posto e non prende danni). Con <code>auth-autologin: true</code>, attivo di default, PvpBot
+registra ogni bot come già autenticato. Per i giocatori veri non cambia nulla. Vedi
+<a href="problemi.html">Problemi comuni</a> se non basta.</p>
+<h3 id="protezioni-worldguard-griefprevention-claim">Protezioni (WorldGuard, GriefPrevention, claim)<a class="anchor" href="#protezioni-worldguard-griefprevention-claim" aria-hidden="true">#</a></h3>
+<p>Ogni blocco piazzato o rotto da un bot passa per gli eventi normali del server, quindi le protezioni lo vedono e
+possono bloccarlo. Lo stesso vale per i binari e i carrelli del cart PvP.</p>
+</article>
+<nav class="pager"><a class="prev" href="index.html"><small>← Precedente</small>Home</a><a class="next" href="guida-rapida.html"><small>Successiva →</small>Guida rapida</a></nav>
+<div class="foot">PvpBot Wiki · per Paper 26.2 e Spigot 1.21.11 / 26.2</div>
+</main>
+<aside class="toc"><h5>In questa pagina</h5><a href="#requisiti">Requisiti</a><a href="#passaggi">Passaggi</a><a href="#permessi">Permessi</a><a href="#file-del-plugin">File del plugin</a><a href="#plugin-compatibili">Plugin compatibili</a><a href="#skinsrestorer" class="sub">SkinsRestorer</a><a href="#plugin-di-login-authme-loginto" class="sub">Plugin di login (AuthMe, LoginTo)</a><a href="#protezioni-worldguard-griefprevention-claim" class="sub">Protezioni (WorldGuard, GriefPrevention, claim)</a></aside>
+</div>
+<script src="assets/search-index.js"></script>
+<script src="assets/app.js"></script>
+</body>
+</html>

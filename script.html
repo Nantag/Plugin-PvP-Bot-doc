@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Script · PvpBot Wiki</title>
+<meta name="description" content="Salva una sequenza di comandi sotto un nome e rilanciala quando vuoi, con parametri e pause.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22%3E%3Ctext y=%22.9em%22 font-size=%2290%22%3E%E2%9A%94%EF%B8%8F%3C/text%3E%3C/svg%3E">
+<link rel="stylesheet" href="assets/style.css">
+<script>try{var t=localStorage.getItem('pvpbot-theme');if(t)document.documentElement.setAttribute('data-theme',t)}catch(e){}</script>
+</head>
+<body>
+<header class="topbar">
+  <button class="icon-btn menu-btn" id="menu" aria-label="Menu">☰</button>
+  <a class="brand" href="index.html"><span class="logo">⚔</span>PvpBot <small>Wiki</small></a>
+  <div class="search">
+    <span class="icon">⌕</span>
+    <input id="q" type="search" placeholder="Cerca nella wiki…" autocomplete="off" aria-label="Cerca">
+    <kbd>/</kbd>
+    <div class="results" id="results"></div>
+  </div>
+  <button class="icon-btn" id="theme" aria-label="Tema chiaro o scuro">☾</button>
+</header>
+<div class="layout">
+<nav class="sidebar">
+<h4>Introduzione</h4>
+<a href="index.html"><span class="ico">🏠</span>Home</a>
+<a href="installazione.html"><span class="ico">📦</span>Installazione</a>
+<a href="guida-rapida.html"><span class="ico">🚀</span>Guida rapida</a>
+<h4>Riferimento</h4>
+<a href="comandi.html"><span class="ico">⌨️</span>Comandi</a>
+<a href="selettori.html"><span class="ico">🎯</span>Selettori</a>
+<a href="impostazioni.html"><span class="ico">⚙️</span>Impostazioni</a>
+<h4>Funzioni</h4>
+<a href="combattimento.html"><span class="ico">⚔️</span>Combattimento</a>
+<a href="fazioni.html"><span class="ico">🏳️</span>Fazioni</a>
+<a href="kit-e-preset.html"><span class="ico">🎒</span>Kit e preset</a>
+<a href="movimento.html"><span class="ico">🧭</span>Movimento e ordini</a>
+<a href="script.html" class="active"><span class="ico">📜</span>Script</a>
+<a href="compagni.html"><span class="ico">🐺</span>Compagni</a>
+<a href="skin.html"><span class="ico">🎭</span>Skin e nomi</a>
+<a href="ghost.html"><span class="ico">👻</span>Ghost</a>
+<h4>Aiuto</h4>
+<a href="problemi.html"><span class="ico">🩺</span>Problemi comuni</a>
+<a href="spigot.html"><span class="ico">🔧</span>Edizione Spigot</a>
+</nav>
+<main class="content">
+<article>
+<div class="crumb">Funzioni</div><h1>Script</h1><p class="lead">Salva una sequenza di comandi sotto un nome e rilanciala quando vuoi, con parametri e pause.</p>
+<h2 id="a-cosa-servono">A cosa servono<a class="anchor" href="#a-cosa-servono" aria-hidden="true">#</a></h2>
+<p>Preparare uno scenario richiede sempre gli stessi comandi: crea i bot, mettili in una fazione, dai i kit, mandali
+contro qualcuno. Uno script li salva sotto un nome, e poi basta una riga per rifarli tutti.</p>
+
+<h2 id="esempio">Esempio<a class="anchor" href="#esempio" aria-hidden="true">#</a></h2>
+<pre><code>/pvpbot script create raid
+/pvpbot script add raid pvpbot spawn 20
+/pvpbot script add raid pvpbot faction join {1} latest
+/pvpbot script add raid pvpbot kit givefaction {2} {1}
+/pvpbot script add raid wait 40
+/pvpbot script add raid pvpbot faction hostile {1} player</code></pre>
+<p>E per lanciarlo:</p>
+<pre><code>/pvpbot script run raid banditi ferro</code></pre>
+<p>Crea 20 bot, li mette nella fazione <code>banditi</code>, dà loro il kit <code>ferro</code>, aspetta due secondi e poi
+li mette in guerra con i giocatori.</p>
+
+<h2 id="regole">Regole<a class="anchor" href="#regole" aria-hidden="true">#</a></h2>
+<ul>
+  <li><strong>Parametri:</strong> <code>{1}</code>…<code>{9}</code> vengono sostituiti con gli argomenti dati a
+  <code>script run</code>, nell'ordine.</li>
+  <li><strong>Pause:</strong> una riga <code>wait &lt;tick&gt;</code> ferma lo script e riprende il resto dopo quei tick
+  (20 = 1 secondo). Il server intanto va avanti normalmente.</li>
+  <li><strong>latest:</strong> dentro uno script indica i bot creati <em>da questo script</em> con l'ultimo
+  <code>spawn</code>, anche se nel frattempo qualcun altro ha creato altri bot.</li>
+  <li><strong>Barra iniziale:</strong> le righe si scrivono senza <code>/</code>; se la metti viene tolta.</li>
+  <li><strong>Commenti:</strong> le righe che iniziano con <code>#</code> vengono saltate.</li>
+  <li><strong>Limite:</strong> 200 righe per script.</li>
+  <li><strong>Uno alla volta:</strong> se lanci uno script mentre un altro è in corso, parte appena il primo finisce.
+  Così due script non si rubano i bot a vicenda.</li>
+  <li><strong>Permessi:</strong> le righe vengono eseguite come se le scrivessi tu. Uno script fa risparmiare tempo, ma
+  non dà permessi in più.</li>
+</ul>
+
+<div class="callout tip"><span class="t">Bot con nome negli script</span>
+<code>/pvpbot spawn &lt;nome&gt;</code> cerca la skin in background, quindi la riga dopo potrebbe non trovare ancora il bot.
+Negli script usa <code>/pvpbot spawn &lt;nome&gt; none</code>, che crea il bot subito.</div>
+
+<h2 id="gestione">Gestione<a class="anchor" href="#gestione" aria-hidden="true">#</a></h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Comando</th><th>Cosa fa</th></tr></thead>
+<tbody>
+<tr><td><code>/pvpbot script list</code></td><td>Elenca gli script.</td></tr>
+<tr><td><code>/pvpbot script show &lt;nome&gt;</code></td><td>Mostra le righe numerate.</td></tr>
+<tr><td><code>/pvpbot script remove &lt;nome&gt; &lt;riga&gt;</code></td><td>Toglie una riga (numero come in <code>show</code>).</td></tr>
+<tr><td><code>/pvpbot script delete &lt;nome&gt;</code></td><td>Cancella lo script.</td></tr>
+</tbody></table></div>
+<p>Gli script stanno in <code>plugins/PvpBot/scripts.yml</code>. Un <code>/pvpbot reload</code> ferma gli script in
+corso.</p>
+</article>
+<nav class="pager"><a class="prev" href="movimento.html"><small>← Precedente</small>Movimento e ordini</a><a class="next" href="compagni.html"><small>Successiva →</small>Compagni</a></nav>
+<div class="foot">PvpBot Wiki · per Paper 26.2 e Spigot 1.21.11 / 26.2</div>
+</main>
+<aside class="toc"><h5>In questa pagina</h5><a href="#a-cosa-servono">A cosa servono</a><a href="#esempio">Esempio</a><a href="#regole">Regole</a><a href="#gestione">Gestione</a></aside>
+</div>
+<script src="assets/search-index.js"></script>
+<script src="assets/app.js"></script>
+</body>
+</html>

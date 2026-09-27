@@ -1,0 +1,46 @@
+---
+title: Ghost
+section: Funzioni
+order: 80
+icon: 👻
+lead: NPC scenografici che ripetono un percorso registrato o ti fissano da lontano. Non combattono e non si possono toccare.
+---
+<h2>Cosa sono</h2>
+<p>Un ghost è un giocatore finto come i bot, ma fuori da tutto il resto del plugin. Non combatte, non si muove da solo,
+non conta come bot e non compare in <code>/pvpbot list</code>. Non prende danni, non si può colpire e non si può usare.
+Compare e sparisce senza messaggi in chat. Serve per atmosfera, eventi horror e scene.</p>
+<p>I comandi <code>/ghost</code> richiedono <code>pvpbot.admin</code>.</p>
+
+<h2>Registrare un percorso</h2>
+<pre><code>/ghost record giro
+/ghost stoprecord</code></pre>
+<p>Tra i due comandi PvpBot registra la tua posizione a ogni tick. Registra anche i blocchi che rompi o piazzi, e alla
+fine li rimette com'erano, così il mondo resta pulito. <code>/ghost recordings</code> elenca le registrazioni, salvate in
+<code>plugins/PvpBot/ghost-recordings/</code>.</p>
+
+<h2>Ghost che ripete il percorso</h2>
+<pre><code>/ghost spawn Viandante giro</code></pre>
+<p>Il ghost ripete il percorso all'infinito, esattamente dove l'hai registrato. Rifà anche le modifiche ai blocchi allo
+stesso momento e le annulla prima di ricominciare, così ogni giro parte dallo stesso mondo.</p>
+
+<h2>Ghost che fissa</h2>
+<pre><code>/ghost stare Osservatore</code></pre>
+<p>Il ghost resta fermo e si gira verso il giocatore più vicino. Quando un giocatore si avvicina a meno di 6 blocchi
+sparisce in silenzio. Nei primi 5 secondi dopo la creazione non sparisce, così non svanisce subito davanti a chi l'ha
+appena creato.</p>
+
+<h2>Skin e frasi</h2>
+<p>Entrambi i tipi accettano, alla fine del comando, una skin e delle frasi:</p>
+<ul>
+  <li><strong>Senza <code>skin:</code></strong> il ghost indossa la skin dell'account con il suo nome;</li>
+  <li><code>skin:&lt;nome&gt;</code> prende la skin di un altro account;</li>
+  <li><code>skin:none</code> usa quella predefinita.</li>
+  <li><strong>Frasi:</strong> separate da <code>|</code>. Il ghost ne scrive una in chat ogni 6 secondi, a rotazione, con
+  il proprio nome.</li>
+</ul>
+<pre><code>/ghost stare Steve skin:none Chi c'è?|...|Vattene
+/ghost spawn Guardiano giro skin:Notch Non dovresti essere qui</code></pre>
+
+<h2>Gestione</h2>
+<pre><code>/ghost list
+/ghost remove Osservatore</code></pre>

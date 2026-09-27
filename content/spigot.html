@@ -1,0 +1,52 @@
+---
+title: Edizione Spigot
+section: Aiuto
+order: 20
+icon: 🔧
+lead: Le differenze tra il jar per Paper e quello per Spigot, e come compilare l'edizione Spigot.
+---
+<h2>Stesso plugin, due jar</h2>
+<p>L'edizione Spigot (1.21.11 e 26.2) ha la stessa IA, gli stessi comandi, la stessa configurazione e le stesse funzioni
+dell'edizione Paper. È compilata dallo stesso codice sorgente, con pochi file sostituiti dalla loro versione per
+Spigot.</p>
+<p>È un jar separato per non togliere nulla alla build Paper, che continua a usare le sue chiamate più veloci. Nessuno dei
+due jar contiene codice per l'altro server.</p>
+
+<h2>Cosa cambia dentro</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Parte</th><th>Paper</th><th>Spigot</th></tr></thead>
+<tbody>
+<tr><td>Chat</td><td>Componenti Adventure</td><td>Codici colore classici, resi allo stesso modo</td></tr>
+<tr><td>Eventi</td><td><code>AsyncChatEvent</code>, knockback di Paper</td><td><code>AsyncPlayerChatEvent</code>, knockback di Bukkit</td></tr>
+<tr><td>Piattaforma</td><td>Metodi di Paper (tick corrente, blocchi sostituibili, giocatori vicini…)</td><td>Le chiamate vanilla o Bukkit equivalenti</td></tr>
+<tr><td>Accesso al server</td><td>Cast diretti a CraftBukkit</td><td>CraftBukkit trovato all'avvio (Spigot mette la revisione nel nome del pacchetto)</td></tr>
+<tr><td>Skin dei bot</td><td>API dei profili di Paper</td><td>Sostituzione diretta del profilo</td></tr>
+<tr><td>Fine caricamento</td><td>Campi cercati per nome</td><td>Il pacchetto "giocatore caricato" che manda un client vero</td></tr>
+</tbody></table></div>
+<p>Per chi usa il plugin non cambia nulla: i comandi e <code>config.yml</code> sono identici.</p>
+
+<h2>Compilare l'edizione Spigot</h2>
+<p>Serve <a href="https://www.spigotmc.org/wiki/buildtools/">BuildTools</a> di Spigot, lanciato con
+<code>--remapped</code> per ogni versione:</p>
+<pre><code>java -jar BuildTools.jar --rev 1.21.11 --remapped
+java -jar BuildTools.jar --rev 26.2 --remapped</code></pre>
+<ol>
+  <li>Copia i file <code>spigot-&lt;versione&gt;.jar</code> prodotti da BuildTools in <code>.spigot/</code> nella radice
+  del repository.</li>
+  <li>Lancia <code>pvpbot-spigot/build.sh 1.21.11 26.2</code>.</li>
+  <li>I jar finiscono in <code>pvpbot-spigot/dist-&lt;versione&gt;/PvpBot-&lt;versione&gt;.jar</code>.</li>
+</ol>
+<p>Se BuildTools rifiuta <code>--remapped</code> per una versione, compilala senza: lo script userà direttamente il jar
+del server.</p>
+<div class="table-wrap"><table>
+<thead><tr><th>Variabile</th><th>Predefinito</th><th>Significato</th></tr></thead>
+<tbody>
+<tr><td><code>SPIGOT_JARS</code></td><td><code>.spigot/</code></td><td>Dove sono i jar di Spigot.</td></tr>
+<tr><td><code>M2</code></td><td><code>~/.m2/repository</code></td><td>Il repository Maven locale (dove <code>--remapped</code> installa le mappature).</td></tr>
+<tr><td><code>JDK</code></td><td><code>java</code> nel <code>PATH</code></td><td>Almeno 21 per 1.21.11, almeno 25 per 26.2.</td></tr>
+</tbody></table></div>
+<p>Lo script funziona su Linux, macOS e Git Bash su Windows.</p>
+
+<h2>Stato</h2>
+<p>L'edizione Spigot è controllata a ogni modifica contro l'API di Bukkit, e fallisce se usa qualcosa che esiste solo su
+Paper. Non è ancora stata provata su un server Spigot vero: se trovi un problema, segnalalo.</p>

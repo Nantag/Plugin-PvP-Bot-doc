@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Edizione Spigot · PvpBot Wiki</title>
+<meta name="description" content="Le differenze tra il jar per Paper e quello per Spigot, e come compilare l&#x27;edizione Spigot.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22%3E%3Ctext y=%22.9em%22 font-size=%2290%22%3E%E2%9A%94%EF%B8%8F%3C/text%3E%3C/svg%3E">
+<link rel="stylesheet" href="assets/style.css">
+<script>try{var t=localStorage.getItem('pvpbot-theme');if(t)document.documentElement.setAttribute('data-theme',t)}catch(e){}</script>
+</head>
+<body>
+<header class="topbar">
+  <button class="icon-btn menu-btn" id="menu" aria-label="Menu">☰</button>
+  <a class="brand" href="index.html"><span class="logo">⚔</span>PvpBot <small>Wiki</small></a>
+  <div class="search">
+    <span class="icon">⌕</span>
+    <input id="q" type="search" placeholder="Cerca nella wiki…" autocomplete="off" aria-label="Cerca">
+    <kbd>/</kbd>
+    <div class="results" id="results"></div>
+  </div>
+  <button class="icon-btn" id="theme" aria-label="Tema chiaro o scuro">☾</button>
+</header>
+<div class="layout">
+<nav class="sidebar">
+<h4>Introduzione</h4>
+<a href="index.html"><span class="ico">🏠</span>Home</a>
+<a href="installazione.html"><span class="ico">📦</span>Installazione</a>
+<a href="guida-rapida.html"><span class="ico">🚀</span>Guida rapida</a>
+<h4>Riferimento</h4>
+<a href="comandi.html"><span class="ico">⌨️</span>Comandi</a>
+<a href="selettori.html"><span class="ico">🎯</span>Selettori</a>
+<a href="impostazioni.html"><span class="ico">⚙️</span>Impostazioni</a>
+<h4>Funzioni</h4>
+<a href="combattimento.html"><span class="ico">⚔️</span>Combattimento</a>
+<a href="fazioni.html"><span class="ico">🏳️</span>Fazioni</a>
+<a href="kit-e-preset.html"><span class="ico">🎒</span>Kit e preset</a>
+<a href="movimento.html"><span class="ico">🧭</span>Movimento e ordini</a>
+<a href="script.html"><span class="ico">📜</span>Script</a>
+<a href="compagni.html"><span class="ico">🐺</span>Compagni</a>
+<a href="skin.html"><span class="ico">🎭</span>Skin e nomi</a>
+<a href="ghost.html"><span class="ico">👻</span>Ghost</a>
+<h4>Aiuto</h4>
+<a href="problemi.html"><span class="ico">🩺</span>Problemi comuni</a>
+<a href="spigot.html" class="active"><span class="ico">🔧</span>Edizione Spigot</a>
+</nav>
+<main class="content">
+<article>
+<div class="crumb">Aiuto</div><h1>Edizione Spigot</h1><p class="lead">Le differenze tra il jar per Paper e quello per Spigot, e come compilare l'edizione Spigot.</p>
+<h2 id="stesso-plugin-due-jar">Stesso plugin, due jar<a class="anchor" href="#stesso-plugin-due-jar" aria-hidden="true">#</a></h2>
+<p>L'edizione Spigot (1.21.11 e 26.2) ha la stessa IA, gli stessi comandi, la stessa configurazione e le stesse funzioni
+dell'edizione Paper. È compilata dallo stesso codice sorgente, con pochi file sostituiti dalla loro versione per
+Spigot.</p>
+<p>È un jar separato per non togliere nulla alla build Paper, che continua a usare le sue chiamate più veloci. Nessuno dei
+due jar contiene codice per l'altro server.</p>
+
+<h2 id="cosa-cambia-dentro">Cosa cambia dentro<a class="anchor" href="#cosa-cambia-dentro" aria-hidden="true">#</a></h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Parte</th><th>Paper</th><th>Spigot</th></tr></thead>
+<tbody>
+<tr><td>Chat</td><td>Componenti Adventure</td><td>Codici colore classici, resi allo stesso modo</td></tr>
+<tr><td>Eventi</td><td><code>AsyncChatEvent</code>, knockback di Paper</td><td><code>AsyncPlayerChatEvent</code>, knockback di Bukkit</td></tr>
+<tr><td>Piattaforma</td><td>Metodi di Paper (tick corrente, blocchi sostituibili, giocatori vicini…)</td><td>Le chiamate vanilla o Bukkit equivalenti</td></tr>
+<tr><td>Accesso al server</td><td>Cast diretti a CraftBukkit</td><td>CraftBukkit trovato all'avvio (Spigot mette la revisione nel nome del pacchetto)</td></tr>
+<tr><td>Skin dei bot</td><td>API dei profili di Paper</td><td>Sostituzione diretta del profilo</td></tr>
+<tr><td>Fine caricamento</td><td>Campi cercati per nome</td><td>Il pacchetto "giocatore caricato" che manda un client vero</td></tr>
+</tbody></table></div>
+<p>Per chi usa il plugin non cambia nulla: i comandi e <code>config.yml</code> sono identici.</p>
+
+<h2 id="compilare-l-edizione-spigot">Compilare l'edizione Spigot<a class="anchor" href="#compilare-l-edizione-spigot" aria-hidden="true">#</a></h2>
+<p>Serve <a href="https://www.spigotmc.org/wiki/buildtools/">BuildTools</a> di Spigot, lanciato con
+<code>--remapped</code> per ogni versione:</p>
+<pre><code>java -jar BuildTools.jar --rev 1.21.11 --remapped
+java -jar BuildTools.jar --rev 26.2 --remapped</code></pre>
+<ol>
+  <li>Copia i file <code>spigot-&lt;versione&gt;.jar</code> prodotti da BuildTools in <code>.spigot/</code> nella radice
+  del repository.</li>
+  <li>Lancia <code>pvpbot-spigot/build.sh 1.21.11 26.2</code>.</li>
+  <li>I jar finiscono in <code>pvpbot-spigot/dist-&lt;versione&gt;/PvpBot-&lt;versione&gt;.jar</code>.</li>
+</ol>
+<p>Se BuildTools rifiuta <code>--remapped</code> per una versione, compilala senza: lo script userà direttamente il jar
+del server.</p>
+<div class="table-wrap"><table>
+<thead><tr><th>Variabile</th><th>Predefinito</th><th>Significato</th></tr></thead>
+<tbody>
+<tr><td><code>SPIGOT_JARS</code></td><td><code>.spigot/</code></td><td>Dove sono i jar di Spigot.</td></tr>
+<tr><td><code>M2</code></td><td><code>~/.m2/repository</code></td><td>Il repository Maven locale (dove <code>--remapped</code> installa le mappature).</td></tr>
+<tr><td><code>JDK</code></td><td><code>java</code> nel <code>PATH</code></td><td>Almeno 21 per 1.21.11, almeno 25 per 26.2.</td></tr>
+</tbody></table></div>
+<p>Lo script funziona su Linux, macOS e Git Bash su Windows.</p>
+
+<h2 id="stato">Stato<a class="anchor" href="#stato" aria-hidden="true">#</a></h2>
+<p>L'edizione Spigot è controllata a ogni modifica contro l'API di Bukkit, e fallisce se usa qualcosa che esiste solo su
+Paper. Non è ancora stata provata su un server Spigot vero: se trovi un problema, segnalalo.</p>
+</article>
+<nav class="pager"><a class="prev" href="problemi.html"><small>← Precedente</small>Problemi comuni</a><span></span></nav>
+<div class="foot">PvpBot Wiki · per Paper 26.2 e Spigot 1.21.11 / 26.2</div>
+</main>
+<aside class="toc"><h5>In questa pagina</h5><a href="#stesso-plugin-due-jar">Stesso plugin, due jar</a><a href="#cosa-cambia-dentro">Cosa cambia dentro</a><a href="#compilare-l-edizione-spigot">Compilare l&#x27;edizione Spigot</a><a href="#stato">Stato</a></aside>
+</div>
+<script src="assets/search-index.js"></script>
+<script src="assets/app.js"></script>
+</body>
+</html>

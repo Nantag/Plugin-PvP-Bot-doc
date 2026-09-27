@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ghost · PvpBot Wiki</title>
+<meta name="description" content="NPC scenografici che ripetono un percorso registrato o ti fissano da lontano. Non combattono e non si possono toccare.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22%3E%3Ctext y=%22.9em%22 font-size=%2290%22%3E%E2%9A%94%EF%B8%8F%3C/text%3E%3C/svg%3E">
+<link rel="stylesheet" href="assets/style.css">
+<script>try{var t=localStorage.getItem('pvpbot-theme');if(t)document.documentElement.setAttribute('data-theme',t)}catch(e){}</script>
+</head>
+<body>
+<header class="topbar">
+  <button class="icon-btn menu-btn" id="menu" aria-label="Menu">☰</button>
+  <a class="brand" href="index.html"><span class="logo">⚔</span>PvpBot <small>Wiki</small></a>
+  <div class="search">
+    <span class="icon">⌕</span>
+    <input id="q" type="search" placeholder="Cerca nella wiki…" autocomplete="off" aria-label="Cerca">
+    <kbd>/</kbd>
+    <div class="results" id="results"></div>
+  </div>
+  <button class="icon-btn" id="theme" aria-label="Tema chiaro o scuro">☾</button>
+</header>
+<div class="layout">
+<nav class="sidebar">
+<h4>Introduzione</h4>
+<a href="index.html"><span class="ico">🏠</span>Home</a>
+<a href="installazione.html"><span class="ico">📦</span>Installazione</a>
+<a href="guida-rapida.html"><span class="ico">🚀</span>Guida rapida</a>
+<h4>Riferimento</h4>
+<a href="comandi.html"><span class="ico">⌨️</span>Comandi</a>
+<a href="selettori.html"><span class="ico">🎯</span>Selettori</a>
+<a href="impostazioni.html"><span class="ico">⚙️</span>Impostazioni</a>
+<h4>Funzioni</h4>
+<a href="combattimento.html"><span class="ico">⚔️</span>Combattimento</a>
+<a href="fazioni.html"><span class="ico">🏳️</span>Fazioni</a>
+<a href="kit-e-preset.html"><span class="ico">🎒</span>Kit e preset</a>
+<a href="movimento.html"><span class="ico">🧭</span>Movimento e ordini</a>
+<a href="script.html"><span class="ico">📜</span>Script</a>
+<a href="compagni.html"><span class="ico">🐺</span>Compagni</a>
+<a href="skin.html"><span class="ico">🎭</span>Skin e nomi</a>
+<a href="ghost.html" class="active"><span class="ico">👻</span>Ghost</a>
+<h4>Aiuto</h4>
+<a href="problemi.html"><span class="ico">🩺</span>Problemi comuni</a>
+<a href="spigot.html"><span class="ico">🔧</span>Edizione Spigot</a>
+</nav>
+<main class="content">
+<article>
+<div class="crumb">Funzioni</div><h1>Ghost</h1><p class="lead">NPC scenografici che ripetono un percorso registrato o ti fissano da lontano. Non combattono e non si possono toccare.</p>
+<h2 id="cosa-sono">Cosa sono<a class="anchor" href="#cosa-sono" aria-hidden="true">#</a></h2>
+<p>Un ghost è un giocatore finto come i bot, ma fuori da tutto il resto del plugin. Non combatte, non si muove da solo,
+non conta come bot e non compare in <code>/pvpbot list</code>. Non prende danni, non si può colpire e non si può usare.
+Compare e sparisce senza messaggi in chat. Serve per atmosfera, eventi horror e scene.</p>
+<p>I comandi <code>/ghost</code> richiedono <code>pvpbot.admin</code>.</p>
+
+<h2 id="registrare-un-percorso">Registrare un percorso<a class="anchor" href="#registrare-un-percorso" aria-hidden="true">#</a></h2>
+<pre><code>/ghost record giro
+/ghost stoprecord</code></pre>
+<p>Tra i due comandi PvpBot registra la tua posizione a ogni tick. Registra anche i blocchi che rompi o piazzi, e alla
+fine li rimette com'erano, così il mondo resta pulito. <code>/ghost recordings</code> elenca le registrazioni, salvate in
+<code>plugins/PvpBot/ghost-recordings/</code>.</p>
+
+<h2 id="ghost-che-ripete-il-percorso">Ghost che ripete il percorso<a class="anchor" href="#ghost-che-ripete-il-percorso" aria-hidden="true">#</a></h2>
+<pre><code>/ghost spawn Viandante giro</code></pre>
+<p>Il ghost ripete il percorso all'infinito, esattamente dove l'hai registrato. Rifà anche le modifiche ai blocchi allo
+stesso momento e le annulla prima di ricominciare, così ogni giro parte dallo stesso mondo.</p>
+
+<h2 id="ghost-che-fissa">Ghost che fissa<a class="anchor" href="#ghost-che-fissa" aria-hidden="true">#</a></h2>
+<pre><code>/ghost stare Osservatore</code></pre>
+<p>Il ghost resta fermo e si gira verso il giocatore più vicino. Quando un giocatore si avvicina a meno di 6 blocchi
+sparisce in silenzio. Nei primi 5 secondi dopo la creazione non sparisce, così non svanisce subito davanti a chi l'ha
+appena creato.</p>
+
+<h2 id="skin-e-frasi">Skin e frasi<a class="anchor" href="#skin-e-frasi" aria-hidden="true">#</a></h2>
+<p>Entrambi i tipi accettano, alla fine del comando, una skin e delle frasi:</p>
+<ul>
+  <li><strong>Senza <code>skin:</code></strong> il ghost indossa la skin dell'account con il suo nome;</li>
+  <li><code>skin:&lt;nome&gt;</code> prende la skin di un altro account;</li>
+  <li><code>skin:none</code> usa quella predefinita.</li>
+  <li><strong>Frasi:</strong> separate da <code>|</code>. Il ghost ne scrive una in chat ogni 6 secondi, a rotazione, con
+  il proprio nome.</li>
+</ul>
+<pre><code>/ghost stare Steve skin:none Chi c'è?|...|Vattene
+/ghost spawn Guardiano giro skin:Notch Non dovresti essere qui</code></pre>
+
+<h2 id="gestione">Gestione<a class="anchor" href="#gestione" aria-hidden="true">#</a></h2>
+<pre><code>/ghost list
+/ghost remove Osservatore</code></pre>
+</article>
+<nav class="pager"><a class="prev" href="skin.html"><small>← Precedente</small>Skin e nomi</a><a class="next" href="problemi.html"><small>Successiva →</small>Problemi comuni</a></nav>
+<div class="foot">PvpBot Wiki · per Paper 26.2 e Spigot 1.21.11 / 26.2</div>
+</main>
+<aside class="toc"><h5>In questa pagina</h5><a href="#cosa-sono">Cosa sono</a><a href="#registrare-un-percorso">Registrare un percorso</a><a href="#ghost-che-ripete-il-percorso">Ghost che ripete il percorso</a><a href="#ghost-che-fissa">Ghost che fissa</a><a href="#skin-e-frasi">Skin e frasi</a><a href="#gestione">Gestione</a></aside>
+</div>
+<script src="assets/search-index.js"></script>
+<script src="assets/app.js"></script>
+</body>
+</html>

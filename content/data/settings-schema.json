@@ -1,0 +1,1162 @@
+[
+ {
+  "key": "check-interval",
+  "path": "general.check-interval",
+  "group": "general",
+  "type": "INT",
+  "min": "1",
+  "max": "200",
+  "help": "ticks between auto-equip passes",
+  "default": 20
+ },
+ {
+  "key": "bots-relog",
+  "path": "general.bots-relog",
+  "group": "general",
+  "type": "BOOL",
+  "min": "0",
+  "max": "0",
+  "help": "respawn bots after a restart",
+  "default": true
+ },
+ {
+  "key": "force-vulnerable",
+  "path": "general.force-vulnerable",
+  "group": "general",
+  "type": "BOOL",
+  "min": "0",
+  "max": "0",
+  "help": "clear the invulnerable flag on bots (login plugins set it and never unset it)",
+  "default": true
+ },
+ {
+  "key": "auth-autologin",
+  "path": "general.auth-autologin",
+  "group": "general",
+  "type": "BOOL",
+  "min": "0",
+  "max": "0",
+  "help": "register bots with the login plugin so it stops freezing them",
+  "default": true
+ },
+ {
+  "key": "bypass-damage-protection",
+  "path": "general.bypass-damage-protection",
+  "group": "general",
+  "type": "BOOL",
+  "min": "0",
+  "max": "0",
+  "help": "un-cancel damage involving bots - overrides region/PvP protection, use with care",
+  "default": false
+ },
+ {
+  "key": "target-scan-interval",
+  "path": "general.target-scan-interval",
+  "group": "general",
+  "type": "INT",
+  "min": "1",
+  "max": "60",
+  "help": "ticks between target sweeps (raise this if a big crowd lags)",
+  "default": 10
+ },
+ {
+  "key": "auto-target",
+  "path": "combat.auto-target",
+  "group": "combat",
+  "type": "BOOL",
+  "min": "0",
+  "max": "0",
+  "help": "hunt the nearest enemy unprompted",
+  "default": true
+ },
+ {
+  "key": "target-players",
+  "path": "combat.target-players",
+  "group": "combat",
+  "type": "BOOL",
+  "min": "0",
+  "max": "0",
+  "help": "auto-target players (off = bots only hunt mobs unless ordered or hit)",
+  "default": true
+ },
+ {
+  "key": "target-passive-mobs",
+  "path": "combat.target-passive-mobs",
+  "group": "combat",
+  "type": "BOOL",
+  "min": "0",
+  "max": "0",
+  "help": "auto-target passive and neutral mobs too (off = hostile mobs only)",
+  "default": false
+ },
+ {
+  "key": "revenge",
+  "path": "combat.revenge",
+  "group": "combat",
+  "type": "BOOL",
+  "min": "0",
+  "max": "0",
+  "help": "fight back against whoever hit us",
+  "default": true
+ },
+ {
+  "key": "friendly-fire",
+  "path": "combat.friendly-fire",
+  "group": "combat",
+  "type": "BOOL",
+  "min": "0",
+  "max": "0",
+  "help": "allow hitting allies",
+  "default": false
+ },
+ {
+  "key": "bot-vs-bot",
+  "path": "combat.bot-vs-bot",
+  "group": "combat",
+  "type": "BOOL",
+  "min": "0",
+  "max": "0",
+  "help": "bots pick fights with each other unprompted",
+  "default": false
+ },
+ {
+  "key": "attack-invincible",
+  "path": "combat.attack-invincible",
+  "group": "combat",
+  "type": "BOOL",
+  "min": "0",
+  "max": "0",
+  "help": "attack creative/spectator players",
+  "default": false
+ },
+ {
+  "key": "max-target-distance",
+  "path": "combat.max-target-distance",
+  "group": "combat",
+  "type": "DOUBLE",
+  "min": "1",
+  "max": "128",
+  "help": "how far a bot looks for targets",
+  "default": 32.0
+ },
+ {
+  "key": "melee-range",
+  "path": "combat.melee-range",
+  "group": "combat",
+  "type": "DOUBLE",
+  "min": "1",
+  "max": "6",
+  "help": "reach, eyes to hitbox as vanilla measures it (3.0 = a player's)",
+  "default": 3.0
+ },
+ {
+  "key": "melee-standoff",
+  "path": "combat.melee-standoff",
+  "group": "combat",
+  "type": "DOUBLE",
+  "min": "0.5",
+  "max": "5",
+  "help": "fighting distance held in melee (stops bots standing inside each other)",
+  "default": 2.2
+ },
+ {
+  "key": "attack-cooldown",
+  "path": "combat.attack-cooldown",
+  "group": "combat",
+  "type": "INT",
+  "min": "1",
+  "max": "100",
+  "help": "ticks between swings (lower = faster)",
+  "default": 12
+ },
+ {
+  "key": "ping-millis",
+  "path": "combat.ping-millis",
+  "group": "combat",
+  "type": "INT",
+  "min": "0",
+  "max": "500",
+  "help": "simulated connection latency - delays when a decided attack actually lands, the same round trip a real player's client has (0 = instant, unrealistically perfect)",
+  "default": 50
+ },
+ {
+  "key": "miss-chance",
+  "path": "combat.miss-chance",
+  "group": "combat",
+  "type": "INT",
+  "min": "0",
+  "max": "100",
+  "help": "percent of swings/shots deliberately missed",
+  "default": 10
+ },
+ {
+  "key": "mistake-chance",
+  "path": "combat.mistake-chance",
+  "group": "combat",
+  "type": "INT",
+  "min": "0",
+  "max": "100",
+  "help": "percent chance to hesitate or panic on a clutch action (0 = flawless)",
+  "default": 12
+ },
+ {
+  "key": "leader-call-seconds",
+  "path": "combat.leader-call-seconds",
+  "group": "combat",
+  "type": "INT",
+  "min": "0",
+  "max": "600",
+  "help": "how long a faction stays hostile to whoever its leader is fighting (0 = off)",
+  "default": 30
+ },
+ {
+  "key": "reaction-ticks",
+  "path": "combat.reaction-ticks",
+  "group": "combat",
+  "type": "INT",
+  "min": "0",
+  "max": "200",
+  "help": "ticks a bot sizes up a player it noticed itself before attacking (0 = instant)",
+  "default": 30
+ },
+ {
+  "key": "spawn-grace",
+  "path": "combat.spawn-grace",
+  "group": "combat",
+  "type": "INT",
+  "min": "0",
+  "max": "600",
+  "help": "seconds after spawning before a bot picks a fight with a player on its own",
+  "default": 5
+ },
+ {
+  "key": "skill",
+  "path": "combat.skill",
+  "group": "combat",
+  "type": "INT",
+  "min": "0",
+  "max": "100",
+  "help": "how human bots' reactions, timing and aim are - never frame-perfect, even at 100",
+  "default": 50
+ },
+ {
+  "key": "turn-speed",
+  "path": "combat.turn-speed",
+  "group": "combat",
+  "type": "DOUBLE",
+  "min": "1",
+  "max": "180",
+  "help": "degrees a bot may turn per tick (180 = instant snap-aim, the old behaviour)",
+  "default": 30.0
+ },
+ {
+  "key": "special-weapon-melee-chance",
+  "path": "combat.special-weapon-melee-chance",
+  "group": "combat",
+  "type": "INT",
+  "min": "0",
+  "max": "100",
+  "help": "percent of engagements a mace carrier fights with an ordinary weapon instead",
+  "default": 35
+ },
+ {
+  "key": "shield-disable-chance",
+  "path": "combat.shield-disable-chance",
+  "group": "combat",
+  "type": "INT",
+  "min": "0",
+  "max": "100",
+  "help": "percent of raised shields a bot actually reacts to by swapping to an axe",
+  "default": 70
+ },
+ {
+  "key": "mace-range-bonus",
+  "path": "combat.mace-range-bonus",
+  "group": "combat",
+  "type": "DOUBLE",
+  "min": "0",
+  "max": "4",
+  "help": "extra reach on a smash, on top of melee-range (a deliberate cheat)",
+  "default": 0.0
+ },
+ {
+  "key": "attribute-swap",
+  "path": "combat.attribute-swap",
+  "group": "combat",
+  "type": "BOOL",
+  "min": "0",
+  "max": "0",
+  "help": "master switch for weapon-swap techniques (breach swap, mace stun, lunge)",
+  "default": false
+ },
+ {
+  "key": "breach-swap",
+  "path": "combat.breach-swap",
+  "group": "combat",
+  "type": "BOOL",
+  "min": "0",
+  "max": "0",
+  "help": "swing a sword carrying the mace's Breach/Density enchantments",
+  "default": true
+ },
+ {
+  "key": "mace-stun",
+  "path": "combat.mace-stun",
+  "group": "combat",
+  "type": "BOOL",
+  "min": "0",
+  "max": "0",
+  "help": "axe to break a raised shield, then the mace straight after without recharging",
+  "default": true
+ },
+ {
+  "key": "spear-lunge",
+  "path": "combat.spear-lunge",
+  "group": "combat",
+  "type": "BOOL",
+  "min": "0",
+  "max": "0",
+  "help": "chain spear jabs to close distance (needs Lunge to actually dash)",
+  "default": true
+ },
+ {
+  "key": "swap-cooldown",
+  "path": "combat.swap-cooldown",
+  "group": "combat",
+  "type": "INT",
+  "min": "0",
+  "max": "200",
+  "help": "ticks between swap combos - the real rate limit, since combos skip the attack gate",
+  "default": 30
+ },
+ {
+  "key": "mace-pearl-launch",
+  "path": "combat.mace-pearl-launch",
+  "group": "combat",
+  "type": "BOOL",
+  "min": "0",
+  "max": "0",
+  "help": "throw a pearl then pop a wind charge on it mid-flight for a much higher launch",
+  "default": false
+ },
+ {
+  "key": "mace-defence-shield",
+  "path": "combat.mace-defence-shield",
+  "group": "combat",
+  "type": "INT",
+  "min": "0",
+  "max": "100",
+  "help": "percent of incoming mace smashes answered with a shield",
+  "default": 55
+ },
+ {
+  "key": "mace-defence-flee",
+  "path": "combat.mace-defence-flee",
+  "group": "combat",
+  "type": "INT",
+  "min": "0",
+  "max": "100",
+  "help": "percent answered by getting out of the way instead (remainder: eat it)",
+  "default": 20
+ },
+ {
+  "key": "mace-totem-chance",
+  "path": "combat.mace-totem-chance",
+  "group": "combat",
+  "type": "INT",
+  "min": "0",
+  "max": "100",
+  "help": "percent of mace fights where the bot puts a totem in the offhand and keeps it there instead of a shield",
+  "default": 35
+ },
+ {
+  "key": "mace",
+  "path": "combat.mace",
+  "group": "combat",
+  "type": "BOOL",
+  "min": "0",
+  "max": "0",
+  "help": "use mace jump attacks",
+  "default": true
+ },
+ {
+  "key": "elytra-mace",
+  "path": "combat.elytra-mace",
+  "group": "combat",
+  "type": "BOOL",
+  "min": "0",
+  "max": "0",
+  "help": "elytra mace: climb on rockets, dive, and smash without landing (needs elytra, rockets, mace)",
+  "default": false
+ },
+ {
+  "key": "elytra-mace-height",
+  "path": "combat.elytra-mace-height",
+  "group": "combat",
+  "type": "INT",
+  "min": "8",
+  "max": "60",
+  "help": "blocks above the target an elytra mace climbs to before diving - higher hits harder",
+  "default": 20
+ },
+ {
+  "key": "cart-pvp",
+  "path": "combat.cart-pvp",
+  "group": "combat",
+  "type": "BOOL",
+  "min": "0",
+  "max": "0",
+  "help": "cart PvP: a Flame arrow, then a rail and a TNT minecart in its path (needs all three, plus arrows)",
+  "default": false
+ },
+ {
+  "key": "cart-max-self-damage",
+  "path": "combat.cart-max-self-damage",
+  "group": "combat",
+  "type": "DOUBLE",
+  "min": "0",
+  "max": "40",
+  "help": "most damage (after armour, on an average roll) a bot accepts from its own cart; never a lethal roll without a totem",
+  "default": 10.0
+ },
+ {
+  "key": "cart-cooldown",
+  "path": "combat.cart-cooldown",
+  "group": "combat",
+  "type": "INT",
+  "min": "0",
+  "max": "1200",
+  "help": "ticks between cart plays",
+  "default": 80
+ },
+ {
+  "key": "crit-chain",
+  "path": "combat.crit-chain",
+  "group": "combat",
+  "type": "BOOL",
+  "min": "0",
+  "max": "0",
+  "help": "chain jump-crits back to back instead of resting between hops",
+  "default": null
+ },
+ {
+  "key": "cooldown-trick",
+  "path": "combat.cooldown-trick",
+  "group": "combat",
+  "type": "BOOL",
+  "min": "0",
+  "max": "0",
+  "help": "swing once attack cooldown clears 84.8% instead of waiting for 100% - still full crit/knockback, just faster",
+  "default": null
+ },
+ {
+  "key": "jump-reset",
+  "path": "combat.jump-reset",
+  "group": "combat",
+  "type": "BOOL",
+  "min": "0",
+  "max": "0",
+  "help": "chain another mace smash right after landing one, instead of resetting on cooldown",
+  "default": null
+ },
+ {
+  "key": "mirror-punish",
+  "path": "combat.mirror-punish",
+  "group": "combat",
+  "type": "BOOL",
+  "min": "0",
+  "max": "0",
+  "help": "swing back mid-air off the enemy's own knockback the instant they hit us (a punish crit)",
+  "default": null
+ },
+ {
+  "key": "hit-select",
+  "path": "combat.hit-select",
+  "group": "combat",
+  "type": "BOOL",
+  "min": "0",
+  "max": "0",
+  "help": "hold a swing back until the angle/spacing is actually favourable, instead of swinging on cooldown alone",
+  "default": null
+ },
+ {
+  "key": "d-tap",
+  "path": "combat.d-tap",
+  "group": "combat",
+  "type": "BOOL",
+  "min": "0",
+  "max": "0",
+  "help": "brief sideways sprint-reset after landing a hit, the same idea as w-tap on a lateral axis",
+  "default": null
+ },
+ {
+  "key": "hit-web-combo",
+  "path": "combat.hit-web-combo",
+  "group": "combat",
+  "type": "BOOL",
+  "min": "0",
+  "max": "0",
+  "help": "follow a landed cobweb trap with an immediate swing instead of leaving it to work alone",
+  "default": null
+ },
+ {
+  "key": "sweep-hit",
+  "path": "combat.sweep-hit",
+  "group": "combat",
+  "type": "BOOL",
+  "min": "0",
+  "max": "0",
+  "help": "drop sprint to land vanilla's sweep AOE when 2+ enemies are clustered in melee range",
+  "default": null
+ },
+ {
+  "key": "priority-hp-target",
+  "path": "combat.priority-hp-target",
+  "group": "combat",
+  "type": "BOOL",
+  "min": "0",
+  "max": "0",
+  "help": "within a priority tier, prefer the lowest-health target over the nearest one",
+  "default": null
+ },
+ {
+  "key": "shield-read-windup",
+  "path": "combat.shield-read-windup",
+  "group": "combat",
+  "type": "BOOL",
+  "min": "0",
+  "max": "0",
+  "help": "raise shield proactively against a read jump-crit windup, not just an incoming mace smash",
+  "default": null
+ },
+ {
+  "key": "orbital",
+  "path": "combat.orbital",
+  "group": "combat",
+  "type": "BOOL",
+  "min": "0",
+  "max": "0",
+  "help": "fire Orbital Strike Cannon rods, keeping clear of their own blast",
+  "default": null
+ },
+ {
+  "key": "orbital-cooldown",
+  "path": "combat.orbital-cooldown",
+  "group": "combat",
+  "type": "INT",
+  "min": "20",
+  "max": "2000",
+  "help": "ticks between orbital strikes",
+  "default": null
+ },
+ {
+  "key": "crits",
+  "path": "combat.crits",
+  "group": "combat",
+  "type": "BOOL",
+  "min": "0",
+  "max": "0",
+  "help": "jump before swinging to land critical hits",
+  "default": true
+ },
+ {
+  "key": "stasis",
+  "path": "combat.stasis",
+  "group": "combat",
+  "type": "BOOL",
+  "min": "0",
+  "max": "0",
+  "help": "block a killing hit and teleport away (ender pearl effects) instead of dying - off makes a protected faction killable again",
+  "default": null
+ },
+ {
+  "key": "shield-disable",
+  "path": "combat.shield-disable",
+  "group": "combat",
+  "type": "BOOL",
+  "min": "0",
+  "max": "0",
+  "help": "switch to an axe to break a blocking enemy's shield",
+  "default": true
+ },
+ {
+  "key": "break-stashes",
+  "path": "combat.break-stashes",
+  "group": "combat",
+  "type": "BOOL",
+  "min": "0",
+  "max": "0",
+  "help": "break a shulker box or ender chest the current target placed nearby, denying a mid-fight restock",
+  "default": null
+ },
+ {
+  "key": "bhop",
+  "path": "movement.bhop",
+  "group": "movement",
+  "type": "BOOL",
+  "min": "0",
+  "max": "0",
+  "help": "jump constantly while chasing",
+  "default": true
+ },
+ {
+  "key": "speed",
+  "path": "movement.speed",
+  "group": "movement",
+  "type": "DOUBLE",
+  "min": "0.1",
+  "max": "2.0",
+  "help": "movement throttle (1.0 = sprint)",
+  "default": 1.0
+ },
+ {
+  "key": "wander",
+  "path": "movement.wander",
+  "group": "movement",
+  "type": "BOOL",
+  "min": "0",
+  "max": "0",
+  "help": "walk around when idle",
+  "default": true
+ },
+ {
+  "key": "follow-distance",
+  "path": "movement.follow-distance",
+  "group": "movement",
+  "type": "DOUBLE",
+  "min": "1",
+  "max": "20",
+  "help": "how far a follower sits from whoever it is escorting",
+  "default": 3.5
+ },
+ {
+  "key": "auto-equip",
+  "path": "utility.auto-equip",
+  "group": "utility",
+  "type": "BOOL",
+  "min": "0",
+  "max": "0",
+  "help": "wear the best armour/weapon carried",
+  "default": true
+ },
+ {
+  "key": "auto-repair",
+  "path": "utility.auto-repair",
+  "group": "utility",
+  "type": "BOOL",
+  "min": "0",
+  "max": "0",
+  "help": "collect nearby XP orbs and mend damaged gear with them",
+  "default": null
+ },
+ {
+  "key": "auto-repair-bottles",
+  "path": "utility.auto-repair-bottles",
+  "group": "utility",
+  "type": "BOOL",
+  "min": "0",
+  "max": "0",
+  "help": "crack open carried XP bottles to mend gear once nearby orbs run out",
+  "default": null
+ },
+ {
+  "key": "auto-totem",
+  "path": "utility.auto-totem",
+  "group": "utility",
+  "type": "BOOL",
+  "min": "0",
+  "max": "0",
+  "help": "grab a totem when close to death",
+  "default": true
+ },
+ {
+  "key": "totem-health",
+  "path": "utility.totem-health",
+  "group": "utility",
+  "type": "DOUBLE",
+  "min": "0",
+  "max": "20",
+  "help": "health at which to panic-swap a totem in",
+  "default": 8.0
+ },
+ {
+  "key": "retreat",
+  "path": "utility.retreat",
+  "group": "utility",
+  "type": "BOOL",
+  "min": "0",
+  "max": "0",
+  "help": "back off when low",
+  "default": true
+ },
+ {
+  "key": "retreat-health",
+  "path": "utility.retreat-health",
+  "group": "utility",
+  "type": "DOUBLE",
+  "min": "0",
+  "max": "20",
+  "help": "health at which to retreat",
+  "default": 6.0
+ },
+ {
+  "key": "auto-food",
+  "path": "utility.auto-food",
+  "group": "utility",
+  "type": "BOOL",
+  "min": "0",
+  "max": "0",
+  "help": "eat when hungry",
+  "default": true
+ },
+ {
+  "key": "food-threshold",
+  "path": "utility.food-threshold",
+  "group": "utility",
+  "type": "INT",
+  "min": "0",
+  "max": "20",
+  "help": "food level below which to eat",
+  "default": 16
+ },
+ {
+  "key": "auto-shield",
+  "path": "utility.auto-shield",
+  "group": "utility",
+  "type": "BOOL",
+  "min": "0",
+  "max": "0",
+  "help": "raise a shield when hurt",
+  "default": true
+ },
+ {
+  "key": "shield-health",
+  "path": "utility.shield-health",
+  "group": "utility",
+  "type": "DOUBLE",
+  "min": "0",
+  "max": "20",
+  "help": "health at which to start blocking",
+  "default": 8.0
+ },
+ {
+  "key": "auto-potion",
+  "path": "utility.auto-potion",
+  "group": "utility",
+  "type": "BOOL",
+  "min": "0",
+  "max": "0",
+  "help": "drink healing potions / eat gapples",
+  "default": true
+ },
+ {
+  "key": "potion-health",
+  "path": "utility.potion-health",
+  "group": "utility",
+  "type": "DOUBLE",
+  "min": "0",
+  "max": "20",
+  "help": "health at which to heal",
+  "default": 10.0
+ },
+ {
+  "key": "buff-potions",
+  "path": "utility.buff-potions",
+  "group": "utility",
+  "type": "BOOL",
+  "min": "0",
+  "max": "0",
+  "help": "drink strength/speed/fire-res before engaging",
+  "default": true
+ },
+ {
+  "key": "pearls",
+  "path": "utility.pearls",
+  "group": "utility",
+  "type": "BOOL",
+  "min": "0",
+  "max": "0",
+  "help": "use ender pearls to escape and to chase runners",
+  "default": true
+ },
+ {
+  "key": "pearl-escape-health",
+  "path": "utility.pearl-escape-health",
+  "group": "utility",
+  "type": "DOUBLE",
+  "min": "0",
+  "max": "20",
+  "help": "health at which to pearl out",
+  "default": 5.0
+ },
+ {
+  "key": "pearl-chase-distance",
+  "path": "utility.pearl-chase-distance",
+  "group": "utility",
+  "type": "DOUBLE",
+  "min": "4",
+  "max": "64",
+  "help": "how far a fleeing target must be before pearling after them",
+  "default": 14.0
+ },
+ {
+  "key": "pearl-cooldown",
+  "path": "utility.pearl-cooldown",
+  "group": "utility",
+  "type": "INT",
+  "min": "20",
+  "max": "600",
+  "help": "ticks between pearls",
+  "default": 120
+ },
+ {
+  "key": "cobwebs",
+  "path": "utility.cobwebs",
+  "group": "utility",
+  "type": "BOOL",
+  "min": "0",
+  "max": "0",
+  "help": "web enemies to pin them",
+  "default": false
+ },
+ {
+  "key": "cobweb-range",
+  "path": "utility.cobweb-range",
+  "group": "utility",
+  "type": "DOUBLE",
+  "min": "0.5",
+  "max": "6",
+  "help": "how close before webbing (lower = must commit)",
+  "default": 3.5
+ },
+ {
+  "key": "cobweb-cooldown",
+  "path": "utility.cobweb-cooldown",
+  "group": "utility",
+  "type": "INT",
+  "min": "20",
+  "max": "600",
+  "help": "ticks between webs from one bot",
+  "default": 160
+ },
+ {
+  "key": "cobweb-global-cooldown",
+  "path": "utility.cobweb-global-cooldown",
+  "group": "utility",
+  "type": "INT",
+  "min": "0",
+  "max": "600",
+  "help": "ticks between webs from ANY bot - stops a squad chain-webbing you (0 = off)",
+  "default": 60
+ },
+ {
+  "key": "drain",
+  "path": "utility.drain",
+  "group": "utility",
+  "type": "BOOL",
+  "min": "0",
+  "max": "0",
+  "help": "scoop up water an enemy places (MLG denial)",
+  "default": true
+ },
+ {
+  "key": "drain-delay",
+  "path": "utility.drain-delay",
+  "group": "utility",
+  "type": "INT",
+  "min": "0",
+  "max": "100",
+  "help": "reaction delay in ticks before draining",
+  "default": 20
+ },
+ {
+  "key": "web-escape-delay",
+  "path": "utility.web-escape-delay",
+  "group": "utility",
+  "type": "INT",
+  "min": "0",
+  "max": "100",
+  "help": "ticks a webbed bot takes to react and reach for its water bucket (each web rolls up to 50% more)",
+  "default": 15
+ },
+ {
+  "key": "web-escape-fumble-chance",
+  "path": "utility.web-escape-fumble-chance",
+  "group": "utility",
+  "type": "INT",
+  "min": "0",
+  "max": "100",
+  "help": "percent of water-escape attempts a webbed bot botches, wasting a beat before it can try again",
+  "default": 35
+ },
+ {
+  "key": "totem-delay-ticks",
+  "path": "utility.totem-delay-ticks",
+  "group": "utility",
+  "type": "INT",
+  "min": "0",
+  "max": "60",
+  "help": "pause before a panic totem reaches the offhand (instant reads as inhuman)",
+  "default": 10
+ },
+ {
+  "key": "water-clutch",
+  "path": "utility.water-clutch",
+  "group": "utility",
+  "type": "BOOL",
+  "min": "0",
+  "max": "0",
+  "help": "MLG a water bucket to survive a long fall",
+  "default": true
+ },
+ {
+  "key": "water-clutch-min-fall",
+  "path": "utility.water-clutch-min-fall",
+  "group": "utility",
+  "type": "DOUBLE",
+  "min": "0",
+  "max": "64",
+  "help": "shortest fall worth a bucket (below this the bot just takes the damage)",
+  "default": 5.0
+ },
+ {
+  "key": "water-clutch-window",
+  "path": "utility.water-clutch-window",
+  "group": "utility",
+  "type": "DOUBLE",
+  "min": "1",
+  "max": "32",
+  "help": "blocks above the ground the water goes down (widens with falling speed)",
+  "default": 5.0
+ },
+ {
+  "key": "water-clutch-pickup",
+  "path": "utility.water-clutch-pickup",
+  "group": "utility",
+  "type": "BOOL",
+  "min": "0",
+  "max": "0",
+  "help": "scoop the water back up after landing",
+  "default": true
+ },
+ {
+  "key": "ranged",
+  "path": "ranged.enabled",
+  "group": "ranged",
+  "type": "BOOL",
+  "min": "0",
+  "max": "0",
+  "help": "use bows and crossbows",
+  "default": true
+ },
+ {
+  "key": "ranged-min-range",
+  "path": "ranged.min-range",
+  "group": "ranged",
+  "type": "DOUBLE",
+  "min": "0",
+  "max": "64",
+  "help": "closer than this, switch to melee",
+  "default": 6.0
+ },
+ {
+  "key": "ranged-optimal-range",
+  "path": "ranged.optimal-range",
+  "group": "ranged",
+  "type": "DOUBLE",
+  "min": "1",
+  "max": "64",
+  "help": "distance to hold while shooting",
+  "default": 12.0
+ },
+ {
+  "key": "bow-min-draw-ticks",
+  "path": "ranged.bow-min-draw-ticks",
+  "group": "ranged",
+  "type": "INT",
+  "min": "1",
+  "max": "60",
+  "help": "draw time before loosing (20 = full)",
+  "default": 18
+ },
+ {
+  "key": "arrow-prediction",
+  "path": "ranged.arrow-prediction",
+  "group": "ranged",
+  "type": "BOOL",
+  "min": "0",
+  "max": "0",
+  "help": "lead shots ahead of moving targets",
+  "default": true
+ },
+ {
+  "key": "ranged-shot-gap",
+  "path": "ranged.shot-gap",
+  "group": "ranged",
+  "type": "INT",
+  "min": "0",
+  "max": "200",
+  "help": "minimum ticks between one arrow and the next draw",
+  "default": 25
+ },
+ {
+  "key": "ranged-volley-size",
+  "path": "ranged.volley-size",
+  "group": "ranged",
+  "type": "INT",
+  "min": "1",
+  "max": "20",
+  "help": "most arrows fired in a row before the bot lowers the bow (each volley is 1 to this many)",
+  "default": 3
+ },
+ {
+  "key": "ranged-rest-ticks",
+  "path": "ranged.rest-ticks",
+  "group": "ranged",
+  "type": "INT",
+  "min": "0",
+  "max": "600",
+  "help": "how long the bot stops shooting after a volley, closing in instead",
+  "default": 80
+ },
+ {
+  "key": "building",
+  "path": "building.enabled",
+  "group": "building",
+  "type": "BOOL",
+  "min": "0",
+  "max": "0",
+  "help": "let bots bridge, pillar and clear soft cover (never stone or anything built)",
+  "default": true
+ },
+ {
+  "key": "building-bridge",
+  "path": "building.bridge",
+  "group": "building",
+  "type": "BOOL",
+  "min": "0",
+  "max": "0",
+  "help": "place a block to cross a gap",
+  "default": true
+ },
+ {
+  "key": "building-pillar",
+  "path": "building.pillar",
+  "group": "building",
+  "type": "BOOL",
+  "min": "0",
+  "max": "0",
+  "help": "tower up toward a target that is above and unreachable",
+  "default": true
+ },
+ {
+  "key": "building-clear-soft",
+  "path": "building.clear-soft-blocks",
+  "group": "building",
+  "type": "BOOL",
+  "min": "0",
+  "max": "0",
+  "help": "dig through dirt/sand/gravel/leaves/undergrowth in the way",
+  "default": true
+ },
+ {
+  "key": "building-cooldown",
+  "path": "building.cooldown",
+  "group": "building",
+  "type": "INT",
+  "min": "0",
+  "max": "200",
+  "help": "ticks between block actions",
+  "default": 6
+ },
+ {
+  "key": "building-budget",
+  "path": "building.budget",
+  "group": "building",
+  "type": "INT",
+  "min": "0",
+  "max": "2000",
+  "help": "most blocks a bot may place+break per minute",
+  "default": 64
+ },
+ {
+  "key": "building-max-pillar",
+  "path": "building.max-pillar",
+  "group": "building",
+  "type": "INT",
+  "min": "0",
+  "max": "64",
+  "help": "tallest tower a bot will build",
+  "default": 6
+ },
+ {
+  "key": "detection",
+  "path": "detection.enabled",
+  "group": "detection",
+  "type": "BOOL",
+  "min": "0",
+  "max": "0",
+  "help": "bots must actually see a target to know about it (off = old plain-radius sweep)",
+  "default": true
+ },
+ {
+  "key": "detection-touch-radius",
+  "path": "detection.touch-radius",
+  "group": "detection",
+  "type": "DOUBLE",
+  "min": "0",
+  "max": "16",
+  "help": "within this, noticed without needing line of sight",
+  "default": 3.0
+ },
+ {
+  "key": "detection-memory-ticks",
+  "path": "detection.memory-ticks",
+  "group": "detection",
+  "type": "INT",
+  "min": "0",
+  "max": "1200",
+  "help": "how long a spotted target stays known after it breaks line of sight",
+  "default": 100
+ },
+ {
+  "key": "detection-invisible",
+  "path": "detection.invisible-multiplier",
+  "group": "detection",
+  "type": "DOUBLE",
+  "min": "0",
+  "max": "2",
+  "help": "notice range against an invisible player (0.15 = spotted at 15% of the usual distance)",
+  "default": 0.15
+ },
+ {
+  "key": "detection-sneaking",
+  "path": "detection.sneaking-multiplier",
+  "group": "detection",
+  "type": "DOUBLE",
+  "min": "0",
+  "max": "2",
+  "help": "notice range against a crouching player",
+  "default": 0.5
+ },
+ {
+  "key": "detection-armoured",
+  "path": "detection.armoured-multiplier",
+  "group": "detection",
+  "type": "DOUBLE",
+  "min": "0",
+  "max": "2",
+  "help": "notice range against a player wearing armour",
+  "default": 1.0
+ },
+ {
+  "key": "detection-unarmoured",
+  "path": "detection.unarmoured-multiplier",
+  "group": "detection",
+  "type": "DOUBLE",
+  "min": "0",
+  "max": "2",
+  "help": "notice range against a player wearing none",
+  "default": 0.7
+ }
+]

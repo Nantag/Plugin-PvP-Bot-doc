@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Fazioni · PvpBot Wiki</title>
+<meta name="description" content="Chi combatte contro chi: fazioni, relazioni, leader, coalizioni e impostazioni per fazione.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22%3E%3Ctext y=%22.9em%22 font-size=%2290%22%3E%E2%9A%94%EF%B8%8F%3C/text%3E%3C/svg%3E">
+<link rel="stylesheet" href="assets/style.css">
+<script>try{var t=localStorage.getItem('pvpbot-theme');if(t)document.documentElement.setAttribute('data-theme',t)}catch(e){}</script>
+</head>
+<body>
+<header class="topbar">
+  <button class="icon-btn menu-btn" id="menu" aria-label="Menu">☰</button>
+  <a class="brand" href="index.html"><span class="logo">⚔</span>PvpBot <small>Wiki</small></a>
+  <div class="search">
+    <span class="icon">⌕</span>
+    <input id="q" type="search" placeholder="Cerca nella wiki…" autocomplete="off" aria-label="Cerca">
+    <kbd>/</kbd>
+    <div class="results" id="results"></div>
+  </div>
+  <button class="icon-btn" id="theme" aria-label="Tema chiaro o scuro">☾</button>
+</header>
+<div class="layout">
+<nav class="sidebar">
+<h4>Introduzione</h4>
+<a href="index.html"><span class="ico">🏠</span>Home</a>
+<a href="installazione.html"><span class="ico">📦</span>Installazione</a>
+<a href="guida-rapida.html"><span class="ico">🚀</span>Guida rapida</a>
+<h4>Riferimento</h4>
+<a href="comandi.html"><span class="ico">⌨️</span>Comandi</a>
+<a href="selettori.html"><span class="ico">🎯</span>Selettori</a>
+<a href="impostazioni.html"><span class="ico">⚙️</span>Impostazioni</a>
+<h4>Funzioni</h4>
+<a href="combattimento.html"><span class="ico">⚔️</span>Combattimento</a>
+<a href="fazioni.html" class="active"><span class="ico">🏳️</span>Fazioni</a>
+<a href="kit-e-preset.html"><span class="ico">🎒</span>Kit e preset</a>
+<a href="movimento.html"><span class="ico">🧭</span>Movimento e ordini</a>
+<a href="script.html"><span class="ico">📜</span>Script</a>
+<a href="compagni.html"><span class="ico">🐺</span>Compagni</a>
+<a href="skin.html"><span class="ico">🎭</span>Skin e nomi</a>
+<a href="ghost.html"><span class="ico">👻</span>Ghost</a>
+<h4>Aiuto</h4>
+<a href="problemi.html"><span class="ico">🩺</span>Problemi comuni</a>
+<a href="spigot.html"><span class="ico">🔧</span>Edizione Spigot</a>
+</nav>
+<main class="content">
+<article>
+<div class="crumb">Funzioni</div><h1>Fazioni</h1><p class="lead">Chi combatte contro chi: fazioni, relazioni, leader, coalizioni e impostazioni per fazione.</p>
+<h2 id="le-basi">Le basi<a class="anchor" href="#le-basi" aria-hidden="true">#</a></h2>
+<p>Una fazione è un gruppo di membri: bot e giocatori veri. Ognuno sta in <strong>una sola</strong> fazione alla volta;
+entrare in un'altra vuol dire lasciare quella vecchia.</p>
+<pre><code>/pvpbot faction create banditi
+/pvpbot faction join banditi latest
+/pvpbot faction join banditi Steve
+/pvpbot faction join banditi range 20
+/pvpbot faction leave Steve
+/pvpbot faction info banditi</code></pre>
+<p><code>join</code> accetta un nome, un <a href="selettori.html">selettore</a> oppure <code>range &lt;blocchi&gt;</code>,
+che aggiunge tutti i bot entro quella distanza da te.</p>
+
+<h3 id="la-fazione-player">La fazione "player"<a class="anchor" href="#la-fazione-player" aria-hidden="true">#</a></h3>
+<p>Ogni giocatore vero che entra nel server senza una fazione viene messo nella fazione <code>player</code>. Chi hai già
+messo in un'altra fazione (o nominato leader) ci resta anche dopo essersi riconnesso. Così puoi dichiarare guerra o pace a
+tutti i giocatori in un colpo solo:</p>
+<pre><code>/pvpbot faction hostile banditi player</code></pre>
+
+<h2 id="relazioni">Relazioni<a class="anchor" href="#relazioni" aria-hidden="true">#</a></h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Relazione</th><th>Comando</th><th>Effetto</th></tr></thead>
+<tbody>
+<tr><td>Neutrale</td><td>(nessuna)</td><td>Il comportamento normale: un bot con <code>auto-target</code> attacca chiunque, come se non ci fossero fazioni.</td></tr>
+<tr><td>Guerra</td><td><code>hostile &lt;a&gt; &lt;b&gt;</code></td><td>Si attaccano a vista. Chiude un'eventuale alleanza o pace.</td></tr>
+<tr><td>Pace</td><td><code>peace &lt;a&gt; &lt;b&gt;</code></td><td>Nessuno dei due inizia. Esplosioni e colpi spazzata li trattano come passanti. Chi viene colpito però risponde, e la chiamata del leader vale lo stesso.</td></tr>
+<tr><td>Alleanza</td><td><code>ally &lt;a&gt; &lt;b&gt;</code></td><td>Stessa parte in tutto: non si prendono di mira, niente vendetta tra loro, gli orbital non sparano se c'è un alleato. Ogni fazione tiene le proprie impostazioni.</td></tr>
+</tbody></table></div>
+<p>Guerra e pace si escludono a vicenda. <code>unally</code> scioglie un'alleanza.</p>
+<div class="callout tip"><span class="t">Alleanza o una fazione sola?</span>
+L'alleanza serve a schierare dalla stessa parte bot di livello diverso: <code>banditi</code> e <code>banditi_elite</code>
+combattono insieme ma con <code>skill</code> diverse.</div>
+
+<h2 id="leader">Leader<a class="anchor" href="#leader" aria-hidden="true">#</a></h2>
+<pre><code>/pvpbot faction leader banditi Capo
+/pvpbot faction leader banditi clear</code></pre>
+<p>Il leader (un bot o un giocatore vero) è sempre un membro della fazione. Tutta la fazione si unisce ai suoi scontri:
+chi il leader attacca e chi attacca il leader diventa bersaglio di tutti. L'ostilità dura
+<code>leader-call-seconds</code> secondi (30 di default, 0 la disattiva) e non sopravvive a un riavvio. Un leader che si
+disconnette resta leader quando torna.</p>
+
+<h2 id="seguire-in-gruppo">Seguire in gruppo<a class="anchor" href="#seguire-in-gruppo" aria-hidden="true">#</a></h2>
+<pre><code>/pvpbot faction follow banditi Capo circle
+/pvpbot faction follow banditi stop</code></pre>
+<div class="table-wrap"><table>
+<thead><tr><th>Formazione</th><th>Disposizione</th></tr></thead>
+<tbody>
+<tr><td><code>behind</code></td><td>Dietro a chi seguono (predefinita).</td></tr>
+<tr><td><code>circle</code></td><td>In cerchio tutto attorno.</td></tr>
+<tr><td><code>open_circle</code></td><td>In cerchio lasciando libero il davanti.</td></tr>
+</tbody></table></div>
+<p>La distanza è <code>follow-distance</code>. Chi segue combatte se attaccato e poi torna in formazione.</p>
+
+<h2 id="impostazioni-per-fazione">Impostazioni per fazione<a class="anchor" href="#impostazioni-per-fazione" aria-hidden="true">#</a></h2>
+<p>Qualsiasi <a href="impostazioni.html">impostazione</a> si può cambiare solo per una fazione. Quello che la fazione
+non imposta viene preso dal preset attivo o da <code>config.yml</code>.</p>
+<pre><code>/pvpbot faction set reclute skill 20
+/pvpbot faction set reclute miss-chance 40
+/pvpbot faction set veterani skill 90
+/pvpbot faction set veterani elytra-mace true</code></pre>
+<p>Le impostazioni della fazione vincono sempre sul preset: se cambi il preset del server, le fazioni che hai regolato a
+mano restano come le hai lasciate.</p>
+
+<h2 id="kit-casuali-per-fazione">Kit casuali per fazione<a class="anchor" href="#kit-casuali-per-fazione" aria-hidden="true">#</a></h2>
+<p>Una fazione può avere una tabella di kit con dei pesi. <code>give</code> tira un kit a caso per ogni bot secondo
+quelle probabilità.</p>
+<pre><code>/pvpbot faction kit banditi set diamante 30
+/pvpbot faction kit banditi set mazza 50
+/pvpbot faction kit banditi set cristalli 20
+/pvpbot faction kit banditi list
+/pvpbot faction kit banditi give</code></pre>
+<p>I pesi sono relativi (qui 30%, 50%, 20%) e vanno da 0 a 1000. Un peso 0 toglie il kit dalla tabella, e
+<code>clear</code> la svuota.</p>
+
+<h2 id="overfazioni">Overfazioni<a class="anchor" href="#overfazioni" aria-hidden="true">#</a></h2>
+<p>Un'overfazione è una coalizione di fazioni. Tutte le fazioni dentro sono automaticamente alleate tra loro: sei fazioni
+sono un comando, non quindici <code>ally</code>.</p>
+<pre><code>/pvpbot overfaction create nord
+/pvpbot overfaction add nord banditi
+/pvpbot overfaction add nord pirati
+/pvpbot overfaction create sud
+/pvpbot overfaction add sud guardie
+/pvpbot overfaction hostile nord sud</code></pre>
+<ul>
+  <li><code>hostile</code> e <code>peace</code> accettano due overfazioni, oppure un'overfazione e una fazione singola.</li>
+  <li><code>overfaction &lt;nome&gt;</code> funziona come <a href="selettori.html">selettore</a> ovunque: puoi spostare,
+  ritirare o equipaggiare tutta una coalizione con un comando.</li>
+  <li><code>leader</code>, <code>follow</code> e <code>tp</code> funzionano come per le fazioni. Il leader di
+  un'overfazione non diventa membro di nessuna fazione e non sopravvive a un riavvio.</li>
+</ul>
+</article>
+<nav class="pager"><a class="prev" href="combattimento.html"><small>← Precedente</small>Combattimento</a><a class="next" href="kit-e-preset.html"><small>Successiva →</small>Kit e preset</a></nav>
+<div class="foot">PvpBot Wiki · per Paper 26.2 e Spigot 1.21.11 / 26.2</div>
+</main>
+<aside class="toc"><h5>In questa pagina</h5><a href="#le-basi">Le basi</a><a href="#la-fazione-player" class="sub">La fazione &quot;player&quot;</a><a href="#relazioni">Relazioni</a><a href="#leader">Leader</a><a href="#seguire-in-gruppo">Seguire in gruppo</a><a href="#impostazioni-per-fazione">Impostazioni per fazione</a><a href="#kit-casuali-per-fazione">Kit casuali per fazione</a><a href="#overfazioni">Overfazioni</a></aside>
+</div>
+<script src="assets/search-index.js"></script>
+<script src="assets/app.js"></script>
+</body>
+</html>
