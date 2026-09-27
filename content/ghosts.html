@@ -1,0 +1,46 @@
+---
+title: Ghosts
+section: Features
+order: 80
+icon: 👻
+lead: Scenic NPCs that replay a recorded path or stare at you from a distance. They don't fight and can't be touched.
+---
+<h2>What they are</h2>
+<p>A ghost is a fake player like the bots, but kept out of everything else in the plugin. It doesn't fight, doesn't
+move on its own, doesn't count as a bot and doesn't show up in <code>/pvpbot list</code>. It can't be damaged, hit or
+interacted with. It appears and disappears with no chat message. Use ghosts for atmosphere, horror events and scenes.</p>
+<p>The <code>/ghost</code> commands need <code>pvpbot.admin</code>.</p>
+
+<h2>Recording a path</h2>
+<pre><code>/ghost record lap
+/ghost stoprecord</code></pre>
+<p>Between the two commands PvpBot records your position every tick. It also records the blocks you break or place,
+and puts them back afterwards so the world stays clean. <code>/ghost recordings</code> lists the recordings, which are
+saved in <code>plugins/PvpBot/ghost-recordings/</code>.</p>
+
+<h2>A ghost that replays the path</h2>
+<pre><code>/ghost spawn Wanderer lap</code></pre>
+<p>The ghost replays the path forever, exactly where you recorded it. It also redoes the block changes at the same
+moments and undoes them before starting over, so every lap starts from the same world.</p>
+
+<h2>A ghost that stares</h2>
+<pre><code>/ghost stare Watcher</code></pre>
+<p>The ghost stands still and turns to face the nearest player. When a player gets within 6 blocks it silently vanishes.
+For the first 5 seconds after it's created it won't vanish, so it doesn't disappear in front of whoever just spawned
+it.</p>
+
+<h2>Skins and lines</h2>
+<p>Both kinds accept a skin and some lines at the end of the command:</p>
+<ul>
+  <li><strong>With no <code>skin:</code></strong> the ghost wears the skin of the account with its name;</li>
+  <li><code>skin:&lt;name&gt;</code> borrows another account's skin;</li>
+  <li><code>skin:none</code> uses the default one.</li>
+  <li><strong>Lines:</strong> separated by <code>|</code>. The ghost says one in chat every 6 seconds, in turn, under its
+  own name.</li>
+</ul>
+<pre><code>/ghost stare Steve skin:none Who's there?|...|Leave now
+/ghost spawn Keeper lap skin:Notch You shouldn't be here</code></pre>
+
+<h2>Managing ghosts</h2>
+<pre><code>/ghost list
+/ghost remove Watcher</code></pre>

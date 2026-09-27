@@ -44,10 +44,10 @@
     var b = document.createElement("button");
     b.className = "copy";
     b.type = "button";
-    b.textContent = "Copia";
+    b.textContent = "Copy";
     b.addEventListener("click", function () {
       var text = pre.querySelector("code") ? pre.querySelector("code").innerText : pre.innerText;
-      var done = function () { b.textContent = "Copiato!"; setTimeout(function () { b.textContent = "Copia"; }, 1200); };
+      var done = function () { b.textContent = "Copied!"; setTimeout(function () { b.textContent = "Copy"; }, 1200); };
       if (navigator.clipboard) navigator.clipboard.writeText(text).then(done, function () {});
     });
     pre.appendChild(b);
@@ -102,7 +102,7 @@
     selected = -1;
     if (!q.trim()) { box.classList.remove("open"); box.innerHTML = ""; return; }
     if (!hits.length) {
-      box.innerHTML = '<div class="empty">Nessun risultato per “' + esc(q) + '”</div>';
+      box.innerHTML = '<div class="empty">No results for “' + esc(q) + '”</div>';
     } else {
       box.innerHTML = hits.map(function (e) {
         return '<a href="' + e.url + '"><span class="r-title">' + mark(e.title, terms) + '</span> <span class="r-page">· ' + esc(e.page) +

@@ -1,0 +1,54 @@
+---
+title: Selectors
+section: Reference
+order: 20
+icon: 🎯
+lead: How to point one command at one bot, many bots or all of them.
+---
+<p>Most orders take a <strong>selector</strong> in place of a bot's name. It works the same everywhere:
+<code>follow</code>, <code>retreat</code>, <code>hide</code>, <code>tether</code>, <code>tp portal/pearl/rift</code>,
+<code>path assign/stop</code>, <code>faction join</code>, <code>kit give</code> and <code>kit givefaction</code>. The
+<a href="commands.html">command list</a> writes it as <code>&lt;selector&gt;</code>.</p>
+
+<h2>List</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Selector</th><th>Who it picks</th></tr></thead>
+<tbody>
+<tr><td><code>&lt;name&gt;</code></td><td>One bot, by name.</td></tr>
+<tr><td><code>all</code></td><td>Every active bot.</td></tr>
+<tr><td><code>latest</code></td><td>Every bot from the last <code>spawn</code> command that is still around.</td></tr>
+<tr><td><code>faction &lt;name&gt;</code></td><td>A faction's active bots.</td></tr>
+<tr><td><code>overfaction &lt;name&gt;</code> or <code>of &lt;name&gt;</code></td><td>The active bots of every faction in a coalition.</td></tr>
+<tr><td><code>random</code></td><td>One bot at random.</td></tr>
+<tr><td><code>random[filters]</code></td><td>Random bots that pass every filter (see below).</td></tr>
+<tr><td><code>list:a,b,c</code></td><td>An explicit list of names. Mostly used by <a href="scripts.html">scripts</a>.</td></tr>
+</tbody></table></div>
+
+<div class="callout"><span class="t">Commands with fewer options</span>
+<code>guard</code>, <code>pause</code>, <code>resume</code> and the instant <code>tp</code> only take <code>&lt;bot&gt;</code>,
+<code>all</code> or <code>faction &lt;name&gt;</code>. <code>follow stop</code> and <code>guard stop</code> take a name
+or <code>all</code>.</div>
+
+<h2>random[...]</h2>
+<p>Picks at random among the bots that pass <em>every</em> filter. Filters are <code>key=value</code> pairs separated by
+commas; spaces after the commas are fine.</p>
+<div class="table-wrap"><table>
+<thead><tr><th>Filter</th><th>Meaning</th></tr></thead>
+<tbody>
+<tr><td><code>limit=&lt;n&gt;</code></td><td>How many bots at most (default 1).</td></tr>
+<tr><td><code>nofaction=true|false</code></td><td>Only bots with no faction, or only bots in one.</td></tr>
+<tr><td><code>paused=true|false</code></td><td>Only paused bots, or only running ones.</td></tr>
+<tr><td><code>world=&lt;name&gt;</code></td><td>Only bots in that world.</td></tr>
+<tr><td><code>alreadyhaskit=true|false</code></td><td>Only bots already carrying something, or only empty-handed ones.</td></tr>
+</tbody></table></div>
+<div class="callout warn"><span class="t">alreadyhaskit is an approximation</span>
+The plugin doesn't record which kit a bot was given, so the filter only checks whether the inventory is empty. A bot
+that picked an item up off the ground counts as "already has a kit".</div>
+
+<h2>Examples</h2>
+<pre><code>/pvpbot kit give iron random[limit=5,alreadyhaskit=false]
+/pvpbot faction join bandits random[limit=3, nofaction=true]
+/pvpbot tp pearl random[limit=10,world=world] Steve 30
+/pvpbot follow faction red Steve circle
+/pvpbot retreat overfaction north to 100 64 -250
+/pvpbot hide latest</code></pre>

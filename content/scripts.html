@@ -1,0 +1,54 @@
+---
+title: Scripts
+section: Features
+order: 50
+icon: 📜
+lead: Save a sequence of commands under a name and run it whenever you like, with parameters and pauses.
+---
+<h2>What they're for</h2>
+<p>Setting up a scenario always takes the same commands: spawn the bots, put them in a faction, hand out kits, point
+them at someone. A script stores those lines under a name, so one line runs them all again.</p>
+
+<h2>Example</h2>
+<pre><code>/pvpbot script create raid
+/pvpbot script add raid pvpbot spawn 20
+/pvpbot script add raid pvpbot faction join {1} latest
+/pvpbot script add raid pvpbot kit givefaction {2} {1}
+/pvpbot script add raid wait 40
+/pvpbot script add raid pvpbot faction hostile {1} player</code></pre>
+<p>And to run it:</p>
+<pre><code>/pvpbot script run raid bandits iron</code></pre>
+<p>This spawns 20 bots, puts them in the <code>bandits</code> faction, gives them the <code>iron</code> kit, waits two
+seconds and then sets them at war with the players.</p>
+
+<h2>Rules</h2>
+<ul>
+  <li><strong>Parameters:</strong> <code>{1}</code>…<code>{9}</code> are replaced by the arguments given to
+  <code>script run</code>, in order.</li>
+  <li><strong>Pauses:</strong> a <code>wait &lt;ticks&gt;</code> line stops the script and resumes the rest after that
+  many ticks (20 = 1 second). The server carries on as normal meanwhile.</li>
+  <li><strong>latest:</strong> inside a script it means the bots <em>this script</em> created with its last
+  <code>spawn</code>, even if someone else spawned bots in the meantime.</li>
+  <li><strong>Leading slash:</strong> lines are written without <code>/</code>; if you add one it's removed.</li>
+  <li><strong>Comments:</strong> lines starting with <code>#</code> are skipped.</li>
+  <li><strong>Limit:</strong> 200 lines per script.</li>
+  <li><strong>One at a time:</strong> if you run a script while another is running, it starts as soon as the first one
+  finishes. That way two scripts never grab each other's bots.</li>
+  <li><strong>Permissions:</strong> lines run as if you typed them. A script saves typing but grants nothing extra.</li>
+</ul>
+
+<div class="callout tip"><span class="t">Named bots in scripts</span>
+<code>/pvpbot spawn &lt;name&gt;</code> looks up the skin in the background, so the next line might not find the bot yet.
+In scripts use <code>/pvpbot spawn &lt;name&gt; none</code>, which creates the bot at once.</div>
+
+<h2>Managing scripts</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Command</th><th>What it does</th></tr></thead>
+<tbody>
+<tr><td><code>/pvpbot script list</code></td><td>Lists the scripts.</td></tr>
+<tr><td><code>/pvpbot script show &lt;name&gt;</code></td><td>Shows the numbered lines.</td></tr>
+<tr><td><code>/pvpbot script remove &lt;name&gt; &lt;line&gt;</code></td><td>Removes a line (numbered as in <code>show</code>).</td></tr>
+<tr><td><code>/pvpbot script delete &lt;name&gt;</code></td><td>Deletes the script.</td></tr>
+</tbody></table></div>
+<p>Scripts are stored in <code>plugins/PvpBot/scripts.yml</code>. A <code>/pvpbot reload</code> stops any script that is
+running.</p>

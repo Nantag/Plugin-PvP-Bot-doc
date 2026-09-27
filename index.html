@@ -1,10 +1,10 @@
 <!doctype html>
-<html lang="it">
+<html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>PvpBot Wiki</title>
-<meta name="description" content="Bot PvP con intelligenza artificiale per server Paper e Spigot.">
+<meta name="description" content="AI-driven PvP bots for Paper and Spigot servers.">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22%3E%3Ctext y=%22.9em%22 font-size=%2290%22%3E%E2%9A%94%EF%B8%8F%3C/text%3E%3C/svg%3E">
 <link rel="stylesheet" href="assets/style.css">
 <script>try{var t=localStorage.getItem('pvpbot-theme');if(t)document.documentElement.setAttribute('data-theme',t)}catch(e){}</script>
@@ -15,92 +15,91 @@
   <a class="brand" href="index.html"><span class="logo">⚔</span>PvpBot <small>Wiki</small></a>
   <div class="search">
     <span class="icon">⌕</span>
-    <input id="q" type="search" placeholder="Cerca nella wiki…" autocomplete="off" aria-label="Cerca">
+    <input id="q" type="search" placeholder="Search the wiki…" autocomplete="off" aria-label="Search">
     <kbd>/</kbd>
     <div class="results" id="results"></div>
   </div>
-  <button class="icon-btn" id="theme" aria-label="Tema chiaro o scuro">☾</button>
+  <button class="icon-btn" id="theme" aria-label="Light or dark theme">☾</button>
 </header>
 <div class="layout">
 <nav class="sidebar">
-<h4>Introduzione</h4>
+<h4>Getting started</h4>
 <a href="index.html" class="active"><span class="ico">🏠</span>Home</a>
-<a href="installazione.html"><span class="ico">📦</span>Installazione</a>
-<a href="guida-rapida.html"><span class="ico">🚀</span>Guida rapida</a>
-<h4>Riferimento</h4>
-<a href="comandi.html"><span class="ico">⌨️</span>Comandi</a>
-<a href="selettori.html"><span class="ico">🎯</span>Selettori</a>
-<a href="impostazioni.html"><span class="ico">⚙️</span>Impostazioni</a>
-<h4>Funzioni</h4>
-<a href="combattimento.html"><span class="ico">⚔️</span>Combattimento</a>
-<a href="fazioni.html"><span class="ico">🏳️</span>Fazioni</a>
-<a href="kit-e-preset.html"><span class="ico">🎒</span>Kit e preset</a>
-<a href="movimento.html"><span class="ico">🧭</span>Movimento e ordini</a>
-<a href="script.html"><span class="ico">📜</span>Script</a>
-<a href="compagni.html"><span class="ico">🐺</span>Compagni</a>
-<a href="skin.html"><span class="ico">🎭</span>Skin e nomi</a>
-<a href="ghost.html"><span class="ico">👻</span>Ghost</a>
-<h4>Aiuto</h4>
-<a href="problemi.html"><span class="ico">🩺</span>Problemi comuni</a>
-<a href="spigot.html"><span class="ico">🔧</span>Edizione Spigot</a>
+<a href="installation.html"><span class="ico">📦</span>Installation</a>
+<a href="quick-start.html"><span class="ico">🚀</span>Quick start</a>
+<h4>Reference</h4>
+<a href="commands.html"><span class="ico">⌨️</span>Commands</a>
+<a href="selectors.html"><span class="ico">🎯</span>Selectors</a>
+<a href="settings.html"><span class="ico">⚙️</span>Settings</a>
+<h4>Features</h4>
+<a href="combat.html"><span class="ico">⚔️</span>Combat</a>
+<a href="factions.html"><span class="ico">🏳️</span>Factions</a>
+<a href="kits-and-presets.html"><span class="ico">🎒</span>Kits and presets</a>
+<a href="movement.html"><span class="ico">🧭</span>Movement and orders</a>
+<a href="scripts.html"><span class="ico">📜</span>Scripts</a>
+<a href="companions.html"><span class="ico">🐺</span>Companions</a>
+<a href="skins.html"><span class="ico">🎭</span>Skins and names</a>
+<a href="ghosts.html"><span class="ico">👻</span>Ghosts</a>
+<h4>Help</h4>
+<a href="troubleshooting.html"><span class="ico">🩺</span>Troubleshooting</a>
+<a href="spigot.html"><span class="ico">🔧</span>Spigot edition</a>
 </nav>
 <main class="content">
 <article>
 
 <div class="hero">
   <h1>PvpBot</h1>
-  <p class="lead">Bot PvP con intelligenza artificiale per server Paper e Spigot. Sono veri giocatori finti: combattono,
-  si muovono, si equipaggiano e ragionano come persone, non come mob.</p>
+  <p class="lead">AI-driven PvP bots for Paper and Spigot servers. They are real fake players: they fight, move, gear up
+  and think like people, not like mobs.</p>
   <div class="actions">
-    <a class="btn primary" href="guida-rapida.html">Inizia in 5 minuti →</a>
-    <a class="btn" href="comandi.html">Tutti i comandi</a>
-    <a class="btn" href="impostazioni.html">Impostazioni</a>
+    <a class="btn primary" href="quick-start.html">Start in 5 minutes →</a>
+    <a class="btn" href="commands.html">All commands</a>
+    <a class="btn" href="settings.html">Settings</a>
   </div>
 </div>
 
-<h2 id="cos-e-pvpbot">Cos'è PvpBot<a class="anchor" href="#cos-e-pvpbot" aria-hidden="true">#</a></h2>
-<p>PvpBot aggiunge al server dei <strong>bot che sono veri giocatori</strong> (senza un client collegato). Per il server e
-per gli altri plugin sono persone come le altre: hanno inventario, armatura, fame, pozioni ed effetti. Combattono con le
-stesse armi e gli stessi trucchi di un giocatore vero: critici in salto, mazza, scudo, arco, perle, ragnatele, secchio
-d'acqua.</p>
-<p>L'obiettivo è un <strong>avversario per allenarsi e per registrare video</strong>, non un terminator. Niente di quello
-che fa un bot è perfetto al frame: la manopola <code>skill</code> (0–100) decide quanto sono rapidi i riflessi, il
-tempismo e la mira, e anche a 100 resta un margine da sfruttare.</p>
+<h2 id="what-pvpbot-is">What PvpBot is<a class="anchor" href="#what-pvpbot-is" aria-hidden="true">#</a></h2>
+<p>PvpBot adds <strong>bots that are real players</strong> (with no client attached). To the server and to other plugins
+they are people like anyone else: they have an inventory, armour, hunger, potions and effects. They fight with the same
+weapons and tricks as a real player: jump crits, the mace, shields, bows, pearls, cobwebs, water buckets.</p>
+<p>The goal is <strong>an opponent to train against and record with</strong>, not a terminator. Nothing a bot does is
+frame-perfect: the <code>skill</code> dial (0–100) sets how fast its reactions, timing and aim are, and even at 100
+there is a gap to play around.</p>
 
-<h2 id="da-dove-iniziare">Da dove iniziare<a class="anchor" href="#da-dove-iniziare" aria-hidden="true">#</a></h2>
+<h2 id="where-to-start">Where to start<a class="anchor" href="#where-to-start" aria-hidden="true">#</a></h2>
 <div class="cards">
-  <a class="card" href="installazione.html"><span class="ci">📦</span><b>Installazione</b><span>Quale jar scaricare, requisiti e plugin compatibili.</span></a>
-  <a class="card" href="guida-rapida.html"><span class="ci">🚀</span><b>Guida rapida</b><span>Il primo bot, il primo combattimento, la prima fazione.</span></a>
-  <a class="card" href="comandi.html"><span class="ci">⌨️</span><b>Comandi</b><span>Ogni comando di <code>/pvpbot</code> e <code>/ghost</code>, raggruppato.</span></a>
-  <a class="card" href="selettori.html"><span class="ci">🎯</span><b>Selettori</b><span>Come dare un ordine a un bot, a una fazione o a un gruppo casuale.</span></a>
-  <a class="card" href="impostazioni.html"><span class="ci">⚙️</span><b>Impostazioni</b><span>Tutte le 116 opzioni con valore predefinito e limiti.</span></a>
-  <a class="card" href="problemi.html"><span class="ci">🩺</span><b>Problemi comuni</b><span>Bot immortali, bloccati o che non attaccano.</span></a>
+  <a class="card" href="installation.html"><span class="ci">📦</span><b>Installation</b><span>Which jar to use, requirements and compatible plugins.</span></a>
+  <a class="card" href="quick-start.html"><span class="ci">🚀</span><b>Quick start</b><span>Your first bot, first fight and first faction.</span></a>
+  <a class="card" href="commands.html"><span class="ci">⌨️</span><b>Commands</b><span>Every <code>/pvpbot</code> and <code>/ghost</code> command, grouped.</span></a>
+  <a class="card" href="selectors.html"><span class="ci">🎯</span><b>Selectors</b><span>How to order one bot, a faction or a random group.</span></a>
+  <a class="card" href="settings.html"><span class="ci">⚙️</span><b>Settings</b><span>All 116 options with defaults and limits.</span></a>
+  <a class="card" href="troubleshooting.html"><span class="ci">🩺</span><b>Troubleshooting</b><span>Bots that are immortal, stuck or won't attack.</span></a>
 </div>
 
-<h2 id="cosa-sa-fare">Cosa sa fare<a class="anchor" href="#cosa-sa-fare" aria-hidden="true">#</a></h2>
+<h2 id="what-it-can-do">What it can do<a class="anchor" href="#what-it-can-do" aria-hidden="true">#</a></h2>
 <div class="cards">
-  <a class="card" href="combattimento.html"><span class="ci">⚔️</span><b>Combattimento</b><span>Mischia, mazza, elytra mace, cart PvP, arco con previsione, scudi.</span></a>
-  <a class="card" href="movimento.html"><span class="ci">🧭</span><b>Movimento</b><span>Pathfinding A*, bhop, ponti e pilastri, barche, guardia, pattuglie.</span></a>
-  <a class="card" href="fazioni.html"><span class="ci">🏳️</span><b>Fazioni</b><span>Guerra, pace, alleanze, leader, overfazioni e impostazioni per fazione.</span></a>
-  <a class="card" href="kit-e-preset.html"><span class="ci">🎒</span><b>Kit e preset</b><span>Equipaggiamenti salvati e profili di difficoltà in un comando.</span></a>
-  <a class="card" href="script.html"><span class="ci">📜</span><b>Script</b><span>Scenari interi salvati sotto un nome, con parametri e pause.</span></a>
-  <a class="card" href="compagni.html"><span class="ci">🐺</span><b>Compagni</b><span>Bot affidati a un giocatore, che li comanda scrivendo in chat.</span></a>
-  <a class="card" href="skin.html"><span class="ci">🎭</span><b>Skin e nomi</b><span>Skin reali o casuali, tabelle di nomi a tema.</span></a>
-  <a class="card" href="ghost.html"><span class="ci">👻</span><b>Ghost</b><span>NPC scenografici che ripetono un percorso registrato o ti fissano.</span></a>
+  <a class="card" href="combat.html"><span class="ci">⚔️</span><b>Combat</b><span>Melee, mace, elytra mace, cart PvP, bows with lead prediction, shields.</span></a>
+  <a class="card" href="movement.html"><span class="ci">🧭</span><b>Movement</b><span>A* pathfinding, bhop, bridging and pillaring, boats, guards, patrols.</span></a>
+  <a class="card" href="factions.html"><span class="ci">🏳️</span><b>Factions</b><span>War, peace, alliances, leaders, overfactions and per-faction settings.</span></a>
+  <a class="card" href="kits-and-presets.html"><span class="ci">🎒</span><b>Kits and presets</b><span>Saved loadouts and difficulty profiles in one command.</span></a>
+  <a class="card" href="scripts.html"><span class="ci">📜</span><b>Scripts</b><span>Whole scenarios saved under a name, with parameters and pauses.</span></a>
+  <a class="card" href="companions.html"><span class="ci">🐺</span><b>Companions</b><span>Bots handed to a player, who orders them around in chat.</span></a>
+  <a class="card" href="skins.html"><span class="ci">🎭</span><b>Skins and names</b><span>Real or random skins, themed name tables.</span></a>
+  <a class="card" href="ghosts.html"><span class="ci">👻</span><b>Ghosts</b><span>Scenic NPCs that replay a recorded path or stare at you.</span></a>
 </div>
 
-<h2 id="in-breve">In breve<a class="anchor" href="#in-breve" aria-hidden="true">#</a></h2>
+<h2 id="at-a-glance">At a glance<a class="anchor" href="#at-a-glance" aria-hidden="true">#</a></h2>
 <ul>
-  <li><strong>Server:</strong> Paper 1.21.11 e 26.2, Spigot 1.21.11 e 26.2 (jar separati).</li>
-  <li><strong>Comandi:</strong> <code>/pvpbot</code> (alias <code>/bot</code>) e <code>/ghost</code>.</li>
-  <li><strong>Permesso:</strong> <code>pvpbot.admin</code>, predefinito per gli op.</li>
-  <li><strong>Dipendenze:</strong> nessuna obbligatoria. SkinsRestorer è supportato se presente.</li>
+  <li><strong>Servers:</strong> Paper 1.21.11 and 26.2, Spigot 1.21.11 and 26.2 (separate jars).</li>
+  <li><strong>Commands:</strong> <code>/pvpbot</code> (alias <code>/bot</code>) and <code>/ghost</code>.</li>
+  <li><strong>Permission:</strong> <code>pvpbot.admin</code>, ops by default.</li>
+  <li><strong>Dependencies:</strong> none required. SkinsRestorer is supported if installed.</li>
 </ul>
 </article>
-<nav class="pager"><span></span><a class="next" href="installazione.html"><small>Successiva →</small>Installazione</a></nav>
-<div class="foot">PvpBot Wiki · per Paper 26.2 e Spigot 1.21.11 / 26.2</div>
+<nav class="pager"><span></span><a class="next" href="installation.html"><small>Next →</small>Installation</a></nav>
+<div class="foot">PvpBot Wiki · for Paper and Spigot 1.21.11 / 26.2</div>
 </main>
-<aside class="toc"><h5>In questa pagina</h5><a href="#cos-e-pvpbot">Cos&#x27;è PvpBot</a><a href="#da-dove-iniziare">Da dove iniziare</a><a href="#cosa-sa-fare">Cosa sa fare</a><a href="#in-breve">In breve</a></aside>
+<aside class="toc"><h5>On this page</h5><a href="#what-pvpbot-is">What PvpBot is</a><a href="#where-to-start">Where to start</a><a href="#what-it-can-do">What it can do</a><a href="#at-a-glance">At a glance</a></aside>
 </div>
 <script src="assets/search-index.js"></script>
 <script src="assets/app.js"></script>

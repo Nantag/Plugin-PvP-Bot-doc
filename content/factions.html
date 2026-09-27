@@ -1,0 +1,95 @@
+---
+title: Factions
+section: Features
+order: 20
+icon: 🏳️
+lead: Who fights whom: factions, relations, leaders, coalitions and per-faction settings.
+---
+<h2>The basics</h2>
+<p>A faction is a group of members: bots and real players. Everyone is in <strong>one</strong> faction at a time;
+joining another means leaving the old one.</p>
+<pre><code>/pvpbot faction create bandits
+/pvpbot faction join bandits latest
+/pvpbot faction join bandits Steve
+/pvpbot faction join bandits range 20
+/pvpbot faction leave Steve
+/pvpbot faction info bandits</code></pre>
+<p><code>join</code> takes a name, a <a href="selectors.html">selector</a> or <code>range &lt;blocks&gt;</code>, which
+adds every bot within that distance of you.</p>
+
+<h3>The "player" faction</h3>
+<p>Every real player who joins the server without a faction is put in the <code>player</code> faction. Anyone you put in
+another faction (or made a leader) stays there after reconnecting. This lets you declare war or peace on every player in
+one go:</p>
+<pre><code>/pvpbot faction hostile bandits player</code></pre>
+
+<h2>Relations</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Relation</th><th>Command</th><th>Effect</th></tr></thead>
+<tbody>
+<tr><td>Neutral</td><td>(none)</td><td>Normal behaviour: a bot with <code>auto-target</code> attacks anyone, as if there were no factions.</td></tr>
+<tr><td>War</td><td><code>hostile &lt;a&gt; &lt;b&gt;</code></td><td>They attack each other on sight. Ends any alliance or peace.</td></tr>
+<tr><td>Peace</td><td><code>peace &lt;a&gt; &lt;b&gt;</code></td><td>Neither side starts anything. Blasts and sweeps treat them as bystanders. A member who is hit still hits back, and the leader's call to arms still counts.</td></tr>
+<tr><td>Alliance</td><td><code>ally &lt;a&gt; &lt;b&gt;</code></td><td>The same side in everything: they don't target each other, no revenge between them, orbital strikes hold fire near an ally. Each faction keeps its own settings.</td></tr>
+</tbody></table></div>
+<p>War and peace rule each other out. <code>unally</code> ends an alliance.</p>
+<div class="callout tip"><span class="t">An alliance or one faction?</span>
+An alliance puts bots of different calibre on the same side: <code>bandits</code> and <code>elite_bandits</code> fight
+together but with different <code>skill</code>.</div>
+
+<h2>Leaders</h2>
+<pre><code>/pvpbot faction leader bandits Boss
+/pvpbot faction leader bandits clear</code></pre>
+<p>The leader (a bot or a real player) is always a member of the faction. The whole faction joins the leader's fights:
+whoever the leader attacks, and whoever attacks the leader, becomes everyone's target. The hostility lasts
+<code>leader-call-seconds</code> seconds (30 by default, 0 turns it off) and doesn't survive a restart. A leader who logs
+out is still the leader when they come back.</p>
+
+<h2>Following as a group</h2>
+<pre><code>/pvpbot faction follow bandits Boss circle
+/pvpbot faction follow bandits stop</code></pre>
+<div class="table-wrap"><table>
+<thead><tr><th>Formation</th><th>Layout</th></tr></thead>
+<tbody>
+<tr><td><code>behind</code></td><td>Behind whoever they follow (default).</td></tr>
+<tr><td><code>circle</code></td><td>A ring all around.</td></tr>
+<tr><td><code>open_circle</code></td><td>A ring that leaves the front clear.</td></tr>
+</tbody></table></div>
+<p>The spacing is <code>follow-distance</code>. Followers fight when attacked, then fall back in.</p>
+
+<h2>Per-faction settings</h2>
+<p>Any <a href="settings.html">setting</a> can be changed for one faction only. Whatever the faction doesn't set comes
+from the active preset or from <code>config.yml</code>.</p>
+<pre><code>/pvpbot faction set rookies skill 20
+/pvpbot faction set rookies miss-chance 40
+/pvpbot faction set veterans skill 90
+/pvpbot faction set veterans elytra-mace true</code></pre>
+<p>Faction settings always beat the preset: if you change the server's preset, the factions you tuned by hand stay as
+you left them.</p>
+
+<h2>Random kits per faction</h2>
+<p>A faction can have a weighted table of kits. <code>give</code> rolls a random kit for each bot using those odds.</p>
+<pre><code>/pvpbot faction kit bandits set diamond 30
+/pvpbot faction kit bandits set mace 50
+/pvpbot faction kit bandits set crystal 20
+/pvpbot faction kit bandits list
+/pvpbot faction kit bandits give</code></pre>
+<p>Weights are relative (here 30%, 50%, 20%) and go from 0 to 1000. A weight of 0 removes the kit from the table, and
+<code>clear</code> empties it.</p>
+
+<h2>Overfactions</h2>
+<p>An overfaction is a coalition of factions. Every faction inside is automatically allied with all the others: six
+factions is one command, not fifteen <code>ally</code> calls.</p>
+<pre><code>/pvpbot overfaction create north
+/pvpbot overfaction add north bandits
+/pvpbot overfaction add north pirates
+/pvpbot overfaction create south
+/pvpbot overfaction add south guards
+/pvpbot overfaction hostile north south</code></pre>
+<ul>
+  <li><code>hostile</code> and <code>peace</code> take two overfactions, or an overfaction and a single faction.</li>
+  <li><code>overfaction &lt;name&gt;</code> works as a <a href="selectors.html">selector</a> everywhere: you can move,
+  retreat or kit out a whole coalition with one command.</li>
+  <li><code>leader</code>, <code>follow</code> and <code>tp</code> work as they do for factions. An overfaction's leader
+  doesn't join any faction and doesn't survive a restart.</li>
+</ul>

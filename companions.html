@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Companions · PvpBot Wiki</title>
+<meta name="description" content="Hand a bot to a regular player, who orders it around by typing in chat.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22%3E%3Ctext y=%22.9em%22 font-size=%2290%22%3E%E2%9A%94%EF%B8%8F%3C/text%3E%3C/svg%3E">
+<link rel="stylesheet" href="assets/style.css">
+<script>try{var t=localStorage.getItem('pvpbot-theme');if(t)document.documentElement.setAttribute('data-theme',t)}catch(e){}</script>
+</head>
+<body>
+<header class="topbar">
+  <button class="icon-btn menu-btn" id="menu" aria-label="Menu">☰</button>
+  <a class="brand" href="index.html"><span class="logo">⚔</span>PvpBot <small>Wiki</small></a>
+  <div class="search">
+    <span class="icon">⌕</span>
+    <input id="q" type="search" placeholder="Search the wiki…" autocomplete="off" aria-label="Search">
+    <kbd>/</kbd>
+    <div class="results" id="results"></div>
+  </div>
+  <button class="icon-btn" id="theme" aria-label="Light or dark theme">☾</button>
+</header>
+<div class="layout">
+<nav class="sidebar">
+<h4>Getting started</h4>
+<a href="index.html"><span class="ico">🏠</span>Home</a>
+<a href="installation.html"><span class="ico">📦</span>Installation</a>
+<a href="quick-start.html"><span class="ico">🚀</span>Quick start</a>
+<h4>Reference</h4>
+<a href="commands.html"><span class="ico">⌨️</span>Commands</a>
+<a href="selectors.html"><span class="ico">🎯</span>Selectors</a>
+<a href="settings.html"><span class="ico">⚙️</span>Settings</a>
+<h4>Features</h4>
+<a href="combat.html"><span class="ico">⚔️</span>Combat</a>
+<a href="factions.html"><span class="ico">🏳️</span>Factions</a>
+<a href="kits-and-presets.html"><span class="ico">🎒</span>Kits and presets</a>
+<a href="movement.html"><span class="ico">🧭</span>Movement and orders</a>
+<a href="scripts.html"><span class="ico">📜</span>Scripts</a>
+<a href="companions.html" class="active"><span class="ico">🐺</span>Companions</a>
+<a href="skins.html"><span class="ico">🎭</span>Skins and names</a>
+<a href="ghosts.html"><span class="ico">👻</span>Ghosts</a>
+<h4>Help</h4>
+<a href="troubleshooting.html"><span class="ico">🩺</span>Troubleshooting</a>
+<a href="spigot.html"><span class="ico">🔧</span>Spigot edition</a>
+</nav>
+<main class="content">
+<article>
+<div class="crumb">Features</div><h1>Companions</h1><p class="lead">Hand a bot to a regular player, who orders it around by typing in chat.</p>
+<h2 id="handing-over-a-bot">Handing over a bot<a class="anchor" href="#handing-over-a-bot" aria-hidden="true">#</a></h2>
+<pre><code>/pvpbot owner set Fido Steve
+/pvpbot owner list Steve
+/pvpbot owner clear Fido</code></pre>
+<p>From then on Steve (even with no permissions) can order <code>Fido</code> around by typing in chat, the way you'd talk
+to a teammate. The player has to be online when you set it.</p>
+
+<h2 id="chat-orders">Chat orders<a class="anchor" href="#chat-orders" aria-hidden="true">#</a></h2>
+<p>A message only counts as an order if its sender owns at least one spawned bot, and the message contains the word
+<strong>bot</strong> (or <strong>bots</strong>) plus one of the orders below. Orders don't show up in chat for anyone
+else. Everything else goes through as normal, so you can talk about bots without giving orders by accident.</p>
+<div class="table-wrap"><table>
+<thead><tr><th>Type</th><th>Also works</th><th>Effect</th></tr></thead>
+<tbody>
+<tr><td><code>bot follow</code></td><td>come, heel, escort</td><td>Follows you.</td></tr>
+<tr><td><code>bot guard</code></td><td>defend, post, hold</td><td>Guards the spot you're on, within 10 blocks.</td></tr>
+<tr><td><code>bot stay</code></td><td>wait, freeze</td><td>Stays where it is (paused).</td></tr>
+<tr><td><code>bot stop</code></td><td>halt, disengage, shutdown</td><td>Stops, and won't even hit back when hit.</td></tr>
+<tr><td><code>bot free</code></td><td>release, dismiss, roam, unleash</td><td>Clears its orders: it's free again.</td></tr>
+<tr><td><code>bot attack &lt;name&gt;</code></td><td>kill, fight, hunt</td><td>Attacks that player or bot.</td></tr>
+<tr><td><code>bot cancel</code></td><td>forget, calm, truce</td><td>Drops whoever it's fighting, without stopping following you or guarding.</td></tr>
+<tr><td><code>bot summon</code></td><td>teleport, warp</td><td>Teleports to you and clears whatever order it was stuck on. Once every 10 seconds.</td></tr>
+<tr><td><code>bot status</code></td><td>where, list</td><td>Says where your bots are and what they're doing.</td></tr>
+<tr><td><code>bot help</code></td><td></td><td>A summary of the orders.</td></tr>
+</tbody></table></div>
+<p>With no name, all of your bots obey. To order just one, include its name as well: <code>bot Fido stay</code>.</p>
+
+<h2 id="self-defence">Self-defence<a class="anchor" href="#self-defence" aria-hidden="true">#</a></h2>
+<p>Companions always hit back at whoever hits them, even with the server's <code>revenge</code> setting off. The
+exceptions are hits from their own owner, and the <code>bot stop</code> order.</p>
+
+<h2 id="when-the-owner-logs-out">When the owner logs out<a class="anchor" href="#when-the-owner-logs-out" aria-hidden="true">#</a></h2>
+<p>When the owner disconnects, their bots aren't removed. They're parked high above the spawn of the
+<code>companions.holding-world</code> world and paused, with health, inventory and faction intact. They only come back
+when the owner types <code>bot summon</code>: rejoining the server isn't enough.</p>
+<pre><code>companions:
+  holding-world: test_world</code></pre>
+<div class="callout warn"><span class="t">Set the right world</span>
+The default is <code>test_world</code>. If your server has no world by that name, the bots stay where they are and the
+console says so: change it in <code>config.yml</code> to a world you have.</div>
+</article>
+<nav class="pager"><a class="prev" href="scripts.html"><small>← Previous</small>Scripts</a><a class="next" href="skins.html"><small>Next →</small>Skins and names</a></nav>
+<div class="foot">PvpBot Wiki · for Paper and Spigot 1.21.11 / 26.2</div>
+</main>
+<aside class="toc"><h5>On this page</h5><a href="#handing-over-a-bot">Handing over a bot</a><a href="#chat-orders">Chat orders</a><a href="#self-defence">Self-defence</a><a href="#when-the-owner-logs-out">When the owner logs out</a></aside>
+</div>
+<script src="assets/search-index.js"></script>
+<script src="assets/app.js"></script>
+</body>
+</html>

@@ -1,47 +1,49 @@
 # PvpBot Wiki
 
-Documentazione di PvpBot: installazione, comandi, selettori, tutte le impostazioni e le funzioni principali. Il sito è
-statico e viene servito così com'è da GitHub Pages.
+Documentation for PvpBot: installation, commands, selectors, every setting and the main features. The site is static
+and GitHub Pages serves it as is.
 
-## Struttura
+## Layout
 
-| Percorso | Cosa contiene |
+| Path | Contents |
 |---|---|
-| `content/*.html` | Le pagine della wiki. Si modificano queste. |
-| `content/data/settings-schema.json` | Le impostazioni di PvpBot: nome, gruppo, tipo, limiti e valore predefinito. |
-| `content/data/settings-it.json` | La descrizione in italiano di ogni impostazione. |
-| `assets/` | Stile, script (tema, menu, ricerca) e indice di ricerca generato. |
-| `build.py` | Il generatore. |
-| `*.html` nella radice | Le pagine generate, pubblicate da GitHub Pages. Non modificarle a mano. |
+| `content/*.html` | The wiki pages. These are what you edit. |
+| `content/data/settings-schema.json` | PvpBot's settings: name, group, type, limits and default. |
+| `content/data/settings-text.json` | The description shown for each setting. |
+| `assets/` | Styles, the script (theme, menu, search) and the generated search index. |
+| `build.py` | The generator. |
+| `*.html` at the root | The generated pages GitHub Pages publishes. Don't edit them by hand. |
 
-## Modificare la wiki
+## Editing the wiki
 
-1. Modifica o aggiungi una pagina in `content/`. Ogni pagina inizia con un'intestazione:
+1. Edit or add a page in `content/`. Every page starts with a header:
 
    ```
    ---
-   title: Comandi
-   section: Riferimento
+   title: Commands
+   section: Reference
    order: 10
    icon: ⌨️
-   lead: La frase sotto il titolo.
+   lead: The sentence under the title.
    ---
    ```
 
-   `section` è una tra `Introduzione`, `Riferimento`, `Funzioni` e `Aiuto`. `order` decide la posizione nella barra
-   laterale. Scrivi `{{settings:combat}}` (o un altro gruppo) per inserire la tabella delle impostazioni di quel gruppo.
-2. Rigenera il sito (serve solo Python 3, nessuna libreria):
+   `section` is one of `Getting started`, `Reference`, `Features` and `Help`. `order` sets the position in the sidebar.
+   Write `{{settings:combat}}` (or another group) to insert that group's settings table.
+2. Rebuild the site (only Python 3 is needed, no libraries):
 
    ```
    python3 build.py
    ```
 
-3. Fai il commit sia di `content/` sia delle pagine generate.
+3. Commit both `content/` and the generated pages. If you rename or remove a page, delete its old generated `.html`
+   at the root too.
 
-Quando PvpBot aggiunge un'impostazione, aggiungila a `settings-schema.json` e scrivi la sua descrizione in
-`settings-it.json`. Se manca la descrizione italiana, viene usata quella inglese dello schema.
+When PvpBot gains a setting, add it to `settings-schema.json` and write its description in `settings-text.json`. If the
+description is missing, the schema's short help text is used.
 
-## Pubblicazione
+## Publishing
 
-In GitHub: **Settings → Pages → Build and deployment → Source: Deploy from a branch**, branch `main`, cartella
-`/ (root)`. Il file `.nojekyll` fa servire i file così come sono.
+On GitHub: **Settings → Pages → Build and deployment → Source: Deploy from a branch**, branch `main`, folder
+`/ (root)`. The `.nojekyll` file makes Pages serve the files as they are. The site is then at
+https://nantag.github.io/Plugin-PvP-Bot-doc/.

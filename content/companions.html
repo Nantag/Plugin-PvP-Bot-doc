@@ -1,0 +1,47 @@
+---
+title: Companions
+section: Features
+order: 60
+icon: 🐺
+lead: Hand a bot to a regular player, who orders it around by typing in chat.
+---
+<h2>Handing over a bot</h2>
+<pre><code>/pvpbot owner set Fido Steve
+/pvpbot owner list Steve
+/pvpbot owner clear Fido</code></pre>
+<p>From then on Steve (even with no permissions) can order <code>Fido</code> around by typing in chat, the way you'd talk
+to a teammate. The player has to be online when you set it.</p>
+
+<h2>Chat orders</h2>
+<p>A message only counts as an order if its sender owns at least one spawned bot, and the message contains the word
+<strong>bot</strong> (or <strong>bots</strong>) plus one of the orders below. Orders don't show up in chat for anyone
+else. Everything else goes through as normal, so you can talk about bots without giving orders by accident.</p>
+<div class="table-wrap"><table>
+<thead><tr><th>Type</th><th>Also works</th><th>Effect</th></tr></thead>
+<tbody>
+<tr><td><code>bot follow</code></td><td>come, heel, escort</td><td>Follows you.</td></tr>
+<tr><td><code>bot guard</code></td><td>defend, post, hold</td><td>Guards the spot you're on, within 10 blocks.</td></tr>
+<tr><td><code>bot stay</code></td><td>wait, freeze</td><td>Stays where it is (paused).</td></tr>
+<tr><td><code>bot stop</code></td><td>halt, disengage, shutdown</td><td>Stops, and won't even hit back when hit.</td></tr>
+<tr><td><code>bot free</code></td><td>release, dismiss, roam, unleash</td><td>Clears its orders: it's free again.</td></tr>
+<tr><td><code>bot attack &lt;name&gt;</code></td><td>kill, fight, hunt</td><td>Attacks that player or bot.</td></tr>
+<tr><td><code>bot cancel</code></td><td>forget, calm, truce</td><td>Drops whoever it's fighting, without stopping following you or guarding.</td></tr>
+<tr><td><code>bot summon</code></td><td>teleport, warp</td><td>Teleports to you and clears whatever order it was stuck on. Once every 10 seconds.</td></tr>
+<tr><td><code>bot status</code></td><td>where, list</td><td>Says where your bots are and what they're doing.</td></tr>
+<tr><td><code>bot help</code></td><td></td><td>A summary of the orders.</td></tr>
+</tbody></table></div>
+<p>With no name, all of your bots obey. To order just one, include its name as well: <code>bot Fido stay</code>.</p>
+
+<h2>Self-defence</h2>
+<p>Companions always hit back at whoever hits them, even with the server's <code>revenge</code> setting off. The
+exceptions are hits from their own owner, and the <code>bot stop</code> order.</p>
+
+<h2>When the owner logs out</h2>
+<p>When the owner disconnects, their bots aren't removed. They're parked high above the spawn of the
+<code>companions.holding-world</code> world and paused, with health, inventory and faction intact. They only come back
+when the owner types <code>bot summon</code>: rejoining the server isn't enough.</p>
+<pre><code>companions:
+  holding-world: test_world</code></pre>
+<div class="callout warn"><span class="t">Set the right world</span>
+The default is <code>test_world</code>. If your server has no world by that name, the bots stay where they are and the
+console says so: change it in <code>config.yml</code> to a world you have.</div>

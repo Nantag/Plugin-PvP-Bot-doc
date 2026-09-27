@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Skins and names · PvpBot Wiki</title>
+<meta name="description" content="What bots look like and what they&#x27;re called.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22%3E%3Ctext y=%22.9em%22 font-size=%2290%22%3E%E2%9A%94%EF%B8%8F%3C/text%3E%3C/svg%3E">
+<link rel="stylesheet" href="assets/style.css">
+<script>try{var t=localStorage.getItem('pvpbot-theme');if(t)document.documentElement.setAttribute('data-theme',t)}catch(e){}</script>
+</head>
+<body>
+<header class="topbar">
+  <button class="icon-btn menu-btn" id="menu" aria-label="Menu">☰</button>
+  <a class="brand" href="index.html"><span class="logo">⚔</span>PvpBot <small>Wiki</small></a>
+  <div class="search">
+    <span class="icon">⌕</span>
+    <input id="q" type="search" placeholder="Search the wiki…" autocomplete="off" aria-label="Search">
+    <kbd>/</kbd>
+    <div class="results" id="results"></div>
+  </div>
+  <button class="icon-btn" id="theme" aria-label="Light or dark theme">☾</button>
+</header>
+<div class="layout">
+<nav class="sidebar">
+<h4>Getting started</h4>
+<a href="index.html"><span class="ico">🏠</span>Home</a>
+<a href="installation.html"><span class="ico">📦</span>Installation</a>
+<a href="quick-start.html"><span class="ico">🚀</span>Quick start</a>
+<h4>Reference</h4>
+<a href="commands.html"><span class="ico">⌨️</span>Commands</a>
+<a href="selectors.html"><span class="ico">🎯</span>Selectors</a>
+<a href="settings.html"><span class="ico">⚙️</span>Settings</a>
+<h4>Features</h4>
+<a href="combat.html"><span class="ico">⚔️</span>Combat</a>
+<a href="factions.html"><span class="ico">🏳️</span>Factions</a>
+<a href="kits-and-presets.html"><span class="ico">🎒</span>Kits and presets</a>
+<a href="movement.html"><span class="ico">🧭</span>Movement and orders</a>
+<a href="scripts.html"><span class="ico">📜</span>Scripts</a>
+<a href="companions.html"><span class="ico">🐺</span>Companions</a>
+<a href="skins.html" class="active"><span class="ico">🎭</span>Skins and names</a>
+<a href="ghosts.html"><span class="ico">👻</span>Ghosts</a>
+<h4>Help</h4>
+<a href="troubleshooting.html"><span class="ico">🩺</span>Troubleshooting</a>
+<a href="spigot.html"><span class="ico">🔧</span>Spigot edition</a>
+</nav>
+<main class="content">
+<article>
+<div class="crumb">Features</div><h1>Skins and names</h1><p class="lead">What bots look like and what they're called.</p>
+<h2 id="real-skins">Real skins<a class="anchor" href="#real-skins" aria-hidden="true">#</a></h2>
+<p>A bot wears the skin of the Minecraft account that has its name. You can also borrow another account's skin:</p>
+<pre><code>/pvpbot spawn Marco
+/pvpbot spawn Marco Notch</code></pre>
+<p>In the first case Marco wears the "Marco" account's skin, if it exists. In the second he wears Notch's skin but is
+still called Marco. Every bot keeps its skin across restarts.</p>
+<p>If <a href="installation.html#skinsrestorer">SkinsRestorer</a> is installed, PvpBot also saves the skin in its
+storage, so it isn't overwritten when the bot joins.</p>
+
+<h2 id="random-skins">Random skins<a class="anchor" href="#random-skins" aria-hidden="true">#</a></h2>
+<p>Almost every bot name is made up and has no skin, so without this option they'd all be Steve and Alex. With
+<code>skins.random</code> bots borrow a skin from a pool.</p>
+<div class="table-wrap"><table>
+<thead><tr><th>Value</th><th>Who gets a random skin</th></tr></thead>
+<tbody>
+<tr><td><code>missing</code> (default)</td><td>Bots whose name has no skin: generated names, name tables, made-up names. A bot named after a real account keeps its own.</td></tr>
+<tr><td><code>always</code></td><td>Every bot, whatever its name.</td></tr>
+<tr><td><code>off</code></td><td>Nobody: default skins.</td></tr>
+</tbody></table></div>
+<pre><code>skins:
+  random: missing
+  built-in-pool: true
+  pool: []</code></pre>
+<ul>
+  <li><strong>Built-in pool</strong> (<code>built-in-pool</code>): a few hundred ordinary players' accounts. Names still on
+  a default skin are skipped, and a skin two accounts share is used once.</li>
+  <li><strong>Your additions</strong> (<code>pool</code>): a list of account names whose skins you want bots in.</li>
+  <li><strong>No repeats:</strong> a batch of bots goes through every skin before any repeats.</li>
+  <li><strong>First start:</strong> the skins are fetched in the background, gently, to stay under Mojang's rate limit
+  (a minute or two; the console says how many came through). After that they're kept in <code>skin-cache.yml</code> and
+  later starts have them at once.</li>
+</ul>
+
+<h2 id="names">Names<a class="anchor" href="#names" aria-hidden="true">#</a></h2>
+<h3 id="generated-names">Generated names<a class="anchor" href="#generated-names" aria-hidden="true">#</a></h3>
+<p><code>/pvpbot spawn</code> and <code>/pvpbot spawn &lt;count&gt;</code> generate unique random names.</p>
+
+<h3 id="name-tables">Name tables<a class="anchor" href="#name-tables" aria-hidden="true">#</a></h3>
+<p>For a themed group (a clan's members, an event's characters) write the lists in <code>config.yml</code>:</p>
+<pre><code>name-tables:
+  pirates:
+    - Blackbeard
+    - Morgan
+    - Kidd
+    - Drake</code></pre>
+<p>and use them like this:</p>
+<pre><code>/pvpbot spawn names:pirates 4
+/pvpbot spawn names:pirates 4 Notch</code></pre>
+<ul>
+  <li>Names are picked at random from the table, never twice in the same command.</li>
+  <li>Names already used by a bot or an online player are skipped.</li>
+  <li>If the table runs out, it spawns as many as it can and tells you.</li>
+  <li>With an account name at the end, the whole batch wears that account's skin.</li>
+</ul>
+<p>Names can be 16 characters at most.</p>
+
+<h3 id="no-join-messages">No join messages<a class="anchor" href="#no-join-messages" aria-hidden="true">#</a></h3>
+<p>Bots appear without a "X joined the game" message, so a squad of twenty doesn't flood the chat.</p>
+</article>
+<nav class="pager"><a class="prev" href="companions.html"><small>← Previous</small>Companions</a><a class="next" href="ghosts.html"><small>Next →</small>Ghosts</a></nav>
+<div class="foot">PvpBot Wiki · for Paper and Spigot 1.21.11 / 26.2</div>
+</main>
+<aside class="toc"><h5>On this page</h5><a href="#real-skins">Real skins</a><a href="#random-skins">Random skins</a><a href="#names">Names</a><a href="#generated-names" class="sub">Generated names</a><a href="#name-tables" class="sub">Name tables</a><a href="#no-join-messages" class="sub">No join messages</a></aside>
+</div>
+<script src="assets/search-index.js"></script>
+<script src="assets/app.js"></script>
+</body>
+</html>

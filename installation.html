@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Installation · PvpBot Wiki</title>
+<meta name="description" content="Which jar to use, what the server needs and which plugins get along with PvpBot.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22%3E%3Ctext y=%22.9em%22 font-size=%2290%22%3E%E2%9A%94%EF%B8%8F%3C/text%3E%3C/svg%3E">
+<link rel="stylesheet" href="assets/style.css">
+<script>try{var t=localStorage.getItem('pvpbot-theme');if(t)document.documentElement.setAttribute('data-theme',t)}catch(e){}</script>
+</head>
+<body>
+<header class="topbar">
+  <button class="icon-btn menu-btn" id="menu" aria-label="Menu">☰</button>
+  <a class="brand" href="index.html"><span class="logo">⚔</span>PvpBot <small>Wiki</small></a>
+  <div class="search">
+    <span class="icon">⌕</span>
+    <input id="q" type="search" placeholder="Search the wiki…" autocomplete="off" aria-label="Search">
+    <kbd>/</kbd>
+    <div class="results" id="results"></div>
+  </div>
+  <button class="icon-btn" id="theme" aria-label="Light or dark theme">☾</button>
+</header>
+<div class="layout">
+<nav class="sidebar">
+<h4>Getting started</h4>
+<a href="index.html"><span class="ico">🏠</span>Home</a>
+<a href="installation.html" class="active"><span class="ico">📦</span>Installation</a>
+<a href="quick-start.html"><span class="ico">🚀</span>Quick start</a>
+<h4>Reference</h4>
+<a href="commands.html"><span class="ico">⌨️</span>Commands</a>
+<a href="selectors.html"><span class="ico">🎯</span>Selectors</a>
+<a href="settings.html"><span class="ico">⚙️</span>Settings</a>
+<h4>Features</h4>
+<a href="combat.html"><span class="ico">⚔️</span>Combat</a>
+<a href="factions.html"><span class="ico">🏳️</span>Factions</a>
+<a href="kits-and-presets.html"><span class="ico">🎒</span>Kits and presets</a>
+<a href="movement.html"><span class="ico">🧭</span>Movement and orders</a>
+<a href="scripts.html"><span class="ico">📜</span>Scripts</a>
+<a href="companions.html"><span class="ico">🐺</span>Companions</a>
+<a href="skins.html"><span class="ico">🎭</span>Skins and names</a>
+<a href="ghosts.html"><span class="ico">👻</span>Ghosts</a>
+<h4>Help</h4>
+<a href="troubleshooting.html"><span class="ico">🩺</span>Troubleshooting</a>
+<a href="spigot.html"><span class="ico">🔧</span>Spigot edition</a>
+</nav>
+<main class="content">
+<article>
+<div class="crumb">Getting started</div><h1>Installation</h1><p class="lead">Which jar to use, what the server needs and which plugins get along with PvpBot.</p>
+<h2 id="requirements">Requirements<a class="anchor" href="#requirements" aria-hidden="true">#</a></h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Server</th><th>Version</th><th>Java</th><th>Jar</th></tr></thead>
+<tbody>
+<tr><td>Paper</td><td>26.2</td><td>25 or newer</td><td>Paper edition</td></tr>
+<tr><td>Paper</td><td>1.21.11</td><td>21 or newer</td><td>Paper edition (1.21.11 build)</td></tr>
+<tr><td>Spigot</td><td>26.2</td><td>25 or newer</td><td>Spigot 26.2 edition</td></tr>
+<tr><td>Spigot</td><td>1.21.11</td><td>21 or newer</td><td>Spigot 1.21.11 edition</td></tr>
+</tbody></table></div>
+<p>Each jar only works on its own platform and version: PvpBot uses server internals to create the bots, so a Paper jar
+won't start on Spigot and vice versa. The features are the same in every edition (see
+<a href="spigot.html">Spigot edition</a>).</p>
+
+<h2 id="steps">Steps<a class="anchor" href="#steps" aria-hidden="true">#</a></h2>
+<ol>
+  <li>Stop the server.</li>
+  <li>Put the right jar in the <code>plugins/</code> folder.</li>
+  <li>Start the server. PvpBot creates <code>plugins/PvpBot/config.yml</code> with every setting commented.</li>
+  <li>As an op, run <code>/pvpbot spawn</code>. If a bot appears, you're set.</li>
+</ol>
+<div class="callout tip"><span class="t">Updating from an older version</span>
+You don't need to delete <code>config.yml</code>. New settings missing from the file use their default value;
+<code>/pvpbot settings</code> marks them with <code>*</code> until you change them with <code>/pvpbot set</code>.</div>
+
+<h2 id="permissions">Permissions<a class="anchor" href="#permissions" aria-hidden="true">#</a></h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Permission</th><th>Default</th><th>Grants</th></tr></thead>
+<tbody>
+<tr><td><code>pvpbot.admin</code></td><td>op</td><td>Every <code>/pvpbot</code> (alias <code>/bot</code>) and <code>/ghost</code> command.</td></tr>
+</tbody></table></div>
+<p>Regular players need no permission to command the bots you hand them: they do it by typing in chat (see
+<a href="companions.html">Companions</a>).</p>
+
+<h2 id="plugin-files">Plugin files<a class="anchor" href="#plugin-files" aria-hidden="true">#</a></h2>
+<p>Everything lives in <code>plugins/PvpBot/</code>:</p>
+<div class="table-wrap"><table>
+<thead><tr><th>File</th><th>Contents</th></tr></thead>
+<tbody>
+<tr><td><code>config.yml</code></td><td>Settings, presets, skins, name tables, the companions' world.</td></tr>
+<tr><td><code>bots.yml</code></td><td>The active bots, brought back after a restart if <code>bots-relog</code> is on.</td></tr>
+<tr><td><code>factions.yml</code></td><td>Factions, members, relations, leaders, overfactions, per-faction settings and kit tables.</td></tr>
+<tr><td><code>kits.yml</code></td><td>Saved kits.</td></tr>
+<tr><td><code>scripts.yml</code></td><td>Saved scripts.</td></tr>
+<tr><td><code>paths.yml</code></td><td>Patrol routes.</td></tr>
+<tr><td><code>ownership.yml</code></td><td>Which player owns which bot.</td></tr>
+<tr><td><code>skin-cache.yml</code></td><td>Skins already fetched, so restarts don't ask Mojang again.</td></tr>
+<tr><td><code>ghost-recordings/</code></td><td>Paths recorded with <code>/ghost record</code>.</td></tr>
+</tbody></table></div>
+<p>After editing a file by hand, run <code>/pvpbot reload</code>.</p>
+
+<h2 id="compatible-plugins">Compatible plugins<a class="anchor" href="#compatible-plugins" aria-hidden="true">#</a></h2>
+<h3 id="skinsrestorer">SkinsRestorer<a class="anchor" href="#skinsrestorer" aria-hidden="true">#</a></h3>
+<p>Optional. If it's installed, PvpBot stores each fetched skin directly in its storage, so SkinsRestorer doesn't
+overwrite it with a default one when the bot joins.</p>
+<h3 id="login-plugins-authme-loginto">Login plugins (AuthMe, LoginTo)<a class="anchor" href="#login-plugins-authme-loginto" aria-hidden="true">#</a></h3>
+<p>A bot can't type <code>/login</code>, so login plugins would keep it locked forever (the usual symptom is a bot that
+hops on the spot and takes no damage). With <code>auth-autologin: true</code>, on by default, PvpBot registers every bot
+as already logged in. Nothing changes for real players. See <a href="troubleshooting.html">Troubleshooting</a> if that
+isn't enough.</p>
+<h3 id="protection-worldguard-griefprevention-claims">Protection (WorldGuard, GriefPrevention, claims)<a class="anchor" href="#protection-worldguard-griefprevention-claims" aria-hidden="true">#</a></h3>
+<p>Every block a bot places or breaks goes through the server's normal events, so protection plugins see it and can
+refuse it. The same goes for the rails and carts of cart PvP.</p>
+</article>
+<nav class="pager"><a class="prev" href="index.html"><small>← Previous</small>Home</a><a class="next" href="quick-start.html"><small>Next →</small>Quick start</a></nav>
+<div class="foot">PvpBot Wiki · for Paper and Spigot 1.21.11 / 26.2</div>
+</main>
+<aside class="toc"><h5>On this page</h5><a href="#requirements">Requirements</a><a href="#steps">Steps</a><a href="#permissions">Permissions</a><a href="#plugin-files">Plugin files</a><a href="#compatible-plugins">Compatible plugins</a><a href="#skinsrestorer" class="sub">SkinsRestorer</a><a href="#login-plugins-authme-loginto" class="sub">Login plugins (AuthMe, LoginTo)</a><a href="#protection-worldguard-griefprevention-claims" class="sub">Protection (WorldGuard, GriefPrevention, claims)</a></aside>
+</div>
+<script src="assets/search-index.js"></script>
+<script src="assets/app.js"></script>
+</body>
+</html>

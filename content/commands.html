@@ -1,0 +1,194 @@
+---
+title: Commands
+section: Reference
+order: 10
+icon: ⌨️
+lead: Every <code>/pvpbot</code> and <code>/ghost</code> command, grouped by topic.
+---
+<p>You need the <code>pvpbot.admin</code> permission (ops by default). <code>/bot</code> is an alias of <code>/pvpbot</code>.
+Values in <code>&lt; &gt;</code> are required, values in <code>[ ]</code> are optional, and <code>|</code> separates
+alternatives. Wherever it says <code>&lt;selector&gt;</code> you can use a name, <code>all</code>, <code>latest</code>,
+<code>faction &lt;name&gt;</code>, <code>overfaction &lt;name&gt;</code> or <code>random[...]</code>: see
+<a href="selectors.html">Selectors</a>.</p>
+
+<h2>Managing bots</h2>
+<div class="table-wrap"><table class="cmds">
+<thead><tr><th>Command</th><th>What it does</th></tr></thead>
+<tbody>
+<tr><td><code>/pvpbot spawn</code></td><td>Spawns a bot with a generated name where you stand (from the console: at the first world's spawn).</td></tr>
+<tr><td><code>/pvpbot spawn &lt;name&gt;</code></td><td>Spawns a bot with that name (16 characters at most). If an account has that name the bot wears its skin, otherwise a random one.</td></tr>
+<tr><td><code>/pvpbot spawn &lt;name&gt; &lt;skinFrom&gt;</code></td><td>Spawns a bot wearing the skin of the account <code>skinFrom</code>.</td></tr>
+<tr><td><code>/pvpbot spawn &lt;name&gt; none</code></td><td>Spawns the bot at once, without looking up a skin. Useful in scripts, where the next line must already find the bot.</td></tr>
+<tr><td><code>/pvpbot spawn &lt;count&gt;</code></td><td>Spawns up to 50 bots with generated names.</td></tr>
+<tr><td><code>/pvpbot spawn names:&lt;table&gt; &lt;count&gt; [skinFrom]</code></td><td>Spawns bots with names taken from a table in <code>config.yml</code>. With <code>skinFrom</code> the whole batch wears the same skin.</td></tr>
+<tr><td><code>/pvpbot remove &lt;bot&gt;</code></td><td>Removes a bot.</td></tr>
+<tr><td><code>/pvpbot removeall</code></td><td>Removes every bot.</td></tr>
+<tr><td><code>/pvpbot list</code></td><td>Lists the active bots.</td></tr>
+<tr><td><code>/pvpbot reload</code></td><td>Reloads <code>config.yml</code> and the other files.</td></tr>
+</tbody></table></div>
+
+<h2>Combat orders</h2>
+<div class="table-wrap"><table class="cmds">
+<thead><tr><th>Command</th><th>What it does</th></tr></thead>
+<tbody>
+<tr><td><code>/pvpbot attack &lt;bot&gt; &lt;target&gt;</code></td><td>The bot hunts a player or another bot, by name.</td></tr>
+<tr><td><code>/pvpbot fight &lt;bot&gt; &lt;bot&gt;</code></td><td>Two bots fight each other, even with <code>bot-vs-bot</code> off.</td></tr>
+<tr><td><code>/pvpbot stop &lt;bot&gt;</code></td><td>Clears the bot's orders and stops it fighting.</td></tr>
+<tr><td><code>/pvpbot retreat &lt;selector&gt; [to &lt;player|x y z&gt;]</code></td><td>Fall back. Without <code>to</code> every bot runs its own way; with <code>to</code> they regroup on a player (followed as they move) or at coordinates. Outranks follow, guard and attack until called off.</td></tr>
+<tr><td><code>/pvpbot retreat stop &lt;selector&gt;</code></td><td>Calls off the retreat.</td></tr>
+<tr><td><code>/pvpbot hide &lt;selector&gt;</code></td><td>The bot hides: with an invisibility potion it drinks it and takes its armour off, without one it crouches. It stops starting fights but keeps following orders, and comes out by itself when an enemy is close and can see it.</td></tr>
+<tr><td><code>/pvpbot hide stop &lt;selector&gt;</code></td><td>Brings the bot out of hiding.</td></tr>
+<tr><td><code>/pvpbot tether &lt;target&gt; &lt;leader&gt; &lt;selector&gt; [radius]</code></td><td>A leash: the bots escort the target and make sure it stays within <code>radius</code> blocks (default 20, 1 to 512) of the leader. See <a href="movement.html#tether">Tether</a>.</td></tr>
+<tr><td><code>/pvpbot tether stop &lt;target&gt;</code></td><td>Releases the target and stands the escort down.</td></tr>
+<tr><td><code>/pvpbot tether info &lt;target&gt;</code></td><td>Shows the tether's state.</td></tr>
+</tbody></table></div>
+
+<h2>Movement and positioning</h2>
+<div class="table-wrap"><table class="cmds">
+<thead><tr><th>Command</th><th>What it does</th></tr></thead>
+<tbody>
+<tr><td><code>/pvpbot follow &lt;selector&gt; &lt;target&gt; [formation]</code></td><td>Escort a player or a bot. Formations: <code>behind</code> (default), <code>circle</code>, <code>open_circle</code>. Followers fight when attacked, then fall back in.</td></tr>
+<tr><td><code>/pvpbot follow stop &lt;bot|all&gt;</code></td><td>Stop following.</td></tr>
+<tr><td><code>/pvpbot guard &lt;bot|all|faction &lt;name&gt;&gt; &lt;radius&gt; [x y z]</code></td><td>Hold a spot (your position or the coordinates) within a radius of 2 to 128 blocks (default 12). Attacks anyone who comes in, and walks back to its post if a fight pulls it too far. Alias: <code>protect</code>.</td></tr>
+<tr><td><code>/pvpbot guard stop [bot|all]</code></td><td>Stands the guards down.</td></tr>
+<tr><td><code>/pvpbot pause &lt;bot|all|faction &lt;name&gt;&gt;</code></td><td>Suspends the AI: the bot stays in the world, falls and takes damage, but does nothing. With no argument, lists the paused bots.</td></tr>
+<tr><td><code>/pvpbot resume &lt;bot|all|faction &lt;name&gt;&gt;</code></td><td>Turns the AI back on. Alias: <code>unpause</code>.</td></tr>
+<tr><td><code>/pvpbot tp &lt;bot|all|faction &lt;name&gt;&gt; &lt;player|bot|x y z&gt;</code></td><td>Instant teleport.</td></tr>
+</tbody></table></div>
+
+<h2>Squad teleport</h2>
+<p>Three showy ways to bring a group somewhere. <code>range</code> is how far around the destination the bots are scattered (default 100, at most 1000).</p>
+<div class="table-wrap"><table class="cmds">
+<thead><tr><th>Command</th><th>What it does</th></tr></thead>
+<tbody>
+<tr><td><code>/pvpbot tp portal [ground] &lt;selector&gt; &lt;player|bot|x y z&gt; [range]</code></td><td>Opens real nether portals (obsidian frame, lit inside) around the destination and has the bots step out: up to 3 per portal, which may float; with <code>ground</code> portals always sit on the ground and up to 5 share one. The portals stay and never lead to the Nether.</td></tr>
+<tr><td><code>/pvpbot tp pearl &lt;selector&gt; &lt;player|bot|x y z&gt; [range]</code></td><td>Each bot arrives on a real ender pearl thrown from high above: real flight, landing and a little fall damage.</td></tr>
+<tr><td><code>/pvpbot tp rift [big] &lt;selector&gt; &lt;player|bot|x y z&gt; [range]</code></td><td>Tears in reality that close right behind the bots: up to 5 per rift, or one big shared rift with <code>big</code>.</td></tr>
+</tbody></table></div>
+
+<h2>Patrol routes</h2>
+<p>You build a route by walking it: create the route, then add a point at each spot you stop at.</p>
+<div class="table-wrap"><table class="cmds">
+<thead><tr><th>Command</th><th>What it does</th></tr></thead>
+<tbody>
+<tr><td><code>/pvpbot path create &lt;name&gt;</code></td><td>Creates an empty route.</td></tr>
+<tr><td><code>/pvpbot path add &lt;name&gt;</code></td><td>Adds your position as the next point (in-game only).</td></tr>
+<tr><td><code>/pvpbot path remove &lt;name&gt; &lt;index&gt;</code></td><td>Removes a point.</td></tr>
+<tr><td><code>/pvpbot path delete &lt;name&gt;</code></td><td>Deletes the route and stops anyone walking it.</td></tr>
+<tr><td><code>/pvpbot path list [name]</code></td><td>Lists the routes, or one route's points.</td></tr>
+<tr><td><code>/pvpbot path assign &lt;selector&gt; &lt;route&gt;</code></td><td>Sends the bots to patrol the route.</td></tr>
+<tr><td><code>/pvpbot path stop &lt;selector&gt;</code></td><td>Stops the patrol.</td></tr>
+</tbody></table></div>
+
+<h2>Settings</h2>
+<div class="table-wrap"><table class="cmds">
+<thead><tr><th>Command</th><th>What it does</th></tr></thead>
+<tbody>
+<tr><td><code>/pvpbot set &lt;setting&gt; &lt;value&gt;</code></td><td>Changes a global setting, live and for good (it is written to <code>config.yml</code>).</td></tr>
+<tr><td><code>/pvpbot settings [group|text]</code></td><td>Shows the current values, by group (<code>general</code>, <code>combat</code>, <code>movement</code>, <code>utility</code>, <code>ranged</code>, <code>building</code>, <code>detection</code>) or filtered by name. <code>*</code> marks a default not yet written to the file.</td></tr>
+<tr><td><code>/pvpbot faction set &lt;faction&gt; &lt;setting&gt; &lt;value&gt;</code></td><td>Changes a setting for one faction only.</td></tr>
+<tr><td><code>/pvpbot preset [name]</code></td><td>With no name, shows the active preset and the ones available; with a name, applies it.</td></tr>
+<tr><td><code>/pvpbot preset save &lt;name&gt;</code></td><td>Saves the values in force right now as a preset (overwrites if it exists).</td></tr>
+<tr><td><code>/pvpbot preset delete &lt;name&gt;</code></td><td>Deletes a preset.</td></tr>
+<tr><td><code>/pvpbot preset off</code></td><td>Turns the preset off: back to <code>config.yml</code> as written.</td></tr>
+</tbody></table></div>
+
+<h2>Factions</h2>
+<p>Alias: <code>/pvpbot f</code>. Details on <a href="factions.html">Factions</a>.</p>
+<div class="table-wrap"><table class="cmds">
+<thead><tr><th>Command</th><th>What it does</th></tr></thead>
+<tbody>
+<tr><td><code>/pvpbot faction create &lt;name&gt;</code></td><td>Creates a faction.</td></tr>
+<tr><td><code>/pvpbot faction disband &lt;name&gt;</code></td><td>Disbands a faction.</td></tr>
+<tr><td><code>/pvpbot faction join &lt;faction&gt; &lt;member|selector&gt;</code></td><td>Adds a player or bots.</td></tr>
+<tr><td><code>/pvpbot faction join &lt;faction&gt; range &lt;blocks&gt;</code></td><td>Adds every bot within that distance of you (0–512).</td></tr>
+<tr><td><code>/pvpbot faction leave &lt;member&gt;</code></td><td>Removes a member from their faction.</td></tr>
+<tr><td><code>/pvpbot faction hostile &lt;a&gt; &lt;b&gt;</code></td><td>War: they attack each other on sight.</td></tr>
+<tr><td><code>/pvpbot faction peace &lt;a&gt; &lt;b&gt;</code></td><td>Peace: neither side starts anything, but both hit back.</td></tr>
+<tr><td><code>/pvpbot faction ally &lt;a&gt; &lt;b&gt;</code></td><td>Alliance: the same side, each with its own settings.</td></tr>
+<tr><td><code>/pvpbot faction unally &lt;a&gt; &lt;b&gt;</code></td><td>Ends the alliance.</td></tr>
+<tr><td><code>/pvpbot faction leader &lt;faction&gt; &lt;player|bot|clear&gt;</code></td><td>Sets or clears the leader.</td></tr>
+<tr><td><code>/pvpbot faction follow &lt;faction&gt; &lt;target|stop&gt; [formation]</code></td><td>The whole faction follows someone.</td></tr>
+<tr><td><code>/pvpbot faction kit &lt;faction&gt; set &lt;kit&gt; &lt;weight&gt;</code></td><td>Adds a kit to the faction's random kit table (weight 0–1000, 0 removes it).</td></tr>
+<tr><td><code>/pvpbot faction kit &lt;faction&gt; list|clear|give</code></td><td>Shows the odds, empties the table, or rolls and hands a kit to every bot.</td></tr>
+<tr><td><code>/pvpbot faction info &lt;name&gt;</code></td><td>Members, leader, allies, enemies and factions at peace.</td></tr>
+<tr><td><code>/pvpbot faction list</code></td><td>Lists the factions.</td></tr>
+</tbody></table></div>
+
+<h2>Overfactions</h2>
+<p>Coalitions of factions. Alias: <code>/pvpbot of</code>.</p>
+<div class="table-wrap"><table class="cmds">
+<thead><tr><th>Command</th><th>What it does</th></tr></thead>
+<tbody>
+<tr><td><code>/pvpbot overfaction create|disband &lt;name&gt;</code></td><td>Creates or disbands a coalition.</td></tr>
+<tr><td><code>/pvpbot overfaction add &lt;overfaction&gt; &lt;faction&gt;</code></td><td>Adds a faction: it becomes allied with every other one inside.</td></tr>
+<tr><td><code>/pvpbot overfaction remove &lt;faction&gt;</code></td><td>Takes a faction out of its coalition.</td></tr>
+<tr><td><code>/pvpbot overfaction hostile|peace &lt;a&gt; &lt;b&gt;</code></td><td>War or peace between two coalitions, or a coalition and a single faction, in one go.</td></tr>
+<tr><td><code>/pvpbot overfaction leader &lt;overfaction&gt; &lt;player|bot|clear&gt;</code></td><td>A leader for the whole coalition.</td></tr>
+<tr><td><code>/pvpbot overfaction follow &lt;overfaction&gt; &lt;target|stop&gt; [formation]</code></td><td>The whole coalition follows someone.</td></tr>
+<tr><td><code>/pvpbot overfaction tp &lt;overfaction&gt; &lt;player|bot|x y z&gt;</code></td><td>Teleports the whole coalition.</td></tr>
+<tr><td><code>/pvpbot overfaction info|list</code></td><td>Info and list.</td></tr>
+</tbody></table></div>
+
+<h2>Kits</h2>
+<div class="table-wrap"><table class="cmds">
+<thead><tr><th>Command</th><th>What it does</th></tr></thead>
+<tbody>
+<tr><td><code>/pvpbot kit save &lt;name&gt; [bot]</code></td><td>Saves your inventory as a kit, or a bot's.</td></tr>
+<tr><td><code>/pvpbot kit give &lt;kit&gt; &lt;player|selector&gt;</code></td><td>Gives the kit to a player (real ones too) or to bots.</td></tr>
+<tr><td><code>/pvpbot kit givefaction &lt;kit&gt; &lt;faction|selector&gt;</code></td><td>Gives the kit to every bot in a faction.</td></tr>
+<tr><td><code>/pvpbot kit delete &lt;name&gt;</code></td><td>Deletes a kit.</td></tr>
+<tr><td><code>/pvpbot kit list</code></td><td>Lists the kits.</td></tr>
+</tbody></table></div>
+
+<h2>Scripts</h2>
+<p>Details on <a href="scripts.html">Scripts</a>.</p>
+<div class="table-wrap"><table class="cmds">
+<thead><tr><th>Command</th><th>What it does</th></tr></thead>
+<tbody>
+<tr><td><code>/pvpbot script create &lt;name&gt;</code></td><td>Creates an empty script.</td></tr>
+<tr><td><code>/pvpbot script add &lt;name&gt; &lt;command&gt;</code></td><td>Adds a line (no leading slash). <code>{1}</code>…<code>{9}</code> are the parameters, <code>wait &lt;ticks&gt;</code> is a pause.</td></tr>
+<tr><td><code>/pvpbot script show &lt;name&gt;</code></td><td>Shows the numbered lines.</td></tr>
+<tr><td><code>/pvpbot script remove &lt;name&gt; &lt;line&gt;</code></td><td>Removes a line.</td></tr>
+<tr><td><code>/pvpbot script delete &lt;name&gt;</code></td><td>Deletes the script.</td></tr>
+<tr><td><code>/pvpbot script run &lt;name&gt; [args...]</code></td><td>Runs the script as if you typed it.</td></tr>
+<tr><td><code>/pvpbot script list</code></td><td>Lists the scripts.</td></tr>
+</tbody></table></div>
+
+<h2>Companions</h2>
+<p>Details on <a href="companions.html">Companions</a>.</p>
+<div class="table-wrap"><table class="cmds">
+<thead><tr><th>Command</th><th>What it does</th></tr></thead>
+<tbody>
+<tr><td><code>/pvpbot owner set &lt;bot&gt; &lt;player&gt;</code></td><td>Hands the bot to an online player, who can then command it in chat.</td></tr>
+<tr><td><code>/pvpbot owner clear &lt;bot&gt;</code></td><td>Removes the owner.</td></tr>
+<tr><td><code>/pvpbot owner list &lt;player&gt;</code></td><td>A player's bots.</td></tr>
+<tr><td><code>/pvpbot owner help</code></td><td>Summary of the chat orders.</td></tr>
+</tbody></table></div>
+
+<h2>Diagnostics and tools</h2>
+<div class="table-wrap"><table class="cmds">
+<thead><tr><th>Command</th><th>What it does</th></tr></thead>
+<tbody>
+<tr><td><code>/pvpbot diagnose &lt;bot&gt;</code></td><td>Works out why a bot can't fight (login plugins, invulnerability, damage cancelled by another plugin) and suggests the fix.</td></tr>
+<tr><td><code>/pvpbot debug &lt;bot&gt;</code></td><td>The bot's internal state: awareness, building, clutch, faction.</td></tr>
+<tr><td><code>/pvpbot debug &lt;bot&gt; invulnerable &lt;true|false&gt;</code></td><td>Forces the vanilla invulnerable flag, to reproduce a problem.</td></tr>
+<tr><td><code>/pvpbot givebow &lt;bot&gt;</code></td><td>Gives the bot a bow and arrows.</td></tr>
+<tr><td><code>/pvpbot drop &lt;bot&gt; &lt;item id&gt; [amount]</code></td><td>Drops an item at the bot's feet (vanilla id, e.g. <code>diamond_sword</code>).</td></tr>
+<tr><td><code>/pvpbot resetattr &lt;player|bot&gt;</code></td><td>Removes every attribute modifier left by other plugins (bosses, items, roles) and restores the base values. Alias: <code>resetattributes</code>.</td></tr>
+<tr><td><code>/pvpbot clearplayerdata</code></td><td>Deletes the player files (data, stats, advancements) of bots that no longer exist. Leaves kits, factions, scripts and config alone.</td></tr>
+</tbody></table></div>
+
+<h2>Ghosts</h2>
+<p>Details on <a href="ghosts.html">Ghosts</a>.</p>
+<div class="table-wrap"><table class="cmds">
+<thead><tr><th>Command</th><th>What it does</th></tr></thead>
+<tbody>
+<tr><td><code>/ghost record &lt;name&gt;</code></td><td>Starts recording your movement (and the blocks you break or place).</td></tr>
+<tr><td><code>/ghost stoprecord</code></td><td>Stops and saves the recording.</td></tr>
+<tr><td><code>/ghost spawn &lt;name&gt; &lt;recording&gt; [skin:&lt;name&gt;|skin:none] [line1|line2|...]</code></td><td>Spawns a ghost that replays the recording forever.</td></tr>
+<tr><td><code>/ghost stare &lt;name&gt; [skin:&lt;name&gt;|skin:none] [line1|line2|...]</code></td><td>Spawns a still ghost that stares at the nearest player and vanishes when someone comes close.</td></tr>
+<tr><td><code>/ghost remove &lt;name&gt;</code></td><td>Removes a ghost.</td></tr>
+<tr><td><code>/ghost list</code></td><td>Lists the ghosts.</td></tr>
+<tr><td><code>/ghost recordings</code></td><td>Lists the recordings.</td></tr>
+</tbody></table></div>

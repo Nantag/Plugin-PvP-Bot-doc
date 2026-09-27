@@ -1,0 +1,77 @@
+---
+title: Settings
+section: Reference
+order: 30
+icon: ⚙️
+lead: Every option that changes how bots behave, with its default and limits.
+---
+<h2>Changing settings</h2>
+<ul>
+  <li><strong>In game:</strong> <code>/pvpbot set &lt;name&gt; &lt;value&gt;</code>. Applies to every bot at once and
+  is written to <code>config.yml</code>.</li>
+  <li><strong>For one faction:</strong> <code>/pvpbot faction set &lt;faction&gt; &lt;name&gt; &lt;value&gt;</code>.
+  Applies only to that faction's bots.</li>
+  <li><strong>In the file:</strong> edit <code>plugins/PvpBot/config.yml</code>, then run <code>/pvpbot reload</code>.</li>
+  <li><strong>To see them:</strong> <code>/pvpbot settings</code>, or <code>/pvpbot settings combat</code> for one group,
+  or <code>/pvpbot settings pearl</code> to filter by name.</li>
+</ul>
+<p>Values outside the limits are refused. Times are in <strong>ticks</strong> (20 ticks = 1 second), distances in blocks,
+and health in half-hearts (20 = full health).</p>
+
+<h3>Which value wins</h3>
+<p>When a bot reads a setting, the most specific layer wins:</p>
+<ol>
+  <li><code>config.yml</code> (or the default, if the key isn't there);</li>
+  <li>the active <a href="kits-and-presets.html#presets">preset</a>, if any;</li>
+  <li>the bot's <a href="factions.html">faction</a> settings.</li>
+</ol>
+<div class="callout warn"><span class="t">Active preset</span>
+If the active preset sets the same key, <code>/pvpbot set</code> writes it to <code>config.yml</code> but the preset's
+value still wins. The command tells you so: use <code>/pvpbot preset off</code>, or save the preset again with
+<code>/pvpbot preset save &lt;name&gt;</code>.</div>
+
+<h2>General</h2>
+<p>Group <code>general</code>: periodic checks, restarts and compatibility with other plugins.</p>
+{{settings:general}}
+
+<h2>Combat</h2>
+<p>Group <code>combat</code>: who to attack, how, and with which techniques. Longer explanations on
+<a href="combat.html">Combat</a>.</p>
+{{settings:combat}}
+
+<h2>Movement</h2>
+<p>Group <code>movement</code>.</p>
+{{settings:movement}}
+
+<h2>Utility and survival</h2>
+<p>Group <code>utility</code>: gear, healing, totems, pearls, cobwebs, water.</p>
+{{settings:utility}}
+
+<h2>Ranged</h2>
+<p>Group <code>ranged</code>: bows and crossbows.</p>
+{{settings:ranged}}
+
+<h2>Building</h2>
+<p>Group <code>building</code>: what bots may do to the world's blocks. They only ever break soft natural blocks (dirt,
+sand, gravel, clay, leaves, undergrowth, cobwebs), never stone, ore, builds or containers.</p>
+{{settings:building}}
+
+<h2>Detection</h2>
+<p>Group <code>detection</code>: when a bot notices a target. The multipliers scale the distance you're noticed at: below
+1 means you have to be closer to be seen.</p>
+{{settings:detection}}
+
+<h2>Other parts of config.yml</h2>
+<p>These parts of <code>config.yml</code> can't be changed with <code>/pvpbot set</code>: edit the file, then run
+<code>/pvpbot reload</code>.</p>
+<div class="table-wrap"><table>
+<thead><tr><th>Key</th><th>Default</th><th>What it does</th></tr></thead>
+<tbody>
+<tr><td><code>active-preset</code></td><td><code>''</code></td><td>The active preset. Changed with <code>/pvpbot preset</code>.</td></tr>
+<tr><td><code>presets</code></td><td>casual, normal, sweaty, passive</td><td>The saved presets. See <a href="kits-and-presets.html#presets">Presets</a>.</td></tr>
+<tr><td><code>skins.random</code></td><td><code>missing</code></td><td><code>missing</code>, <code>always</code> or <code>off</code>. See <a href="skins.html">Skins and names</a>.</td></tr>
+<tr><td><code>skins.built-in-pool</code></td><td><code>true</code></td><td>Use the few hundred skins that ship with the plugin.</td></tr>
+<tr><td><code>skins.pool</code></td><td><code>[]</code></td><td>Extra account names whose skins bots can wear.</td></tr>
+<tr><td><code>name-tables</code></td><td>default, bandits</td><td>Name lists for <code>/pvpbot spawn names:&lt;table&gt;</code>.</td></tr>
+<tr><td><code>companions.holding-world</code></td><td><code>test_world</code></td><td>The world companions are parked in while their owner is offline. See <a href="companions.html">Companions</a>.</td></tr>
+</tbody></table></div>

@@ -1,0 +1,67 @@
+---
+title: Quick start
+section: Getting started
+order: 20
+icon: 🚀
+lead: From your first bot to a small faction war, in a handful of commands.
+---
+<p>Every command below needs <code>pvpbot.admin</code> (ops have it). You can type <code>/bot</code> instead of
+<code>/pvpbot</code>.</p>
+
+<h2>1. Your first bot</h2>
+<pre><code>/pvpbot spawn Marco</code></pre>
+<p>A bot called <code>Marco</code> appears where you stand. If a Minecraft account has that name, the bot wears its
+skin; otherwise it gets a random one (see <a href="skins.html">Skins and names</a>). Without a name, one is
+generated.</p>
+<p>A new bot leaves you alone for a few seconds (<code>spawn-grace</code>), then sizes you up for a moment
+(<code>reaction-ticks</code>) before attacking.</p>
+
+<h2>2. Give it some gear</h2>
+<p>A new bot has an empty inventory and fights with its fists. The quickest fix is to save your own inventory as a kit
+and hand it over:</p>
+<pre><code>/pvpbot kit save diamond
+/pvpbot kit give diamond Marco</code></pre>
+<p>The bot puts on the best armour and holds the best weapon it carries by itself (<code>auto-equip</code>).</p>
+
+<h2>3. Make it fight</h2>
+<pre><code>/pvpbot attack Marco Steve
+/pvpbot spawn Luca
+/pvpbot fight Marco Luca
+/pvpbot stop Marco</code></pre>
+<p><code>attack</code> sends Marco after Steve. <code>fight</code> sets two bots on each other (even with
+<code>bot-vs-bot</code> off). <code>stop</code> calls it off.</p>
+
+<h2>4. Lots of bots at once</h2>
+<pre><code>/pvpbot spawn 10
+/pvpbot kit give diamond latest
+/pvpbot follow latest Steve circle</code></pre>
+<p>This spawns 10 bots with generated names (50 at most per command), gives them all the kit and has them escort Steve
+in a circle. <code>latest</code> is a <a href="selectors.html">selector</a>: it means everything the last
+<code>spawn</code> created, so you don't have to type ten names.</p>
+
+<h2>5. Two factions at war</h2>
+<pre><code>/pvpbot faction create red
+/pvpbot faction create blue
+/pvpbot spawn 5
+/pvpbot faction join red latest
+/pvpbot spawn 5
+/pvpbot faction join blue latest
+/pvpbot faction hostile red blue</code></pre>
+<p>The two factions' bots now attack each other on sight. Real players are put in the <code>player</code> faction
+automatically. More on <a href="factions.html">Factions</a>.</p>
+
+<h2>6. Change the difficulty</h2>
+<pre><code>/pvpbot preset casual
+/pvpbot preset sweaty
+/pvpbot preset off</code></pre>
+<p><code>casual</code> makes bots slow and sloppy, <code>sweaty</code> turns everything on with sharp reactions, and
+<code>off</code> goes back to <code>config.yml</code> as written. Or change a single setting:
+<code>/pvpbot set skill 70</code>. The full list is on <a href="settings.html">Settings</a>.</p>
+
+<h2>7. Clean up</h2>
+<pre><code>/pvpbot remove Marco
+/pvpbot removeall</code></pre>
+
+<div class="callout tip"><span class="t">Next steps</span>
+Save this sequence as a <a href="scripts.html">script</a> and run it again with one command, or hand a bot to a player
+with <code>/pvpbot owner set</code> (see <a href="companions.html">Companions</a>).</div>

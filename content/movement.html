@@ -1,0 +1,113 @@
+---
+title: Movement and orders
+section: Features
+order: 40
+icon: 🧭
+lead: How bots get around, what they may do to blocks, and the orders that position them.
+---
+<h2>How they walk</h2>
+<p>Bots don't teleport in small steps: they press "keys" like a player and let vanilla physics do the rest. That's why
+they collide, take knockback and fall like a real player.</p>
+<ul>
+  <li><strong>A* pathfinding</strong> around obstacles, weighted to find long detours too (round a wide wall, out of a
+  U-shaped trap).</li>
+  <li><strong>Straight line:</strong> when the way is clear it walks straight at the target, so it tracks someone moving
+  tick by tick instead of following a stale route.</li>
+  <li><strong>Smoothed routes:</strong> it cuts across open ground and faces where it walks.</li>
+  <li>It walks off planned drops instead of bridging over them, climbs ladders down as well as up, and plans round closed
+  iron doors.</li>
+  <li><strong>Bunny hop</strong> (<code>bhop</code>) only on long straight stretches, with each bot on its own rhythm so
+  a squad doesn't hop in step.</li>
+  <li><strong>Boats:</strong> boards a boat, places one if needed and steers it across water.</li>
+  <li><strong>Wandering</strong> (<code>wander</code>): walks around when there's nothing to do.</li>
+  <li><code>speed</code> sets the pace (1.0 = sprint).</li>
+</ul>
+
+<h2>Building</h2>
+<p>With <code>building</code> on, a bot can:</p>
+<ul>
+  <li><strong>bridge</strong> a gap (<code>building-bridge</code>) with the blocks it carries, or a wind charge if it has
+  none;</li>
+  <li><strong>pillar up</strong> toward a target above and out of reach (<code>building-pillar</code>, at most
+  <code>building-max-pillar</code> blocks);</li>
+  <li><strong>dig through soft cover</strong> (<code>building-clear-soft</code>): dirt, sand, gravel, clay, leaves,
+  undergrowth, cobwebs.</li>
+</ul>
+<p>It never breaks stone, ore, builds or containers. Every change goes through the normal events, so WorldGuard,
+GriefPrevention, claim plugins and block loggers see it and can refuse it. The pace is limited by
+<code>building-cooldown</code> and <code>building-budget</code> (blocks per minute).</p>
+
+<h2>Following</h2>
+<pre><code>/pvpbot follow Marco Steve
+/pvpbot follow latest Steve circle
+/pvpbot follow stop all</code></pre>
+<p>Formations: <code>behind</code>, <code>circle</code>, <code>open_circle</code> (see
+<a href="factions.html#following-as-a-group">Factions</a>). It's an escort, not a leash: followers fight when attacked,
+then fall back in.</p>
+
+<h2>Guarding</h2>
+<pre><code>/pvpbot guard faction guards 15
+/pvpbot guard Marco 10 100 64 -200
+/pvpbot guard stop all</code></pre>
+<p>The bots hold a spot (your position, or the given coordinates) and attack anyone who enters the radius. Each patrols
+its own part of the perimeter. If a fight pulls them too far, they break off and walk back to their post, so they don't
+chase someone into a cave and get lost.</p>
+
+<h2>Patrols</h2>
+<pre><code>/pvpbot path create walls
+/pvpbot path add walls
+/pvpbot path add walls
+/pvpbot path add walls
+/pvpbot path assign faction guards walls</code></pre>
+<p>Each <code>path add</code> adds the spot you're standing on, so you build the route by walking it. At the last point
+the bots turn back instead of jumping to the first. <code>path list walls</code> shows the points, <code>path remove
+walls 2</code> removes one, and <code>path stop</code> ends the patrol.</p>
+
+<h2>Retreat</h2>
+<pre><code>/pvpbot retreat faction bandits
+/pvpbot retreat all to Steve
+/pvpbot retreat stop all</code></pre>
+<p>Without <code>to</code> each bot runs its own way, so the squad scatters. With <code>to</code> they regroup on a
+player (following them as they move) or at coordinates.</p>
+<p>A retreat outranks follow, guard and attack. The bot only hits back at whoever just hit it or is right on top of it.
+It lasts until you call it off, or until you give <code>stop</code> or a new <code>attack</code>.</p>
+<p>The automatic low-health retreat is set with <code>retreat</code> and <code>retreat-health</code>.</p>
+
+<h2>Hiding</h2>
+<pre><code>/pvpbot hide latest
+/pvpbot hide stop latest</code></pre>
+<ul>
+  <li><strong>With an invisibility potion</strong> (drinkable or splash): it uses it and takes off its armour, which
+  would otherwise show floating, then puts it back on at the end. It moves at full speed.</li>
+  <li><strong>Without a potion:</strong> it crouches and keeps its armour on.</li>
+</ul>
+<p>A hidden bot doesn't start fights but still follows orders: it follows, retreats and holds its post. It comes out
+and fights as soon as an enemy is close and can see it.</p>
+
+<h2 id="tether">Tether (leash)</h2>
+<pre><code>/pvpbot tether Prisoner Boss faction guards 15
+/pvpbot tether info Prisoner
+/pvpbot tether stop Prisoner</code></pre>
+<p>The escort follows the target and makes sure it stays within the radius (default 20) of the leader.</p>
+<ol>
+  <li>If the target strays outside, it gets <strong>one warning</strong>: a real but weak hit (half a heart) that shoves
+  it back toward the leader.</li>
+  <li>If it comes back inside, the warning is cleared.</li>
+  <li>If it isn't back within <strong>5 seconds</strong>, the whole escort attacks it for real, as with
+  <code>/pvpbot attack</code>, until you run <code>tether stop</code>.</li>
+</ol>
+
+<h2>Pause</h2>
+<pre><code>/pvpbot pause all
+/pvpbot resume faction bandits</code></pre>
+<p>A paused bot stays in the world, falls and takes damage, but does nothing. Useful to set up a scene without bots
+wandering off or starting a fight. <code>/pvpbot pause</code> with no argument lists who is paused.</p>
+
+<h2>Teleporting</h2>
+<pre><code>/pvpbot tp all Steve
+/pvpbot tp portal ground faction bandits Steve 40
+/pvpbot tp pearl latest 100 70 -300
+/pvpbot tp rift big overfaction north Steve</code></pre>
+<p>Plain <code>tp</code> is instant. <code>portal</code>, <code>pearl</code> and <code>rift</code> bring the squad in with
+some style, scattered within a range (default 100) around the destination. Details on
+<a href="commands.html#squad-teleport">Commands</a>.</p>

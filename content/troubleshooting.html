@@ -1,0 +1,76 @@
+---
+title: Troubleshooting
+section: Help
+order: 10
+icon: 🩺
+lead: The usual reasons a bot won't move, won't take damage or won't attack, and how to fix them.
+---
+<div class="callout tip"><span class="t">Always start here</span>
+<code>/pvpbot diagnose &lt;bot&gt;</code> checks the bot and tells you what's blocking it: game mode, damage immunity,
+login plugins, plugins cancelling damage, movement or knockback, and the last knockback it took.</div>
+
+<h2>The bot hops on the spot and won't move</h2>
+<p>It's almost always a <strong>login plugin</strong> (AuthMe, LoginTo…). A bot can't type <code>/login</code>, so the
+plugin keeps it locked.</p>
+<ol>
+  <li>Check that <code>auth-autologin</code> is <code>true</code> (it is by default): it registers bots as already
+  logged in.</li>
+  <li>If your login plugin isn't one PvpBot recognises, <code>/pvpbot diagnose</code> shows it. In that case set the
+  login plugin to ignore players with the bots' names, or disable it to test.</li>
+</ol>
+
+<h2>The bot takes no damage</h2>
+<ul>
+  <li><strong>Invulnerable flag:</strong> some login plugins set it and never clear it. With
+  <code>force-vulnerable: true</code> (the default) PvpBot clears it. <code>diagnose</code> tells you if this is the
+  cause.</li>
+  <li><strong>Region protection or PvP off:</strong> WorldGuard, safe zones and the like cancel damage. It's better to
+  move the fight out of the protected area. As a last resort there's <code>/pvpbot set bypass-damage-protection
+  true</code>, but it overrides <em>all</em> protection, legitimate protection included.</li>
+  <li><strong>Game mode:</strong> a bot in creative or spectator takes no damage.</li>
+</ul>
+
+<h2>The bot won't attack me</h2>
+<ul>
+  <li>It was just spawned: it waits <code>spawn-grace</code> seconds, then sizes you up for <code>reaction-ticks</code>.</li>
+  <li>It can't see you: with <code>detection</code> on it needs line of sight. Crouching or invisible, you're noticed
+  from closer.</li>
+  <li>You're in creative or spectator (<code>attack-invincible</code> is off).</li>
+  <li>A preset made it passive (<code>/pvpbot preset</code> shows which is active), or <code>auto-target</code> or
+  <code>target-players</code> are off, perhaps just for its faction (<code>/pvpbot faction info</code>).</li>
+  <li>You're allies or at peace: see <a href="factions.html">Factions</a>.</li>
+  <li>It's paused, hiding or retreating.</li>
+</ul>
+
+<h2>The bot fights with its fists</h2>
+<p>It has no weapons. Give it a <a href="kits-and-presets.html">kit</a> or <code>/pvpbot givebow &lt;bot&gt;</code>.
+<code>auto-equip</code> must be on for it to hold the best weapon by itself.</p>
+
+<h2>Lag with lots of bots</h2>
+<ul>
+  <li>Raise <code>target-scan-interval</code> (say from 10 to 20): looking for targets is the most expensive thing a bot
+  does. When its target dies or leaves, a bot still looks again at once.</li>
+  <li>Lower <code>max-target-distance</code>.</li>
+  <li>Turn <code>wander</code> off for bots that don't need to move, or pause them.</li>
+</ul>
+
+<h2>Odd stats or speed after a boss or an item</h2>
+<p>Another plugin added an attribute modifier (health, speed, damage) and never removed it.
+<code>/pvpbot resetattr &lt;player|bot&gt;</code> removes every modifier and restores a player's correct base values. It
+works on real players too.</p>
+
+<h2>The world folder fills up with bot files</h2>
+<p>Bots are real players, so the server saves data, stats and advancements for them like anyone else.
+<code>/pvpbot clearplayerdata</code> deletes those files for bots that no longer exist. It leaves active bots, kits,
+factions, scripts and config alone.</p>
+
+<h2>The plugin loads but nothing works</h2>
+<ul>
+  <li>Check you installed the right jar for your platform and version (see <a href="installation.html">Installation</a>).</li>
+  <li>Read the console at startup. A <code>kits.yml</code> copied from another server may fail to load: PvpBot still
+  starts, without kits, and says so in the console.</li>
+</ul>
+
+<h2>Companions aren't put away</h2>
+<p>Check <code>companions.holding-world</code>: it must be the name of a world that exists on your server. See
+<a href="companions.html#when-the-owner-logs-out">Companions</a>.</p>

@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Combat · PvpBot Wiki</title>
+<meta name="description" content="How a bot picks targets, how it hits, and which techniques it uses.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22%3E%3Ctext y=%22.9em%22 font-size=%2290%22%3E%E2%9A%94%EF%B8%8F%3C/text%3E%3C/svg%3E">
+<link rel="stylesheet" href="assets/style.css">
+<script>try{var t=localStorage.getItem('pvpbot-theme');if(t)document.documentElement.setAttribute('data-theme',t)}catch(e){}</script>
+</head>
+<body>
+<header class="topbar">
+  <button class="icon-btn menu-btn" id="menu" aria-label="Menu">☰</button>
+  <a class="brand" href="index.html"><span class="logo">⚔</span>PvpBot <small>Wiki</small></a>
+  <div class="search">
+    <span class="icon">⌕</span>
+    <input id="q" type="search" placeholder="Search the wiki…" autocomplete="off" aria-label="Search">
+    <kbd>/</kbd>
+    <div class="results" id="results"></div>
+  </div>
+  <button class="icon-btn" id="theme" aria-label="Light or dark theme">☾</button>
+</header>
+<div class="layout">
+<nav class="sidebar">
+<h4>Getting started</h4>
+<a href="index.html"><span class="ico">🏠</span>Home</a>
+<a href="installation.html"><span class="ico">📦</span>Installation</a>
+<a href="quick-start.html"><span class="ico">🚀</span>Quick start</a>
+<h4>Reference</h4>
+<a href="commands.html"><span class="ico">⌨️</span>Commands</a>
+<a href="selectors.html"><span class="ico">🎯</span>Selectors</a>
+<a href="settings.html"><span class="ico">⚙️</span>Settings</a>
+<h4>Features</h4>
+<a href="combat.html" class="active"><span class="ico">⚔️</span>Combat</a>
+<a href="factions.html"><span class="ico">🏳️</span>Factions</a>
+<a href="kits-and-presets.html"><span class="ico">🎒</span>Kits and presets</a>
+<a href="movement.html"><span class="ico">🧭</span>Movement and orders</a>
+<a href="scripts.html"><span class="ico">📜</span>Scripts</a>
+<a href="companions.html"><span class="ico">🐺</span>Companions</a>
+<a href="skins.html"><span class="ico">🎭</span>Skins and names</a>
+<a href="ghosts.html"><span class="ico">👻</span>Ghosts</a>
+<h4>Help</h4>
+<a href="troubleshooting.html"><span class="ico">🩺</span>Troubleshooting</a>
+<a href="spigot.html"><span class="ico">🔧</span>Spigot edition</a>
+</nav>
+<main class="content">
+<article>
+<div class="crumb">Features</div><h1>Combat</h1><p class="lead">How a bot picks targets, how it hits, and which techniques it uses.</p>
+<h2 id="a-human-opponent">A human opponent<a class="anchor" href="#a-human-opponent" aria-hidden="true">#</a></h2>
+<p>PvpBot is built for training and recording, not for winning at all costs. No move is frame-perfect:
+<code>skill</code> (0–100, default 50) sets the speed of the reactions, the timing and the aim of <em>every</em>
+technique.</p>
+<ul>
+  <li>Mace smashes and elytra hits land a little early or late; crit hops are sometimes mistimed.</li>
+  <li>The axe against a shield comes <em>after</em> the shield is seen; the shield against a smash goes up a reaction late.</li>
+  <li>Weapon-swap combos fumble now and then. Practised moves, like the mace stun or the pearl launch, come off most of the time.</li>
+  <li>Arrows and pearls are a little off and react late to a juke.</li>
+</ul>
+<p>Even at 100 there is a gap to play around. Reach is a player's (<code>melee-range: 3.0</code>, measured like vanilla,
+from the eyes to the hitbox), aim turns at a limited speed (<code>turn-speed</code>) and <code>ping-millis</code>
+simulates a real connection's latency.</p>
+<p>On top of that come <code>miss-chance</code> (swings missed on purpose) and <code>mistake-chance</code> (hesitating
+or panicking at the decisive moment).</p>
+
+<h2 id="picking-a-target">Picking a target<a class="anchor" href="#picking-a-target" aria-hidden="true">#</a></h2>
+<ul>
+  <li><code>auto-target</code>: the bot looks for the nearest enemy within <code>max-target-distance</code> by itself.
+  <code>target-players</code> and <code>target-passive-mobs</code> decide whether players and passive mobs count.</li>
+  <li><code>revenge</code>: it hits back at whoever hits it. <code>bot-vs-bot</code>: bots attack each other without orders.</li>
+  <li><a href="factions.html">Factions</a> decide who is an enemy, an ally or at peace.</li>
+  <li><code>priority-hp-target</code>: at equal priority it prefers the target with the least health.</li>
+</ul>
+
+<h3 id="detection">Detection<a class="anchor" href="#detection" aria-hidden="true">#</a></h3>
+<p>With <code>detection</code> on, a bot only knows about a target if:</p>
+<ul>
+  <li>it can see it;</li>
+  <li>it is very close (<code>detection-touch-radius</code>);</li>
+  <li>or it was told about it by an order.</li>
+</ul>
+<p>After losing sight it remembers the target for <code>detection-memory-ticks</code>. Crouching, being invisible or
+wearing no armour shortens the distance you're noticed at.</p>
+
+<h3 id="it-doesn-t-attack-at-once">It doesn't attack at once<a class="anchor" href="#it-doesn-t-attack-at-once" aria-hidden="true">#</a></h3>
+<p>A new bot leaves players alone for <code>spawn-grace</code> seconds. When it notices a player by itself, it sizes
+them up for <code>reaction-ticks</code> before attacking. A hit, an order or a faction war is answered at once.</p>
+
+<h2 id="melee">Melee<a class="anchor" href="#melee" aria-hidden="true">#</a></h2>
+<p>Swords, axes and spears. The bot keeps a fighting distance (<code>melee-standoff</code>) instead of walking into you,
+and swings every <code>attack-cooldown</code> ticks.</p>
+<p>The techniques, each switchable on its own:</p>
+<div class="table-wrap"><table>
+<thead><tr><th>Setting</th><th>Technique</th></tr></thead>
+<tbody>
+<tr><td><code>crits</code>, <code>crit-chain</code></td><td>Crits from a real jump, back to back if wanted.</td></tr>
+<tr><td><code>cooldown-trick</code></td><td>Swings at 84.8% cooldown: full damage and knockback, but sooner.</td></tr>
+<tr><td><code>hit-select</code></td><td>Waits for a favourable angle and spacing.</td></tr>
+<tr><td><code>d-tap</code></td><td>Sideways sprint reset after a hit.</td></tr>
+<tr><td><code>mirror-punish</code></td><td>Hits back mid-air off your own knockback.</td></tr>
+<tr><td><code>sweep-hit</code></td><td>Sweep attack when 2 or more enemies are on it.</td></tr>
+<tr><td><code>shield-disable</code></td><td>Switches to an axe against a raised shield (<code>shield-disable-chance</code> of the time).</td></tr>
+<tr><td><code>shield-read-windup</code></td><td>Raises the shield when it reads your crit windup.</td></tr>
+</tbody></table></div>
+
+<h2 id="mace">Mace<a class="anchor" href="#mace" aria-hidden="true">#</a></h2>
+<p>With <code>mace</code> on, the bot uses the mace with tactics, not at every chance:</p>
+<ul>
+  <li><strong>Launch and smash:</strong> it launches with a wind charge or a jump only when the smash can land: close
+  enough, shield down, target not running, and a few seconds between launches.</li>
+  <li><strong>Pearl launch</strong> (<code>mace-pearl-launch</code>): throws a pearl and pops a wind charge on it
+  mid-flight, going far higher.</li>
+  <li><strong>Not always the mace:</strong> <code>special-weapon-melee-chance</code> of the time it fights with an
+  ordinary weapon.</li>
+  <li><strong>Wind Burst:</strong> a smash with a Wind Burst mace throws it back up for the next one
+  (<code>jump-reset</code> chains smashes).</li>
+  <li><strong>Defence:</strong> against an incoming smash it raises a shield (<code>mace-defence-shield</code>), gets out
+  of the way (<code>mace-defence-flee</code>) or takes it. <code>mace-totem-chance</code> of the time it keeps a totem
+  in the offhand instead of a shield.</li>
+</ul>
+
+<h3 id="elytra-mace">Elytra mace<a class="anchor" href="#elytra-mace" aria-hidden="true">#</a></h3>
+<p>With <code>elytra-mace</code> (needs elytra, rockets and a mace) the bot:</p>
+<ol>
+  <li>climbs on rockets above the fight, to <code>elytra-mace-height</code> blocks;</li>
+  <li>dives at where you're heading;</li>
+  <li>smashes without landing: it drops the glide for the swing and picks it up again straight after, as a player does;</li>
+  <li>climbs back up for another pass.</li>
+</ol>
+<p>A last-moment sidestep gets out of the way.</p>
+<p>With no rockets it uses whatever height it has: if Wind Burst, a wind charge, a pearl or a drop takes it up high, it
+opens the elytra, glides over you and dives.</p>
+
+<h2 id="cart-pvp">Cart PvP<a class="anchor" href="#cart-pvp" aria-hidden="true">#</a></h2>
+<p>With <code>cart-pvp</code> (needs a Flame bow, arrows, rails and TNT minecarts) the bot:</p>
+<ol>
+  <li>draws the bow and looses;</li>
+  <li>puts a rail and a TNT minecart in the arrow's path;</li>
+  <li>the arrow sets the cart off at your feet.</li>
+</ol>
+<p>Before doing it, it works out the damage with vanilla's own explosion formula (distance, blocks in the way, armour,
+Protection, difficulty). It only goes ahead if:</p>
+<ul>
+  <li>the trade favours it;</li>
+  <li>its average damage taken is under <code>cart-max-self-damage</code>;</li>
+  <li>not even the worst roll can kill it (unless it holds a totem);</li>
+  <li>no ally is in the blast.</li>
+</ul>
+
+<h2 id="weapon-swapping">Weapon swapping<a class="anchor" href="#weapon-swapping" aria-hidden="true">#</a></h2>
+<p><code>attribute-swap</code> is the master switch for three techniques:</p>
+<ul>
+  <li><code>breach-swap</code>: hits with a sword carrying the mace's Breach/Density enchantments;</li>
+  <li><code>mace-stun</code>: an axe to break the shield, then the mace straight after;</li>
+  <li><code>spear-lunge</code>: chained spear jabs to close distance (needs Lunge).</li>
+</ul>
+<p>The rate limit is <code>swap-cooldown</code>.</p>
+
+<h2 id="bows-and-crossbows">Bows and crossbows<a class="anchor" href="#bows-and-crossbows" aria-hidden="true">#</a></h2>
+<ul>
+  <li>Holds <code>ranged-optimal-range</code> and switches to melee under <code>ranged-min-range</code>.</li>
+  <li>With <code>arrow-prediction</code> it leads moving targets.</li>
+  <li>Fires in volleys (<code>ranged-volley-size</code>), then stops for <code>ranged-rest-ticks</code> and closes in.</li>
+  <li>Against mace users: if it saw you holding a mace in the last few seconds, it loads a Slow Falling arrow first.</li>
+</ul>
+
+<h2 id="survival">Survival<a class="anchor" href="#survival" aria-hidden="true">#</a></h2>
+<ul>
+  <li><strong>Totems</strong> (<code>auto-totem</code>): into the hand under <code>totem-health</code>, after a short
+  pause (<code>totem-delay-ticks</code>).</li>
+  <li><strong>Food, shield, potions:</strong> eats without waste, blocks when hurt, drinks healing potions and eats golden
+  apples. It won't use an enchanted apple while it has a plain one. Buff potions (<code>buff-potions</code>) only when
+  there's actually a fight.</li>
+  <li><strong>Retreat</strong> (<code>retreat</code>): backs off when low.</li>
+  <li><strong>Pearls</strong> (<code>pearls</code>): to escape when nearly dead or to chase someone running away.</li>
+  <li><strong>Cobwebs</strong> (<code>cobwebs</code>): <code>cobweb-global-cooldown</code> stops a squad from chain-webbing
+  you.</li>
+  <li><strong>Water:</strong> an MLG bucket on long falls (<code>water-clutch</code>), scoops up the water you place
+  (<code>drain</code>), and when webbed tries to escape with water, sometimes fumbling.</li>
+  <li><strong>Repair</strong> (<code>auto-repair</code>): mends gear with Mending by collecting XP.</li>
+  <li><strong>Enemy stashes</strong> (<code>break-stashes</code>): breaks the shulker box or ender chest you place
+  mid-fight.</li>
+</ul>
+
+<h2 id="other">Other<a class="anchor" href="#other" aria-hidden="true">#</a></h2>
+<ul>
+  <li><strong>Orbital Strike Cannon</strong> (<code>orbital</code>): if the bot has the datapack's rods, it uses them
+  without blowing itself up. It won't fire at anyone inside the blast radius, runs after firing, and holds fire if an
+  ally is in the area.</li>
+  <li><strong>Stasis</strong> (<code>stasis</code>, off by default): blocks a killing hit and pulls the bot away like a
+  pearl, healing it to half health. It's used per faction (<code>/pvpbot faction set bosses stasis true</code>) for
+  characters that must not die.</li>
+</ul>
+</article>
+<nav class="pager"><a class="prev" href="settings.html"><small>← Previous</small>Settings</a><a class="next" href="factions.html"><small>Next →</small>Factions</a></nav>
+<div class="foot">PvpBot Wiki · for Paper and Spigot 1.21.11 / 26.2</div>
+</main>
+<aside class="toc"><h5>On this page</h5><a href="#a-human-opponent">A human opponent</a><a href="#picking-a-target">Picking a target</a><a href="#detection" class="sub">Detection</a><a href="#it-doesn-t-attack-at-once" class="sub">It doesn&#x27;t attack at once</a><a href="#melee">Melee</a><a href="#mace">Mace</a><a href="#elytra-mace" class="sub">Elytra mace</a><a href="#cart-pvp">Cart PvP</a><a href="#weapon-swapping">Weapon swapping</a><a href="#bows-and-crossbows">Bows and crossbows</a><a href="#survival">Survival</a><a href="#other">Other</a></aside>
+</div>
+<script src="assets/search-index.js"></script>
+<script src="assets/app.js"></script>
+</body>
+</html>

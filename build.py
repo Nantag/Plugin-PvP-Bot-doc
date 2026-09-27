@@ -8,8 +8,8 @@ previous/next) and written to the repository root, where GitHub Pages serves it 
 Content pages start with a small header:
 
     ---
-    title: Comandi
-    section: Riferimento
+    title: Commands
+    section: Reference
     order: 20
     icon: ⌨️
     lead: One sentence under the title.
@@ -25,7 +25,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent
 CONTENT = ROOT / "content"
 SITE_NAME = "PvpBot Wiki"
-SECTIONS = ["Introduzione", "Riferimento", "Funzioni", "Aiuto"]
+SECTIONS = ["Getting started", "Reference", "Features", "Help"]
 
 
 def parse(path):
@@ -43,7 +43,7 @@ def parse(path):
         "slug": slug,
         "url": "index.html" if slug == "index" else slug + ".html",
         "title": meta.get("title", slug),
-        "section": meta.get("section", "Funzioni"),
+        "section": meta.get("section", "Features"),
         "order": int(meta.get("order", "100")),
         "icon": meta.get("icon", "•"),
         "lead": meta.get("lead", ""),
@@ -79,8 +79,8 @@ def strip_tags(s):
 
 def settings_tables():
     schema = json.loads((CONTENT / "data" / "settings-schema.json").read_text(encoding="utf-8"))
-    italian = json.loads((CONTENT / "data" / "settings-it.json").read_text(encoding="utf-8"))
-    code_defaults = italian.get("_code_defaults", {})
+    described = json.loads((CONTENT / "data" / "settings-text.json").read_text(encoding="utf-8"))
+    code_defaults = described.get("_code_defaults", {})
     groups = {}
     for e in schema:
         groups.setdefault(e["group"], []).append(e)
@@ -104,12 +104,12 @@ def settings_tables():
     for group, entries in groups.items():
         rows = []
         for e in entries:
-            desc = italian.get(e["key"], e["help"])
+            desc = described.get(e["key"], e["help"])
             rows.append(
                 "<tr><td><code>{k}</code></td><td class=\"def\"><code>{d}</code></td><td class=\"def\">{r}</td><td>{h}</td></tr>".format(
                     k=html.escape(e["key"]), d=html.escape(fmt_default(e)), r=html.escape(fmt_range(e)), h=desc))
-        tables[group] = ("<div class=\"table-wrap\"><table class=\"settings\"><thead><tr><th>Nome</th><th>Predefinito</th><th>Valori</th>"
-                         "<th>Cosa fa</th></tr></thead><tbody>" + "".join(rows) + "</tbody></table></div>")
+        tables[group] = ("<div class=\"table-wrap\"><table class=\"settings\"><thead><tr><th>Setting</th><th>Default</th><th>Values</th>"
+                         "<th>What it does</th></tr></thead><tbody>" + "".join(rows) + "</tbody></table></div>")
     return tables
 
 
@@ -137,24 +137,24 @@ def page_html(p, pages, body, toc):
     prev_p = pages[i - 1] if i > 0 else None
     next_p = pages[i + 1] if i + 1 < len(pages) else None
     pager = '<nav class="pager">'
-    pager += (f'<a class="prev" href="{prev_p["url"]}"><small>← Precedente</small>{html.escape(prev_p["title"])}</a>'
+    pager += (f'<a class="prev" href="{prev_p["url"]}"><small>← Previous</small>{html.escape(prev_p["title"])}</a>'
               if prev_p else "<span></span>")
-    pager += (f'<a class="next" href="{next_p["url"]}"><small>Successiva →</small>{html.escape(next_p["title"])}</a>'
+    pager += (f'<a class="next" href="{next_p["url"]}"><small>Next →</small>{html.escape(next_p["title"])}</a>'
               if next_p else "<span></span>")
     pager += "</nav>"
     toc_html = ""
     if toc:
         sub = ' class="sub"'
-        toc_html = "<h5>In questa pagina</h5>" + "".join(
+        toc_html = "<h5>On this page</h5>" + "".join(
             f'<a href="#{hid}"{sub if lvl == 3 else ""}>{html.escape(text)}</a>' for lvl, hid, text in toc)
     header = ""
     if not p["hero"]:
         header = (f'<div class="crumb">{html.escape(p["section"])}</div><h1>{html.escape(p["title"])}</h1>'
                   + (f'<p class="lead">{p["lead"]}</p>' if p["lead"] else ""))
     title = SITE_NAME if p["slug"] == "index" else f'{p["title"]} · {SITE_NAME}'
-    desc = strip_tags(p["lead"]) or "Documentazione di PvpBot, il plugin di bot PvP per Paper e Spigot."
+    desc = strip_tags(p["lead"]) or "Documentation for PvpBot, the PvP bot plugin for Paper and Spigot."
     return f"""<!doctype html>
-<html lang="it">
+<html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -170,11 +170,11 @@ def page_html(p, pages, body, toc):
   <a class="brand" href="index.html"><span class="logo">⚔</span>PvpBot <small>Wiki</small></a>
   <div class="search">
     <span class="icon">⌕</span>
-    <input id="q" type="search" placeholder="Cerca nella wiki…" autocomplete="off" aria-label="Cerca">
+    <input id="q" type="search" placeholder="Search the wiki…" autocomplete="off" aria-label="Search">
     <kbd>/</kbd>
     <div class="results" id="results"></div>
   </div>
-  <button class="icon-btn" id="theme" aria-label="Tema chiaro o scuro">☾</button>
+  <button class="icon-btn" id="theme" aria-label="Light or dark theme">☾</button>
 </header>
 <div class="layout">
 <nav class="sidebar">
@@ -186,7 +186,7 @@ def page_html(p, pages, body, toc):
 {body}
 </article>
 {pager}
-<div class="foot">PvpBot Wiki · per Paper 26.2 e Spigot 1.21.11 / 26.2</div>
+<div class="foot">PvpBot Wiki · for Paper and Spigot 1.21.11 / 26.2</div>
 </main>
 <aside class="toc">{toc_html}</aside>
 </div>

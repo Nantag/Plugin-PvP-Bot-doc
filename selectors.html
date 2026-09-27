@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Selectors · PvpBot Wiki</title>
+<meta name="description" content="How to point one command at one bot, many bots or all of them.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22%3E%3Ctext y=%22.9em%22 font-size=%2290%22%3E%E2%9A%94%EF%B8%8F%3C/text%3E%3C/svg%3E">
+<link rel="stylesheet" href="assets/style.css">
+<script>try{var t=localStorage.getItem('pvpbot-theme');if(t)document.documentElement.setAttribute('data-theme',t)}catch(e){}</script>
+</head>
+<body>
+<header class="topbar">
+  <button class="icon-btn menu-btn" id="menu" aria-label="Menu">☰</button>
+  <a class="brand" href="index.html"><span class="logo">⚔</span>PvpBot <small>Wiki</small></a>
+  <div class="search">
+    <span class="icon">⌕</span>
+    <input id="q" type="search" placeholder="Search the wiki…" autocomplete="off" aria-label="Search">
+    <kbd>/</kbd>
+    <div class="results" id="results"></div>
+  </div>
+  <button class="icon-btn" id="theme" aria-label="Light or dark theme">☾</button>
+</header>
+<div class="layout">
+<nav class="sidebar">
+<h4>Getting started</h4>
+<a href="index.html"><span class="ico">🏠</span>Home</a>
+<a href="installation.html"><span class="ico">📦</span>Installation</a>
+<a href="quick-start.html"><span class="ico">🚀</span>Quick start</a>
+<h4>Reference</h4>
+<a href="commands.html"><span class="ico">⌨️</span>Commands</a>
+<a href="selectors.html" class="active"><span class="ico">🎯</span>Selectors</a>
+<a href="settings.html"><span class="ico">⚙️</span>Settings</a>
+<h4>Features</h4>
+<a href="combat.html"><span class="ico">⚔️</span>Combat</a>
+<a href="factions.html"><span class="ico">🏳️</span>Factions</a>
+<a href="kits-and-presets.html"><span class="ico">🎒</span>Kits and presets</a>
+<a href="movement.html"><span class="ico">🧭</span>Movement and orders</a>
+<a href="scripts.html"><span class="ico">📜</span>Scripts</a>
+<a href="companions.html"><span class="ico">🐺</span>Companions</a>
+<a href="skins.html"><span class="ico">🎭</span>Skins and names</a>
+<a href="ghosts.html"><span class="ico">👻</span>Ghosts</a>
+<h4>Help</h4>
+<a href="troubleshooting.html"><span class="ico">🩺</span>Troubleshooting</a>
+<a href="spigot.html"><span class="ico">🔧</span>Spigot edition</a>
+</nav>
+<main class="content">
+<article>
+<div class="crumb">Reference</div><h1>Selectors</h1><p class="lead">How to point one command at one bot, many bots or all of them.</p>
+<p>Most orders take a <strong>selector</strong> in place of a bot's name. It works the same everywhere:
+<code>follow</code>, <code>retreat</code>, <code>hide</code>, <code>tether</code>, <code>tp portal/pearl/rift</code>,
+<code>path assign/stop</code>, <code>faction join</code>, <code>kit give</code> and <code>kit givefaction</code>. The
+<a href="commands.html">command list</a> writes it as <code>&lt;selector&gt;</code>.</p>
+
+<h2 id="list">List<a class="anchor" href="#list" aria-hidden="true">#</a></h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Selector</th><th>Who it picks</th></tr></thead>
+<tbody>
+<tr><td><code>&lt;name&gt;</code></td><td>One bot, by name.</td></tr>
+<tr><td><code>all</code></td><td>Every active bot.</td></tr>
+<tr><td><code>latest</code></td><td>Every bot from the last <code>spawn</code> command that is still around.</td></tr>
+<tr><td><code>faction &lt;name&gt;</code></td><td>A faction's active bots.</td></tr>
+<tr><td><code>overfaction &lt;name&gt;</code> or <code>of &lt;name&gt;</code></td><td>The active bots of every faction in a coalition.</td></tr>
+<tr><td><code>random</code></td><td>One bot at random.</td></tr>
+<tr><td><code>random[filters]</code></td><td>Random bots that pass every filter (see below).</td></tr>
+<tr><td><code>list:a,b,c</code></td><td>An explicit list of names. Mostly used by <a href="scripts.html">scripts</a>.</td></tr>
+</tbody></table></div>
+
+<div class="callout"><span class="t">Commands with fewer options</span>
+<code>guard</code>, <code>pause</code>, <code>resume</code> and the instant <code>tp</code> only take <code>&lt;bot&gt;</code>,
+<code>all</code> or <code>faction &lt;name&gt;</code>. <code>follow stop</code> and <code>guard stop</code> take a name
+or <code>all</code>.</div>
+
+<h2 id="random">random[...]<a class="anchor" href="#random" aria-hidden="true">#</a></h2>
+<p>Picks at random among the bots that pass <em>every</em> filter. Filters are <code>key=value</code> pairs separated by
+commas; spaces after the commas are fine.</p>
+<div class="table-wrap"><table>
+<thead><tr><th>Filter</th><th>Meaning</th></tr></thead>
+<tbody>
+<tr><td><code>limit=&lt;n&gt;</code></td><td>How many bots at most (default 1).</td></tr>
+<tr><td><code>nofaction=true|false</code></td><td>Only bots with no faction, or only bots in one.</td></tr>
+<tr><td><code>paused=true|false</code></td><td>Only paused bots, or only running ones.</td></tr>
+<tr><td><code>world=&lt;name&gt;</code></td><td>Only bots in that world.</td></tr>
+<tr><td><code>alreadyhaskit=true|false</code></td><td>Only bots already carrying something, or only empty-handed ones.</td></tr>
+</tbody></table></div>
+<div class="callout warn"><span class="t">alreadyhaskit is an approximation</span>
+The plugin doesn't record which kit a bot was given, so the filter only checks whether the inventory is empty. A bot
+that picked an item up off the ground counts as "already has a kit".</div>
+
+<h2 id="examples">Examples<a class="anchor" href="#examples" aria-hidden="true">#</a></h2>
+<pre><code>/pvpbot kit give iron random[limit=5,alreadyhaskit=false]
+/pvpbot faction join bandits random[limit=3, nofaction=true]
+/pvpbot tp pearl random[limit=10,world=world] Steve 30
+/pvpbot follow faction red Steve circle
+/pvpbot retreat overfaction north to 100 64 -250
+/pvpbot hide latest</code></pre>
+</article>
+<nav class="pager"><a class="prev" href="commands.html"><small>← Previous</small>Commands</a><a class="next" href="settings.html"><small>Next →</small>Settings</a></nav>
+<div class="foot">PvpBot Wiki · for Paper and Spigot 1.21.11 / 26.2</div>
+</main>
+<aside class="toc"><h5>On this page</h5><a href="#list">List</a><a href="#random">random[...]</a><a href="#examples">Examples</a></aside>
+</div>
+<script src="assets/search-index.js"></script>
+<script src="assets/app.js"></script>
+</body>
+</html>

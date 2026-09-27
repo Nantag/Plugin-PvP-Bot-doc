@@ -1,0 +1,69 @@
+---
+title: Installation
+section: Getting started
+order: 10
+icon: 📦
+lead: Which jar to use, what the server needs and which plugins get along with PvpBot.
+---
+<h2>Requirements</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Server</th><th>Version</th><th>Java</th><th>Jar</th></tr></thead>
+<tbody>
+<tr><td>Paper</td><td>26.2</td><td>25 or newer</td><td>Paper edition</td></tr>
+<tr><td>Paper</td><td>1.21.11</td><td>21 or newer</td><td>Paper edition (1.21.11 build)</td></tr>
+<tr><td>Spigot</td><td>26.2</td><td>25 or newer</td><td>Spigot 26.2 edition</td></tr>
+<tr><td>Spigot</td><td>1.21.11</td><td>21 or newer</td><td>Spigot 1.21.11 edition</td></tr>
+</tbody></table></div>
+<p>Each jar only works on its own platform and version: PvpBot uses server internals to create the bots, so a Paper jar
+won't start on Spigot and vice versa. The features are the same in every edition (see
+<a href="spigot.html">Spigot edition</a>).</p>
+
+<h2>Steps</h2>
+<ol>
+  <li>Stop the server.</li>
+  <li>Put the right jar in the <code>plugins/</code> folder.</li>
+  <li>Start the server. PvpBot creates <code>plugins/PvpBot/config.yml</code> with every setting commented.</li>
+  <li>As an op, run <code>/pvpbot spawn</code>. If a bot appears, you're set.</li>
+</ol>
+<div class="callout tip"><span class="t">Updating from an older version</span>
+You don't need to delete <code>config.yml</code>. New settings missing from the file use their default value;
+<code>/pvpbot settings</code> marks them with <code>*</code> until you change them with <code>/pvpbot set</code>.</div>
+
+<h2>Permissions</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Permission</th><th>Default</th><th>Grants</th></tr></thead>
+<tbody>
+<tr><td><code>pvpbot.admin</code></td><td>op</td><td>Every <code>/pvpbot</code> (alias <code>/bot</code>) and <code>/ghost</code> command.</td></tr>
+</tbody></table></div>
+<p>Regular players need no permission to command the bots you hand them: they do it by typing in chat (see
+<a href="companions.html">Companions</a>).</p>
+
+<h2>Plugin files</h2>
+<p>Everything lives in <code>plugins/PvpBot/</code>:</p>
+<div class="table-wrap"><table>
+<thead><tr><th>File</th><th>Contents</th></tr></thead>
+<tbody>
+<tr><td><code>config.yml</code></td><td>Settings, presets, skins, name tables, the companions' world.</td></tr>
+<tr><td><code>bots.yml</code></td><td>The active bots, brought back after a restart if <code>bots-relog</code> is on.</td></tr>
+<tr><td><code>factions.yml</code></td><td>Factions, members, relations, leaders, overfactions, per-faction settings and kit tables.</td></tr>
+<tr><td><code>kits.yml</code></td><td>Saved kits.</td></tr>
+<tr><td><code>scripts.yml</code></td><td>Saved scripts.</td></tr>
+<tr><td><code>paths.yml</code></td><td>Patrol routes.</td></tr>
+<tr><td><code>ownership.yml</code></td><td>Which player owns which bot.</td></tr>
+<tr><td><code>skin-cache.yml</code></td><td>Skins already fetched, so restarts don't ask Mojang again.</td></tr>
+<tr><td><code>ghost-recordings/</code></td><td>Paths recorded with <code>/ghost record</code>.</td></tr>
+</tbody></table></div>
+<p>After editing a file by hand, run <code>/pvpbot reload</code>.</p>
+
+<h2>Compatible plugins</h2>
+<h3>SkinsRestorer</h3>
+<p>Optional. If it's installed, PvpBot stores each fetched skin directly in its storage, so SkinsRestorer doesn't
+overwrite it with a default one when the bot joins.</p>
+<h3>Login plugins (AuthMe, LoginTo)</h3>
+<p>A bot can't type <code>/login</code>, so login plugins would keep it locked forever (the usual symptom is a bot that
+hops on the spot and takes no damage). With <code>auth-autologin: true</code>, on by default, PvpBot registers every bot
+as already logged in. Nothing changes for real players. See <a href="troubleshooting.html">Troubleshooting</a> if that
+isn't enough.</p>
+<h3>Protection (WorldGuard, GriefPrevention, claims)</h3>
+<p>Every block a bot places or breaks goes through the server's normal events, so protection plugins see it and can
+refuse it. The same goes for the rails and carts of cart PvP.</p>
