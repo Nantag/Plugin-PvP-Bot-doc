@@ -5,9 +5,10 @@ order: 30
 lead: Everything finished on GitHub but not in the Modrinth download yet. It all ships with the next release.
 ---
 <p class="status"><span class="badge">Unreleased</span> This page lists what is in PvpBot's source but not in the build
-on Modrinth. The rest of the wiki describes the Modrinth build. 97 new settings and a dozen new commands; nothing is
-removed and every existing setting keeps its meaning. Most of the new behaviour is on by default, and the new
-techniques start off.</p>
+on Modrinth. The rest of the wiki describes the Modrinth build. 98 new settings, a dozen new commands and a chest menu for
+nearly everything. Every existing setting keeps its meaning. One command leaves: <code>/pvpbot tp rift</code> (see
+<a href="#leaving-pvpbot">Leaving PvpBot</a>). Most of the new behaviour is on by default, and the new techniques start
+off.</p>
 
 <p>In short: difficulty is no longer one slider, bots aim and land hits the way a player's crosshair does, and they read
 you, space, bait and tilt like people. They know 27 mace and spear techniques, regear from an ender chest, march in
@@ -32,7 +33,8 @@ globally. A bot's own values are kept by name in <code>bot-settings.yml</code>, 
 <ul>
   <li><strong>aggressive</strong> commits and stays in longer.</li>
   <li><strong>safe</strong> heals and pearls out early.</li>
-  <li><strong>defensive</strong> holds its patch of ground and lets you come to it.</li>
+  <li><strong>defensive</strong> stands its ground: it blocks more, punishes your mistakes, never chases past a few
+  blocks (it stops, faces you and lets you come back), never backs off to reset, and heals where it stands.</li>
   <li><strong>adaptive</strong> swings between aggressive and safe with the health race.</li>
   <li><strong>balanced</strong> sits in the middle, and <strong>default</strong> plays as bots always have.</li>
 </ul>
@@ -45,7 +47,8 @@ you choose.</p>
 /pvpbot randomplaystyle &lt;bots&gt;
 /pvpbot randomplaystylechances [list|reset|&lt;style&gt; &lt;weight&gt;]</code></pre>
 <p>The <strong>opening</strong> is new too. A bot walks a new opponent down the way a player does: drifting side to
-side, pausing to watch, arcing in over the last few blocks and only sprinting near the end. From the first hit either
+side, pausing to watch, arcing in over the last few blocks and only sprinting near the end. That careful walk is only
+the last stretch: from further off it sprints and hops in like anyone crossing open ground. From the first hit either
 way, it fights as always.</p>
 {{settings:next-behaviour}}
 
@@ -63,6 +66,23 @@ validate against, so nothing is ever missing from it.</p>
 /pvpbot settings bot &lt;bot&gt; | faction &lt;faction&gt;   one bot's or one faction's values
 /pvpbot settings list [group|word]               printed in chat instead
 /pvpbot faction settings &lt;faction&gt; [word]        the faction's screen, with what it changes marked</code></pre>
+
+<h2>Menus and the kit editor</h2>
+<p><code>/pvpbot menu</code> opens a hub of chest menus, and every button runs the matching <code>/pvpbot</code> command,
+so permissions and replies are the same as typing it.</p>
+<ul>
+  <li><strong>Bots:</strong> a head for each bot. Its panel opens its bag or ender chest live, gives it a kit,
+  restocks it, sets its faction, sends it to follow or fight, pauses or removes it.</li>
+  <li><strong>Kits:</strong> edit, wear, hand out, delete, or make a new one (named in chat).</li>
+  <li><strong>Factions:</strong> members, kit odds, recruit bots nearby, follow, formation, war, peace and alliance,
+  uniform, disband.</li>
+  <li><strong>Presets, settings and techniques.</strong></li>
+</ul>
+<p>The <strong>kit editor</strong> lays a kit out like an inventory (bag, hotbar, armour, off-hand), with a second page
+for the kit's ender chest. Kits now keep every item component, so things like shield banners are no longer lost.</p>
+<pre><code>/pvpbot menu
+/pvpbot kit edit &lt;name&gt;
+/pvpbot kit rename &lt;old&gt; &lt;new&gt;      faction kit tables follow the new name</code></pre>
 
 <h2>Aim that decides hits</h2>
 <p>A swing now lands <strong>where the crosshair is</strong>, the way a player's client picks what it hits, instead of
@@ -146,6 +166,10 @@ setting. The ones bots already used start on, the new ones start off.</p>
 
 <h2>Survival, webs and escapes</h2>
 <ul>
+  <li><strong>Backing off to heal</strong> follows the open ground, not a straight line away. The bot looks round for
+  the most open way out that still leads away from you (never into a wall or off a drop), sprint-jumps along it while
+  there's room, and stops about ten blocks off. Cornered, it turns and fights instead of pressing into the wall. While a
+  gapple or potion is up it eases back facing you, the way a player eats.</li>
   <li><strong>Advanced healing:</strong> it buys a gap before it heals (a knockback hit, a web on you, or a short
   pearl) instead of eating in your face. <code>healing: old</code> brings back the previous behaviour.</li>
   <li><strong>Off-hand preference</strong> (auto, totem or shield), a totem in the main hand when a smash is about to
@@ -161,9 +185,12 @@ setting. The ones bots already used start on, the new ones start off.</p>
 
 <h2>Regearing</h2>
 <p>A bot regears from its <strong>ender chest</strong> the way it's done on an SMP: it pearls away, sets the chest down
-beside it, takes out a shulker, restocks only what it's short of and packs it all back. It waits for room first and
-recovers everything if you catch it mid-way. It can also restock from a shulker box placed nearby, or mine yours out from
-under you.</p>
+beside it, takes what it's short of (loose, or out of a shulker inside) and packs it all back. It waits for room first and
+recovers everything if you catch it mid-way. A <strong>shulker box in its bag</strong> works too, with no ender chest
+needed. It can also restock from a shulker box placed nearby, or mine yours out from under you.</p>
+<p>Every step is played out by hand, so you can watch it: the chest or box comes up in its hand and is placed with a
+swing and its sound, opened with the lid moving, emptied one stack at a time, closed, and mined with its best pickaxe over
+the real break time (everyone near sees the crack), and then the drop is picked up. How fast it goes follows skill.</p>
 <pre><code>/pvpbot restock &lt;bot|all|faction &lt;name&gt;&gt; [instant]   regear now
 /pvpbot view inventory|enderchest &lt;bot&gt;             a bot's bag or ender chest, live and editable</code></pre>
 {{settings:next-regear}}
@@ -255,12 +282,27 @@ client version. It lists every bot within 48 blocks, with whether it would fight
   <li><strong>Spear-macers actually smash:</strong> the spear dash now solves the velocity that lands on the target,
   and the smash is always swung with the mace.</li>
   <li>The opening walk-in ends once the gap has been growing for half a second, so a bot chases someone running.</li>
+  <li><strong>Followers keep up:</strong> a formation no longer falls behind once the leader moves. A follower more than
+  a few blocks off its spot sprints back; close to it, it walks at full speed while the leader walks; it only eases in
+  when the leader stops.</li>
+  <li><strong>Looks at what it uses:</strong> a bot looks at the block before it places water or a block, scoops water
+  back, or breaks something, and its arm swings like a click. Water clutches no longer happen looking straight
+  ahead.</li>
+  <li><strong>Elytra mace without rockets</strong> builds a real smash: it glides toward you, then closes its wings and
+  drops once a fall would land on you, so every block counts. A Wind Burst hit throws it up for another go (three at
+  most). With rockets it makes two passes a flight at most and rests 9 to 14 seconds after one.</li>
+  <li><strong>Cart PvP</strong> no longer stands there with a drawn bow. The bow only comes up once there's a spot that
+  works. When shooting first would hurt it too much it <em>sets and pops</em>: rail and cart down next to you, out of its
+  own blast, then a quick arrow while you're still on it.</li>
 </ul>
 
+<h2>Leaving PvpBot</h2>
+<p><code>/pvpbot tp rift</code> is no longer part of PvpBot. <code>tp portal</code> and <code>tp pearl</code> stay.</p>
+
 <h2>For plugin developers</h2>
-<p>A new extension point, <code>BotArsenal</code>, lets another plugin teach bots to use its own gear: guns, grenades,
-medical items, special armour. With no add-on installed nothing changes. A handler registers once and is asked at fixed
-points in every bot's combat tick:</p>
+<p>An add-on API, <code>BotAddons</code>, lets another plugin teach bots to use its own gear and ways of getting about:
+guns, grenades, medical items, special armour, a lift or a launcher. With no add-on installed nothing changes. An add-on
+implements <code>BotAddon</code> (every hook defaults to "not mine") and is asked at fixed points in every bot's tick:</p>
 <div class="table-wrap">
 <table>
 <thead><tr><th>Hook</th><th>When</th></tr></thead>
@@ -268,15 +310,19 @@ points in every bot's combat tick:</p>
 <tr><td><code>override</code></td><td>Right after the target is chosen, ahead of eating, pearls and retreats.</td></tr>
 <tr><td><code>fight</code></td><td>With a target, ahead of every built-in attack. Returning false falls through to
 PvpBot's own play.</td></tr>
-<tr><td><code>idle</code></td><td>With no target (or while hiding), ahead of guarding and escorting.</td></tr>
+<tr><td><code>idle</code></td><td>With no target, ahead of guarding, escorting and wandering.</td></tr>
+<tr><td><code>route</code></td><td>Whenever a bot walks somewhere, ahead of its own pathfinding: a transport the add-on
+runs.</td></tr>
 <tr><td><code>blocksSight</code></td><td>Whenever a bot looks for a target: something only the add-on knows about (a smoke
 cloud) can hide a player.</td></tr>
 </tbody>
 </table>
 </div>
 <p><code>holdsHand</code>, <code>reserved</code> and <code>armourScore</code> keep PvpBot's own auto-equip, bow code and
-armour picker out of the add-on's way. FirearmsBots is the first add-on built on it.</p>
-<pre><code>BotArsenal.register(new BotArsenal.Handler() {
+armour picker out of the add-on's way. Add-ons are asked in the order they registered, the first to claim something has
+it, and a plugin's add-ons are dropped when it is disabled. The hooks run on the main thread for every bot every tick, so
+keep them cheap.</p>
+<pre><code>BotAddons.register(plugin, new BotAddon() {
     @Override
     public boolean fight(Player bot, Entity target, BotSettings settings) {
         return false;   // fight with your gear, or hand the tick back
