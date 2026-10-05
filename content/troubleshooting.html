@@ -2,12 +2,13 @@
 title: Troubleshooting
 section: Help
 order: 10
-icon: 🩺
 lead: The usual reasons a bot won't move, won't take damage or won't attack, and how to fix them.
 ---
 <div class="callout tip"><span class="t">Always start here</span>
 <code>/pvpbot diagnose &lt;bot&gt;</code> checks the bot and tells you what's blocking it: game mode, damage immunity,
-login plugins, plugins cancelling damage, movement or knockback, and the last knockback it took.</div>
+login plugins, plugins cancelling damage, movement or knockback, and the last knockback it took.
+In the <a href="next-update.html">next update</a>, <code>/pvpbot diagnose &lt;player&gt;</code> does the same from the
+other side: why bots can't hurt a particular player.</div>
 
 <h2>The bot hops on the spot and won't move</h2>
 <p>It's almost always a <strong>login plugin</strong> (AuthMe, LoginTo…). A bot can't type <code>/login</code>, so the

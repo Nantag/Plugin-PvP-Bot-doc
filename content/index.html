@@ -2,57 +2,77 @@
 title: Home
 section: Getting started
 order: 0
-icon: 🏠
 lead: AI-driven PvP bots for Paper and Spigot servers.
 hero: true
 ---
-<div class="hero">
+<header class="intro">
+  <p class="eyebrow">Paper &amp; Spigot · 1.21.11 and 26.2</p>
   <h1>PvpBot</h1>
-  <p class="lead">AI-driven PvP bots for Paper and Spigot servers. They are real fake players: they fight, move, gear up
-  and think like people, not like mobs.</p>
-  <div class="actions">
+  <p class="lead">Bots that join your server as real players and fight the way people do: jump crits, shields, the
+  mace, bows, pearls, cobwebs and water buckets. Built to train against and record with, not to win every fight.</p>
+  <p class="actions">
     <a class="btn primary" href="https://modrinth.com/plugin/pvp-bot-plugin-pvpbp">Download on Modrinth</a>
-    <a class="btn" href="quick-start.html">Start in 5 minutes →</a>
-    <a class="btn" href="commands.html">All commands</a>
-    <a class="btn" href="settings.html">Settings</a>
-  </div>
-</div>
+    <a class="btn" href="quick-start.html">Quick start</a>
+    <a class="next-link" href="next-update.html">What's in the next update →</a>
+  </p>
+</header>
 
-<h2>What PvpBot is</h2>
-<p>PvpBot adds <strong>bots that are real players</strong> (with no client attached). To the server and to other plugins
-they are people like anyone else: they have an inventory, armour, hunger, potions and effects. They fight with the same
-weapons and tricks as a real player: jump crits, the mace, shields, bows, pearls, cobwebs, water buckets.</p>
-<p>The goal is <strong>an opponent to train against and record with</strong>, not a terminator. Nothing a bot does is
-frame-perfect: the <code>skill</code> dial (0–100) sets how fast its reactions, timing and aim are, and even at 100
-there is a gap to play around.</p>
+<h2>What it is</h2>
+<p>A PvpBot bot is a <strong>player with no client attached</strong>. To the server and every other plugin it is a
+person like anyone else: it has an inventory, armour, hunger, potion effects and a skin, and it takes knockback and
+damage the vanilla way.</p>
+<p>Nothing it does is frame-perfect. One <code>skill</code> dial, from 0 to 100, sets how quickly it reacts, how well it
+times a swing and how far off its aim lands. Even at 100 there is a gap to play around.</p>
 
-<h2>Where to start</h2>
-<div class="cards">
-  <a class="card" href="installation.html"><span class="ci">📦</span><b>Installation</b><span>Which jar to use, requirements and compatible plugins.</span></a>
-  <a class="card" href="quick-start.html"><span class="ci">🚀</span><b>Quick start</b><span>Your first bot, first fight and first faction.</span></a>
-  <a class="card" href="commands.html"><span class="ci">⌨️</span><b>Commands</b><span>Every <code>/pvpbot</code> and <code>/ghost</code> command, grouped.</span></a>
-  <a class="card" href="selectors.html"><span class="ci">🎯</span><b>Selectors</b><span>How to order one bot, a faction or a random group.</span></a>
-  <a class="card" href="settings.html"><span class="ci">⚙️</span><b>Settings</b><span>All 116 options with defaults and limits.</span></a>
-  <a class="card" href="troubleshooting.html"><span class="ci">🩺</span><b>Troubleshooting</b><span>Bots that are immortal, stuck or won't attack.</span></a>
-</div>
-
-<h2>What it can do</h2>
-<div class="cards">
-  <a class="card" href="combat.html"><span class="ci">⚔️</span><b>Combat</b><span>Melee, mace, elytra mace, cart PvP, bows with lead prediction, shields.</span></a>
-  <a class="card" href="movement.html"><span class="ci">🧭</span><b>Movement</b><span>A* pathfinding, bhop, bridging and pillaring, boats, guards, patrols.</span></a>
-  <a class="card" href="factions.html"><span class="ci">🏳️</span><b>Factions</b><span>War, peace, alliances, leaders, overfactions and per-faction settings.</span></a>
-  <a class="card" href="kits-and-presets.html"><span class="ci">🎒</span><b>Kits and presets</b><span>Saved loadouts and difficulty profiles in one command.</span></a>
-  <a class="card" href="scripts.html"><span class="ci">📜</span><b>Scripts</b><span>Whole scenarios saved under a name, with parameters and pauses.</span></a>
-  <a class="card" href="companions.html"><span class="ci">🐺</span><b>Companions</b><span>Bots handed to a player, who orders them around in chat.</span></a>
-  <a class="card" href="skins.html"><span class="ci">🎭</span><b>Skins and names</b><span>Real or random skins, themed name tables.</span></a>
-  <a class="card" href="ghosts.html"><span class="ci">👻</span><b>Ghosts</b><span>Scenic NPCs that replay a recorded path or stare at you.</span></a>
+<h2>The manual</h2>
+<div class="index">
+  <section>
+    <p class="index-h">Getting started</p>
+    <dl>
+      <dt><a href="installation.html">Installation</a></dt><dd>Which jar to use, requirements, compatible plugins.</dd>
+      <dt><a href="quick-start.html">Quick start</a></dt><dd>A first bot, a first fight, a first faction.</dd>
+      <dt><a href="next-update.html">Next update</a></dt><dd>Finished on GitHub, not on Modrinth yet.</dd>
+    </dl>
+  </section>
+  <section>
+    <p class="index-h">Reference</p>
+    <dl>
+      <dt><a href="commands.html">Commands</a></dt><dd>Every <code>/pvpbot</code> and <code>/ghost</code> command.</dd>
+      <dt><a href="selectors.html">Selectors</a></dt><dd>Ordering one bot, a faction or a random group.</dd>
+      <dt><a href="settings.html">Settings</a></dt><dd>All 116 options, with defaults and limits.</dd>
+    </dl>
+  </section>
+  <section>
+    <p class="index-h">Features</p>
+    <dl>
+      <dt><a href="combat.html">Combat</a></dt><dd>Melee, mace, elytra mace, cart PvP, bows, shields.</dd>
+      <dt><a href="movement.html">Movement</a></dt><dd>Pathfinding, bridging, boats, guards and patrols.</dd>
+      <dt><a href="factions.html">Factions</a></dt><dd>War, peace, alliances, leaders and overfactions.</dd>
+      <dt><a href="kits-and-presets.html">Kits and presets</a></dt><dd>Saved loadouts and difficulty profiles.</dd>
+      <dt><a href="scripts.html">Scripts</a></dt><dd>Whole scenarios saved under a name.</dd>
+      <dt><a href="companions.html">Companions</a></dt><dd>Bots a player orders around in chat.</dd>
+      <dt><a href="skins.html">Skins and names</a></dt><dd>Real or random skins, themed name tables.</dd>
+      <dt><a href="ghosts.html">Ghosts</a></dt><dd>Scenery NPCs that replay a path or watch you.</dd>
+    </dl>
+  </section>
+  <section>
+    <p class="index-h">Help</p>
+    <dl>
+      <dt><a href="troubleshooting.html">Troubleshooting</a></dt><dd>Bots that are immortal, stuck or won't attack.</dd>
+      <dt><a href="spigot.html">Spigot edition</a></dt><dd>What differs from the Paper build.</dd>
+    </dl>
+  </section>
 </div>
 
 <h2>At a glance</h2>
-<ul>
-  <li><strong>Download:</strong> <a href="https://modrinth.com/plugin/pvp-bot-plugin-pvpbp">PvpBot on Modrinth</a>.</li>
-  <li><strong>Servers:</strong> Paper 1.21.11 and 26.2, Spigot 1.21.11 and 26.2 (separate jars).</li>
-  <li><strong>Commands:</strong> <code>/pvpbot</code> (alias <code>/bot</code>) and <code>/ghost</code>.</li>
-  <li><strong>Permission:</strong> <code>pvpbot.admin</code>, ops by default.</li>
-  <li><strong>Dependencies:</strong> none required. SkinsRestorer is supported if installed.</li>
-</ul>
+<div class="table-wrap">
+<table class="facts">
+<tbody>
+<tr><th>Servers</th><td>Paper 1.21.11 and 26.2, Spigot 1.21.11 and 26.2 (one jar each)</td></tr>
+<tr><th>Commands</th><td><code>/pvpbot</code> (alias <code>/bot</code>) and <code>/ghost</code></td></tr>
+<tr><th>Permission</th><td><code>pvpbot.admin</code>, ops by default</td></tr>
+<tr><th>Dependencies</th><td>None. SkinsRestorer is used if it is installed.</td></tr>
+<tr><th>Download</th><td><a href="https://modrinth.com/plugin/pvp-bot-plugin-pvpbp">modrinth.com/plugin/pvp-bot-plugin-pvpbp</a></td></tr>
+</tbody>
+</table>
+</div>

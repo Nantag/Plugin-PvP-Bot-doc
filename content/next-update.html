@@ -1,0 +1,72 @@
+---
+title: Next update
+section: Getting started
+order: 30
+lead: What is finished on GitHub but not in the Modrinth download yet. It ships with the next release.
+---
+<p class="status"><span class="badge">Unreleased</span> Everything on this page is in PvpBot's source but not in the
+build on Modrinth. The rest of this wiki describes the Modrinth build.</p>
+
+<h2><code>/pvpbot diagnose</code> works on players</h2>
+<p><code>/pvpbot diagnose &lt;bot&gt;</code> explains why a bot can't fight. The new form answers the opposite question:
+<strong>why bots can't hurt a particular player</strong>.</p>
+<pre><code>/pvpbot diagnose &lt;player&gt;
+/pvpbot diagnose &lt;player&gt; reset</code></pre>
+<p>It reads the player's state the way the game's damage checks see it: game mode, the invulnerable flag, the game's
+own "client still loading" protection, hit invulnerability, a raised shield, a shared scoreboard team, PvP in the world,
+and the client brand and version (through ViaVersion if installed).</p>
+<p>Then it lists every bot within 48 blocks, with whether that bot would fight the player, what it is targeting, and
+whether it can see them.</p>
+<p>From the moment the server starts, every bot hit aimed at a real player is logged. The report shows what became of
+each one:</p>
+<div class="table-wrap">
+<table>
+<thead><tr><th>Outcome</th><th>What it means</th></tr></thead>
+<tbody>
+<tr><td>Turned away</td><td>The game refused the hit before any plugin saw it. The reason is checked on the spot: hit
+invulnerability, creative or spectator, an invulnerable flag, the loading protection, a team without friendly fire, or
+PvP off.</td></tr>
+<tr><td>Cancelled</td><td>A plugin stopped it. The report says at which event priority, which narrows down the plugin.</td></tr>
+<tr><td>Shield</td><td>Their raised shield took it.</td></tr>
+<tr><td>Zeroed</td><td>It went through with no damage left (a plugin, or armour and resistance).</td></tr>
+<tr><td>Landed</td><td>It hurt them.</td></tr>
+</tbody>
+</table>
+</div>
+<p>It ends with a one-line verdict. <code>reset</code> starts a fresh log. Melee swings, mace smashes, spear jabs and
+elytra strikes are all logged, and so are bot arrows. Both the Paper and the Spigot editions have it.</p>
+
+<h2>Blinded bots can't see</h2>
+<p>A bot with <strong>Blindness</strong> or <strong>Darkness</strong> no longer spots targets by sight. It only notices
+someone who comes within touching distance (about a block and a half). It still remembers who it was already fighting.
+A splash of blindness is now a real way to break off a fight.</p>
+
+<h2>Weapon add-ons</h2>
+<p>For plugin developers. PvpBot now has an extension point, <code>BotArsenal</code>, that lets another plugin teach bots
+to use its own gear: guns, grenades, medical items, special armour. With no add-on installed nothing changes.</p>
+<p>A handler registers once and is asked at fixed points in every bot's combat tick:</p>
+<div class="table-wrap">
+<table>
+<thead><tr><th>Hook</th><th>When</th></tr></thead>
+<tbody>
+<tr><td><code>override</code></td><td>Right after the target is chosen, ahead of eating, pearls and retreats.</td></tr>
+<tr><td><code>fight</code></td><td>With a target, ahead of every built-in attack. Handing the tick back falls through to
+PvpBot's own melee and ranged play.</td></tr>
+<tr><td><code>idle</code></td><td>With no target (or while hiding), ahead of guarding and escorting.</td></tr>
+<tr><td><code>blocksSight</code></td><td>Whenever a bot looks for a target: something only the add-on knows about (a smoke
+cloud) can hide a player.</td></tr>
+</tbody>
+</table>
+</div>
+<p>Three more keep PvpBot's own gear logic out of the way: <code>holdsHand</code> stops the weapon auto-equip while the
+add-on holds an item on purpose, <code>reserved</code> keeps the bow and crossbow code off the add-on's items, and
+<code>armourScore</code> lets the armour picker rank the add-on's armour.</p>
+<p>The first add-on is FirearmsBots: its bots fight with guns, grenades, cover, plates, meds and revives.</p>
+<pre><code>BotArsenal.register(new BotArsenal.Handler() {
+    @Override
+    public boolean fight(Player bot, Entity target, BotSettings settings) {
+        // fight with your gear; return false to let PvpBot fight as usual
+        return false;
+    }
+});</code></pre>
+

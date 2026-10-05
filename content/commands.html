@@ -2,7 +2,6 @@
 title: Commands
 section: Reference
 order: 10
-icon: ⌨️
 lead: Every <code>/pvpbot</code> and <code>/ghost</code> command, grouped by topic.
 ---
 <p>You need the <code>pvpbot.admin</code> permission (ops by default). <code>/bot</code> is an alias of <code>/pvpbot</code>.
@@ -171,6 +170,7 @@ alternatives. Wherever it says <code>&lt;selector&gt;</code> you can use a name,
 <thead><tr><th>Command</th><th>What it does</th></tr></thead>
 <tbody>
 <tr><td><code>/pvpbot diagnose &lt;bot&gt;</code></td><td>Works out why a bot can't fight (login plugins, invulnerability, damage cancelled by another plugin) and suggests the fix.</td></tr>
+<tr><td><code>/pvpbot diagnose &lt;player&gt; [reset]</code> <a class="badge" href="next-update.html">Next update</a></td><td>Why bots won't fight or can't hurt a real player: their state, every bot nearby, and what became of each bot hit aimed at them.</td></tr>
 <tr><td><code>/pvpbot debug &lt;bot&gt;</code></td><td>The bot's internal state: awareness, building, clutch, faction.</td></tr>
 <tr><td><code>/pvpbot debug &lt;bot&gt; invulnerable &lt;true|false&gt;</code></td><td>Forces the vanilla invulnerable flag, to reproduce a problem.</td></tr>
 <tr><td><code>/pvpbot givebow &lt;bot&gt;</code></td><td>Gives the bot a bow and arrows.</td></tr>
