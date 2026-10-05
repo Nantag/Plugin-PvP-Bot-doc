@@ -11,7 +11,6 @@ Content pages start with a small header:
     title: Commands
     section: Reference
     order: 20
-    icon: ⌨️
     lead: One sentence under the title.
     ---
 
@@ -24,7 +23,17 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent
 CONTENT = ROOT / "content"
-SITE_NAME = "PvpBot Wiki"
+SITE_NAME = "PvpBot docs"
+
+# Icons are inline SVG (no icon font, no emoji): 20px, stroked with the current text colour.
+_SVG = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"{cls}>{body}</svg>'
+ICON_MENU = _SVG.format(cls="", body='<path d="M4 7h16M4 12h16M4 17h16"/>')
+ICON_SEARCH = _SVG.format(cls="", body='<circle cx="11" cy="11" r="6.5"/><path d="m20 20-4-4"/>')
+ICON_MOON = _SVG.format(cls=' class="i-moon"', body='<path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/>')
+ICON_SUN = _SVG.format(cls=' class="i-sun"', body='<circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/>')
+# The favicon: the letter P in a square, in the accent colour.
+FAVICON = ("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' "
+           "fill='%23a3302a'/%3E%3Cpath d='M11 24V8h6.5a4.5 4.5 0 0 1 0 9H11' fill='none' stroke='%23fff' stroke-width='3'/%3E%3C/svg%3E")
 SECTIONS = ["Getting started", "Reference", "Features", "Help"]
 
 
@@ -45,7 +54,6 @@ def parse(path):
         "title": meta.get("title", slug),
         "section": meta.get("section", "Features"),
         "order": int(meta.get("order", "100")),
-        "icon": meta.get("icon", "•"),
         "lead": meta.get("lead", ""),
         "hero": meta.get("hero", "") == "true",
         "body": body.strip(),
@@ -124,7 +132,7 @@ def sidebar(pages, current):
         out.append(f"<h4>{html.escape(section)}</h4>")
         for p in items:
             cls = ' class="active"' if p is current else ""
-            out.append(f'<a href="{p["url"]}"{cls}><span class="ico">{p["icon"]}</span>{html.escape(p["title"])}</a>')
+            out.append(f'<a href="{p["url"]}"{cls}>{html.escape(p["title"])}</a>')
     return "\n".join(out)
 
 
@@ -151,7 +159,8 @@ def page_html(p, pages, body, toc):
     if not p["hero"]:
         header = (f'<div class="crumb">{html.escape(p["section"])}</div><h1>{html.escape(p["title"])}</h1>'
                   + (f'<p class="lead">{p["lead"]}</p>' if p["lead"] else ""))
-    title = SITE_NAME if p["slug"] == "index" else f'{p["title"]} · {SITE_NAME}'
+    title = "PvpBot documentation" if p["slug"] == "index" else f'{p["title"]} · {SITE_NAME}'
+    next_cls = ' class="active"' if p["slug"] == "next-update" else ""
     desc = strip_tags(p["lead"]) or "Documentation for PvpBot, the PvP bot plugin for Paper and Spigot."
     return f"""<!doctype html>
 <html lang="en">
@@ -160,21 +169,28 @@ def page_html(p, pages, body, toc):
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>{html.escape(title)}</title>
 <meta name="description" content="{html.escape(desc)}">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22%3E%3Ctext y=%22.9em%22 font-size=%2290%22%3E%E2%9A%94%EF%B8%8F%3C/text%3E%3C/svg%3E">
+<link rel="icon" href="{FAVICON}">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap">
 <link rel="stylesheet" href="assets/style.css">
 {HEAD_SCRIPT}
 </head>
 <body>
 <header class="topbar">
-  <button class="icon-btn menu-btn" id="menu" aria-label="Menu">☰</button>
-  <a class="brand" href="index.html"><span class="logo">⚔</span>PvpBot <small>Wiki</small></a>
+  <button class="icon-btn menu-btn" id="menu" aria-label="Menu">{ICON_MENU}</button>
+  <a class="brand" href="index.html">PvpBot<span class="brand-sub">docs</span></a>
+  <nav class="topnav">
+    <a href="next-update.html"{next_cls}>Next update</a>
+    <a href="https://modrinth.com/plugin/pvp-bot-plugin-pvpbp">Download</a>
+  </nav>
   <div class="search">
-    <span class="icon">⌕</span>
-    <input id="q" type="search" placeholder="Search the wiki…" autocomplete="off" aria-label="Search">
+    <span class="icon">{ICON_SEARCH}</span>
+    <input id="q" type="search" placeholder="Search" autocomplete="off" aria-label="Search">
     <kbd>/</kbd>
     <div class="results" id="results"></div>
   </div>
-  <button class="icon-btn" id="theme" aria-label="Light or dark theme">☾</button>
+  <button class="icon-btn" id="theme" aria-label="Light or dark theme">{ICON_MOON}{ICON_SUN}</button>
 </header>
 <div class="layout">
 <nav class="sidebar">
@@ -186,7 +202,7 @@ def page_html(p, pages, body, toc):
 {body}
 </article>
 {pager}
-<div class="foot">PvpBot Wiki · for Paper and Spigot 1.21.11 / 26.2 · <a href="https://modrinth.com/plugin/pvp-bot-plugin-pvpbp">Download on Modrinth</a></div>
+<footer class="foot"><span>PvpBot · Paper and Spigot 1.21.11 / 26.2</span><a href="https://modrinth.com/plugin/pvp-bot-plugin-pvpbp">Modrinth</a><a href="https://github.com/Nantag/Plugin-PvP-Bot-doc">Edit these docs on GitHub</a></footer>
 </main>
 <aside class="toc">{toc_html}</aside>
 </div>

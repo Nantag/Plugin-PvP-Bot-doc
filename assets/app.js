@@ -17,7 +17,8 @@
     if (t) return t === "dark";
     return window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches;
   }
-  function paint() { if (toggle) toggle.textContent = effectiveDark() ? "☀" : "☾"; }
+  // The button holds a moon and a sun icon; the stylesheet shows the one for the theme you would switch to.
+  function paint() { root.classList.toggle("is-dark", effectiveDark()); }
   if (toggle) {
     toggle.addEventListener("click", function () {
       var next = effectiveDark() ? "light" : "dark";
