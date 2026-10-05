@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Next update · PvpBot docs</title>
-<meta name="description" content="What is finished on GitHub but not in the Modrinth download yet. It ships with the next release.">
+<meta name="description" content="Everything finished on GitHub but not in the Modrinth download yet. It all ships with the next release.">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23a3302a'/%3E%3Cpath d='M11 24V8h6.5a4.5 4.5 0 0 1 0 9H11' fill='none' stroke='%23fff' stroke-width='3'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -54,77 +54,290 @@
 </nav>
 <main class="content">
 <article>
-<div class="crumb">Getting started</div><h1>Next update</h1><p class="lead">What is finished on GitHub but not in the Modrinth download yet. It ships with the next release.</p>
-<p class="status"><span class="badge">Unreleased</span> Everything on this page is in PvpBot's source but not in the
-build on Modrinth. The rest of this wiki describes the Modrinth build.</p>
+<div class="crumb">Getting started</div><h1>Next update</h1><p class="lead">Everything finished on GitHub but not in the Modrinth download yet. It all ships with the next release.</p>
+<p class="status"><span class="badge">Unreleased</span> This page lists what is in PvpBot's source but not in the build
+on Modrinth. The rest of the wiki describes the Modrinth build. 97 new settings and a dozen new commands; nothing is
+removed and every existing setting keeps its meaning. Most of the new behaviour is on by default, and the new
+techniques start off.</p>
+
+<p>In short: difficulty is no longer one slider, bots aim and land hits the way a player's crosshair does, and they read
+you, space, bait and tilt like people. They know 27 mace and spear techniques, regear from an ender chest, march in
+formations wearing faction uniforms, and fight in armies that hold or break. And there's a chest menu for every setting.</p>
+
+<h2 id="difficulty-knobs-and-presets">Difficulty knobs and presets<a class="anchor" href="#difficulty-knobs-and-presets" aria-hidden="true">#</a></h2>
+<p><code>skill</code> is now split into one <strong>knob</strong> per part of it. That way you can build a bot that aims
+perfectly but reacts slowly, or one that never misses a crit but can't clutch. A knob at <code>-1</code> follows
+<code>skill</code>, so a config that only sets <code>skill</code> plays as it did.</p>
+<p>Six presets write every knob at once: <code>easy</code>, <code>medium</code>, <code>hard</code>, <code>expert</code>,
+<code>professional</code> and <code>perfect</code>. Every setting now resolves per bot first, then per faction, then
+globally. A bot's own values are kept by name in <code>bot-settings.yml</code>, so they survive respawns and restarts.</p>
+<pre><code>/pvpbot difficulty [list]
+/pvpbot difficulty preset &lt;easy|medium|hard|expert|professional|perfect&gt;
+/pvpbot difficulty &lt;knob&gt; &lt;value&gt;
+/pvpbot difficulty bot &lt;bot&gt; [list|preset &lt;level&gt;|clear|&lt;knob&gt; &lt;value&gt;]
+/pvpbot difficulty faction &lt;faction&gt; [list|preset &lt;level&gt;|clear|&lt;knob&gt; &lt;value&gt;]</code></pre>
+<div class="table-wrap"><table class="settings"><thead><tr><th>Setting</th><th>Default</th><th>Values</th><th>What it does</th></tr></thead><tbody><tr><td><code>aim</code></td><td class="def"><code>-1</code></td><td class="def">-1 – 100</td><td>How straight it aims - swings, pearls, charges, shots (-1 = follow skill)</td></tr><tr><td><code>reaction</code></td><td class="def"><code>-1</code></td><td class="def">-1 – 100</td><td>How fast it responds to anything new (-1 = follow skill)</td></tr><tr><td><code>crit-timing</code></td><td class="def"><code>-1</code></td><td class="def">-1 – 100</td><td>How close to the ideal tick its crits, swings and smashes land (-1 = follow skill)</td></tr><tr><td><code>technique</code></td><td class="def"><code>-1</code></td><td class="def">-1 – 100</td><td>How often the hard techniques actually come off (-1 = follow skill)</td></tr><tr><td><code>tracking</code></td><td class="def"><code>-1</code></td><td class="def">-1 – 100</td><td>How well it keeps its aim on a moving target mid-technique (-1 = follow skill)</td></tr><tr><td><code>clutch</code></td><td class="def"><code>-1</code></td><td class="def">-1 – 100</td><td>Water-bucket clutch success rate, percent (-1 = follow mistake-chance)</td></tr><tr><td><code>shield-disable-speed</code></td><td class="def"><code>-1</code></td><td class="def">-1 – 100</td><td>How fast it notices a raised shield and axes it (-1 = follow reaction)</td></tr><tr><td><code>shield-charge</code></td><td class="def"><code>0</code></td><td class="def">0 – 100</td><td>Attack charge, percent, it waits for before the axe hit on a shield (0 = at once)</td></tr><tr><td><code>strafe</code></td><td class="def"><code>22</code></td><td class="def">0 – 60</td><td>Degrees off the straight line it circles you at (0 = walks straight in)</td></tr><tr><td><code>reach-flips</code></td><td class="def"><code>0</code></td><td class="def">0 – 10</td><td>How often, in tens of percent, a swing gives up full reach (0 = always full reach)</td></tr><tr><td><code>potion-gap</code></td><td class="def"><code>2.0</code></td><td class="def">0 – 10</td><td>Seconds at least between two healing potions</td></tr><tr><td><code>cart-skip</code></td><td class="def"><code>0</code></td><td class="def">0 – 100</td><td>Percent of cart chances it lets go by</td></tr><tr><td><code>elytra-mace-level</code></td><td class="def"><code>0</code></td><td class="def">0 – 5</td><td>Elytra-mace skill, 1 (easy) to 5 (professional) - 0 follows skill</td></tr><tr><td><code>stun-slam-chance</code></td><td class="def"><code>100</code></td><td class="def">0 – 100</td><td>Percent of raised shields it goes for the axe-then-mace stun slam on</td></tr></tbody></table></div>
+
+<h2 id="playstyles">Playstyles<a class="anchor" href="#playstyles" aria-hidden="true">#</a></h2>
+<p>A playstyle sets what a bot <em>wants</em>, on top of how well it plays: when it commits, heals, runs and chases.</p>
+<ul>
+  <li><strong>aggressive</strong> commits and stays in longer.</li>
+  <li><strong>safe</strong> heals and pearls out early.</li>
+  <li><strong>defensive</strong> holds its patch of ground and lets you come to it.</li>
+  <li><strong>adaptive</strong> swings between aggressive and safe with the health race.</li>
+  <li><strong>balanced</strong> sits in the middle, and <strong>default</strong> plays as bots always have.</li>
+</ul>
+<p>Set it per bot (kept by name), per faction or globally. <code>randomplaystyle</code> rolls each bot its own, by weights
+you choose.</p>
+<pre><code>/pvpbot playstyle list
+/pvpbot playstyle &lt;style&gt; &lt;bots&gt;
+/pvpbot playstyle clear &lt;bots&gt;
+/pvpbot playstyle faction &lt;faction&gt; &lt;style|clear&gt;
+/pvpbot randomplaystyle &lt;bots&gt;
+/pvpbot randomplaystylechances [list|reset|&lt;style&gt; &lt;weight&gt;]</code></pre>
+<p>The <strong>opening</strong> is new too. A bot walks a new opponent down the way a player does: drifting side to
+side, pausing to watch, arcing in over the last few blocks and only sprinting near the end. From the first hit either
+way, it fights as always.</p>
+<div class="table-wrap"><table class="settings"><thead><tr><th>Setting</th><th>Default</th><th>Values</th><th>What it does</th></tr></thead><tbody><tr><td><code>playstyle</code></td><td class="def"><code>default</code></td><td class="def">default / aggressive / safe / defensive / balanced / adaptive</td><td>Temperament: how far it commits, when it runs, how it uses the safety net</td></tr><tr><td><code>opening</code></td><td class="def"><code>true</code></td><td class="def">true / false</td><td>Walks a new opponent down the way a player does - drifting, pausing, arcing in - not a straight sprint</td></tr></tbody></table></div>
+
+<h2 id="the-settings-chest">The settings chest<a class="anchor" href="#the-settings-chest" aria-hidden="true">#</a></h2>
+<p><code>/pvpbot settings</code> opens a paged chest of every setting, generated from the same list the commands
+validate against, so nothing is ever missing from it.</p>
+<ul>
+  <li>Left-click toggles or steps a value up, right-click steps it down, and shift steps by ten. Q takes a faction's or
+  bot's own value off.</li>
+  <li>Filter by group, search by word, and nudge the whole difficulty a preset up or down from the bottom row.</li>
+  <li>It works on the Spigot edition too.</li>
+</ul>
+<pre><code>/pvpbot settings                                 the chest
+/pvpbot settings search &lt;word&gt;                   only what matches
+/pvpbot settings bot &lt;bot&gt; | faction &lt;faction&gt;   one bot's or one faction's values
+/pvpbot settings list [group|word]               printed in chat instead
+/pvpbot faction settings &lt;faction&gt; [word]        the faction's screen, with what it changes marked</code></pre>
+
+<h2 id="aim-that-decides-hits">Aim that decides hits<a class="anchor" href="#aim-that-decides-hits" aria-hidden="true">#</a></h2>
+<p>A swing now lands <strong>where the crosshair is</strong>, the way a player's client picks what it hits, instead of
+"in reach, then a dice roll". The bot:</p>
+<ul>
+  <li>sees you a moment late (the <code>tracking</code> knob);</li>
+  <li>flicks onto you like a hand: a touch of overshoot, then it settles;</li>
+  <li>carries a small tremor (<code>aim</code>) and aims at the upper body.</li>
+</ul>
+<p>It holds a ready swing until its crosshair is on you, for as long as its patience lasts. Walking a straight line or
+circling steadily gets you hit; a juke inside its reaction time makes it whiff. A whiff costs it the attack meter, as it
+does a player.</p>
+<div class="table-wrap"><table class="settings"><thead><tr><th>Setting</th><th>Default</th><th>Values</th><th>What it does</th></tr></thead><tbody><tr><td><code>aim-hits</code></td><td class="def"><code>true</code></td><td class="def">true / false</td><td>Its swing lands where its crosshair is: it aims a moment late, flicks and settles, and whiffs a juke (off: the old in-reach-and-a-dice-roll hit)</td></tr><tr><td><code>aim-height</code></td><td class="def"><code>70</code></td><td class="def">30 – 95</td><td>Where on the body it aims, percent of height from the feet - each bot a little higher or lower</td></tr></tbody></table></div>
+
+<h2 id="senses">Senses<a class="anchor" href="#senses" aria-hidden="true">#</a></h2>
+<ul>
+  <li><strong>View cone:</strong> someone behind a bot isn't seen until they're heard or they hit it.</li>
+  <li><strong>Hearing:</strong> sprinting (walking at half the range, crouching silent), fighting, a totem going off,
+  eating and pearls make it stop and turn to look. A pursuer it is already fighting is tracked by ear.</li>
+  <li><strong>Blindness and Darkness</strong> blind it: it only notices someone within touching distance, though it
+  remembers who it was fighting.</li>
+</ul>
+<div class="table-wrap"><table class="settings"><thead><tr><th>Setting</th><th>Default</th><th>Values</th><th>What it does</th></tr></thead><tbody><tr><td><code>fov</code></td><td class="def"><code>120</code></td><td class="def">30 – 360</td><td>How wide it sees, in degrees: someone behind it is not seen until heard or felt (360 = all round)</td></tr><tr><td><code>hearing</code></td><td class="def"><code>16</code></td><td class="def">0 – 32</td><td>Blocks it hears sprinting, fighting, eating and pearls from, and turns to look (0 = deaf)</td></tr></tbody></table></div>
+
+<h2 id="fighting-smarter">Fighting smarter<a class="anchor" href="#fighting-smarter" aria-hidden="true">#</a></h2>
+<ul>
+  <li><strong>Hotbar only:</strong> in a fight it uses its hotbar and off-hand. Anything in the bag means opening the
+  inventory: it stands still, can't swing, and moves the item over. Between fights it refills its hotbar the way its kit
+  laid it out.</li>
+  <li><strong>Damage model:</strong> it ranks weapons by the damage they do through <em>your</em> armour (toughness,
+  Breach, Protection, Resistance, crits) and times heals by how fast it's losing health. It backs off sooner when losing
+  the trade and stays in when winning.</li>
+  <li><strong>Reads you:</strong> how often you shield, jump-reset and strafe each way, when you pearl, how many totems
+  and gapples you use. A shield player gets the axe every time, a jump-resetter gets crits, a pearl gets followed, and
+  low with no totem showing means all in.</li>
+  <li><strong>Shield game:</strong> it drops its shield to a charged axe instead of feeding it, goes all out while yours
+  is down, and keeps out of reach while its own is.</li>
+  <li><strong>Edges:</strong> it walks round to knock you toward the void, lava or a drop, and keeps its own back off
+  edges.</li>
+  <li><strong>UHC tools</strong> (off by default, because they change blocks): lava at your feet taken straight back,
+  fire under you, a couple of blocks to hide behind while it heals.</li>
+</ul>
+<div class="table-wrap"><table class="settings"><thead><tr><th>Setting</th><th>Default</th><th>Values</th><th>What it does</th></tr></thead><tbody><tr><td><code>hotbar-only</code></td><td class="def"><code>true</code></td><td class="def">true / false</td><td>In a fight it uses its hotbar and off-hand; anything in the bag means opening the inventory - standing still for a moment - and it refills its hotbar between fights</td></tr><tr><td><code>damage-model</code></td><td class="def"><code>true</code></td><td class="def">true / false</td><td>Picks weapons by the damage they do through your armour, and fights, heals and backs off by who is winning the trade and how fast it is losing health</td></tr><tr><td><code>read-opponent</code></td><td class="def"><code>true</code></td><td class="def">true / false</td><td>Learns your habits in a fight: axes a shield player every time, crits a jump-resetter, follows your pearls, goes all in when you are low with no totem up</td></tr><tr><td><code>shield-game</code></td><td class="def"><code>true</code></td><td class="def">true / false</td><td>Lowers its shield to an axe about to land, punishes the five seconds your shield is down, and keeps its distance while its own is</td></tr><tr><td><code>edge-play</code></td><td class="def"><code>true</code></td><td class="def">true / false</td><td>Lines its hits up to knock you toward the void, lava or a drop, and keeps its own back off edges</td></tr><tr><td><code>lava-play</code></td><td class="def"><code>false</code></td><td class="def">true / false</td><td>UHC: pours lava on you and takes it back, and lights fire at your feet (needs a lava bucket / flint and steel; changes blocks)</td></tr><tr><td><code>block-off</code></td><td class="def"><code>false</code></td><td class="def">true / false</td><td>Walls itself off with a couple of blocks while it heals (needs blocks; changes blocks)</td></tr></tbody></table></div>
+
+<h2 id="playing-like-a-person">Playing like a person<a class="anchor" href="#playing-like-a-person" aria-hidden="true">#</a></h2>
+<ul>
+  <li><strong>Personality:</strong> every bot gets its own habits from its name: how jumpy it is, how wide it strafes,
+  the range it likes, rush or turtle, sprint-comboer or crit-hunter. Weak bots sometimes spam-click air, and pay for it.</li>
+  <li><strong>Spacing and whiffs:</strong> out of your reach while its meter refills, back in as it fills. It hovers at
+  the edge of your reach to bait a swing, and punishes a whiff with a free hit.</li>
+  <li><strong>Tempo:</strong> it pushes after landing two in a row, backs off to reset after taking two, and takes a
+  breath after a heavy trade.</li>
+  <li><strong>Items in hand first:</strong> gapples, potions and pearls come up a moment before use, and now and then the
+  wrong slot comes up first.</li>
+  <li><strong>Panic or clutch:</strong> at three hearts a bot either locks in or falls apart. Better bots lock in more
+  often.</li>
+  <li><strong>After a kill:</strong> some crouch over the body; most pick the totems, pearls, gapples and potions out of
+  the drop.</li>
+  <li><strong>Fidgeting:</strong> standing about, bots look round, glance at people walking past, flick their hotbar and
+  hop.</li>
+</ul>
+<div class="table-wrap"><table class="settings"><thead><tr><th>Setting</th><th>Default</th><th>Values</th><th>What it does</th></tr></thead><tbody><tr><td><code>personality</code></td><td class="def"><code>true</code></td><td class="def">true / false</td><td>Each bot has its own habits from its name - how jumpy, how wide it strafes, its range, rush or turtle, sprint-combo or crit-hunter, and (below skill 45) sometimes spam-clicking</td></tr><tr><td><code>spacing</code></td><td class="def"><code>true</code></td><td class="def">true / false</td><td>Out of your reach while its meter refills and yours is full, back in as it fills; now and then hovers at the edge of your reach to draw a swing</td></tr><tr><td><code>whiff-punish</code></td><td class="def"><code>true</code></td><td class="def">true / false</td><td>You swing and miss: it steps straight in for the free hit</td></tr><tr><td><code>tempo</code></td><td class="def"><code>true</code></td><td class="def">true / false</td><td>Fights in phases: pushes after landing two, backs off to reset after taking two, a breath after a heavy trade</td></tr><tr><td><code>show-items</code></td><td class="def"><code>true</code></td><td class="def">true / false</td><td>A gapple, potion or pearl is up in its hand a moment before it is used, and now and then the wrong slot comes up first</td></tr><tr><td><code>panic</code></td><td class="def"><code>true</code></td><td class="def">true / false</td><td>At three hearts it either locks in (steadier aim) or panics (shaky aim, jumpy, strafing every which way) - better bots lock in more often</td></tr><tr><td><code>after-fight</code></td><td class="def"><code>true</code></td><td class="def">true / false</td><td>After a kill: crouches over the body (some do), picks the good stuff out of the drop</td></tr><tr><td><code>idle-fidget</code></td><td class="def"><code>true</code></td><td class="def">true / false</td><td>Standing about it looks round, glances at people, flicks its hotbar, hops and taps crouch</td></tr></tbody></table></div>
+
+<h2 id="27-mace-and-spear-techniques">27 mace and spear techniques<a class="anchor" href="#27-mace-and-spear-techniques" aria-hidden="true">#</a></h2>
+<p>Difficulty is how well a bot plays; techniques are which moves it knows at all. Each technique is an ordinary
+setting. The ones bots already used start on, the new ones start off.</p>
+<ul>
+  <li><strong>Core swaps:</strong> mace swap, spear-mace swap, breach swap, spear reach swap.</li>
+  <li><strong>Fundamentals:</strong> wind-charge mace, crouch boost, cooldown discipline (wind charges now carry vanilla's
+  item cooldown), hit preference, hotbar shield tracking, elytra wind-charge boost.</li>
+  <li><strong>Movement:</strong> spear dash (a held charge and the spear on one click, distance picked by pitch), dash
+  chain, spear-macing, wind-charge reset and self-reset.</li>
+  <li><strong>Anti-shield:</strong> ground and elytra backstab, stun slam (one-tick, easy or optimal), spear stun slam,
+  shield drain.</li>
+  <li><strong>Finishers:</strong> detap spear-mace, detap breach, spear double pop, wind-charge cancel.</li>
+  <li><strong>Rocket mace</strong> with four climb-and-drop patterns, <strong>elytra spear</strong>, and a choice of pearl
+  catch for the pearl launch.</li>
+</ul>
+<pre><code>/pvpbot techniques [bot &lt;bot&gt;|faction &lt;faction&gt;] [&lt;technique&gt; &lt;value&gt;]</code></pre>
+<div class="table-wrap"><table class="settings"><thead><tr><th>Setting</th><th>Default</th><th>Values</th><th>What it does</th></tr></thead><tbody><tr><td><code>mace-swap</code></td><td class="def"><code>true</code></td><td class="def">true / false</td><td>Swaps to the mace for its smashes and back to its weapon between them (off: the mace stays out)</td></tr><tr><td><code>spear-mace-swap</code></td><td class="def"><code>false</code></td><td class="def">true / false</td><td>After a spear lunge carries it in, the follow-up hit comes off the mace</td></tr><tr><td><code>sword-windburst-swap</code></td><td class="def"><code>false</code></td><td class="def">true / false</td><td>No effect: a smash is always swung with the mace (a sword swap there turned every smash into a plain sword hit)</td></tr><tr><td><code>spear-reach-swap</code></td><td class="def"><code>false</code></td><td class="def">true / false</td><td>A target just past sword reach gets the spear&#x27;s 4.5-block jab instead of a step in</td></tr><tr><td><code>windcharge-mace</code></td><td class="def"><code>true</code></td><td class="def">true / false</td><td>A wind charge at its own feet to go up for a smash</td></tr><tr><td><code>wc-crouch-boost</code></td><td class="def"><code>false</code></td><td class="def">true / false</td><td>Throws the launch charge nearly straight under itself: more height, less drift toward them</td></tr><tr><td><code>cooldown-discipline</code></td><td class="def"><code>true</code></td><td class="def">true / false</td><td>Never throws a charge still on cooldown, and holds the smash swing for a charged meter</td></tr><tr><td><code>hit-preference</code></td><td class="def"><code>true</code></td><td class="def">true / false</td><td>In a mace play it saves the swing for the smash coming up rather than spending it on a flat hit</td></tr><tr><td><code>hotbar-shield-tracking</code></td><td class="def"><code>false</code></td><td class="def">true / false</td><td>Watches for a shield and keeps an axe on its hotbar for it, ready to stun</td></tr><tr><td><code>elytra-wc-boost</code></td><td class="def"><code>false</code></td><td class="def">true / false</td><td>Out of rockets mid-climb, a wind charge under the elytra for the height</td></tr><tr><td><code>spear-dash</code></td><td class="def"><code>false</code></td><td class="def">true / false</td><td>At the top of a launch, a wind charge and the spear on the same tick dash it across the gap</td></tr><tr><td><code>dash-chain</code></td><td class="def"><code>false</code></td><td class="def">true / false</td><td>Strings launches and spear dashes together to cover a long approach</td></tr><tr><td><code>spear-macing</code></td><td class="def"><code>false</code></td><td class="def">true / false</td><td>Launches for a smash from further out, letting the spear dash carry it in over them</td></tr><tr><td><code>wc-reset</code></td><td class="def"><code>false</code></td><td class="def">true / false</td><td>A smash that lands goes straight back up off a wind charge the same tick</td></tr><tr><td><code>wc-self-reset</code></td><td class="def"><code>false</code></td><td class="def">true / false</td><td>A wind charge under itself before a hard landing: the blast resets the fall</td></tr><tr><td><code>stun-slam-variant</code></td><td class="def"><code>one-tick</code></td><td class="def">one-tick / easy / optimal</td><td>How the stun slam goes in: one-tick (axe and mace the same tick), easy (axe, then the mace once it charges), optimal (only from a fall, so the mace part is a smash)</td></tr><tr><td><code>ground-backstab</code></td><td class="def"><code>false</code></td><td class="def">true / false</td><td>Beats a raised shield by getting behind it: past them, turn, mace their back (alternative to mace-stun) (an alternative to <code>mace-stun</code>: switching one on switches the other off)</td></tr><tr><td><code>elytra-backstab</code></td><td class="def"><code>false</code></td><td class="def">true / false</td><td>An elytra dive at a raised shield comes down behind it instead of pulling out</td></tr><tr><td><code>spear-stun-slam</code></td><td class="def"><code>false</code></td><td class="def">true / false</td><td>Axes a raised shield down, then follows with the spear&#x27;s long jab</td></tr><tr><td><code>shield-drain</code></td><td class="def"><code>false</code></td><td class="def">true / false</td><td>A wind charge into someone turtling behind a shield, to knock them off their stance</td></tr><tr><td><code>detap-spear-mace</code></td><td class="def"><code>false</code></td><td class="def">true / false</td><td>On a low opponent: a spear jab, then the mace the tick their hit protection runs out</td></tr><tr><td><code>detap-breach</code></td><td class="def"><code>false</code></td><td class="def">true / false</td><td>A breach swap, then a second one the tick their hit protection runs out</td></tr><tr><td><code>spear-double-pop</code></td><td class="def"><code>false</code></td><td class="def">true / false</td><td>A smash that pops a totem is followed straight away by a spear jab to pop the next</td></tr><tr><td><code>wc-cancel</code></td><td class="def"><code>false</code></td><td class="def">true / false</td><td>A wind charge into an opponent going up for a smash, knocking them off course</td></tr><tr><td><code>wc-cancel-chance</code></td><td class="def"><code>10</code></td><td class="def">0 – 100</td><td>Percent of an opponent&#x27;s launches wc-cancel goes for (never twice within 15 seconds)</td></tr><tr><td><code>rocket-mace</code></td><td class="def"><code>climb</code></td><td class="def">off / climb / spiral / angled / overhead</td><td>The elytra-mace climb-and-drop: climb (the usual), spiral (round them), angled (out, then a long run in), overhead (straight up over them) - or off, no rocket climbs</td></tr><tr><td><code>elytra-spear</code></td><td class="def"><code>false</code></td><td class="def">true / false</td><td>An elytra pass with the spear: rocket at them and jab on the way through</td></tr><tr><td><code>pearl-catch</code></td><td class="def"><code>smart</code></td><td class="def">smart / standard / instant / angle</td><td>The pearl catch for mace-pearl-launch: smart (picks per situation - recommended), standard (straight up), instant (charge from the off-hand, both throws back to back), angle (out over them)</td></tr></tbody></table></div>
+
+<h2 id="survival-webs-and-escapes">Survival, webs and escapes<a class="anchor" href="#survival-webs-and-escapes" aria-hidden="true">#</a></h2>
+<ul>
+  <li><strong>Advanced healing:</strong> it buys a gap before it heals (a knockback hit, a web on you, or a short
+  pearl) instead of eating in your face. <code>healing: old</code> brings back the previous behaviour.</li>
+  <li><strong>Off-hand preference</strong> (auto, totem or shield), a totem in the main hand when a smash is about to
+  land, answers to being combo'd, and eating at three hunger bars.</li>
+  <li><strong>Webs</strong> are held out, looked at and swung, not a block appearing in a sword hand. They can predict
+  where you walk, web your head against a wall, or knock you back and web where you land.</li>
+  <li><strong>Cutting out of a web:</strong> shears first (keeping the web), then water, a pearl, then a sword.</li>
+  <li><strong>Escapes:</strong> chorus fruit when webbed and boxed in, and water on its own feet when burning.</li>
+</ul>
+<div class="table-wrap"><table class="settings"><thead><tr><th>Setting</th><th>Default</th><th>Values</th><th>What it does</th></tr></thead><tbody><tr><td><code>healing</code></td><td class="def"><code>advanced</code></td><td class="def">advanced / old</td><td>How it heals under pressure: advanced buys a gap first (knockback hit, web or short pearl), old just heals where it stands or runs</td></tr><tr><td><code>offhand</code></td><td class="def"><code>auto</code></td><td class="def">auto / totem / shield</td><td>What it keeps in its off-hand: auto (shield while healthy, totem when low), totem, or shield</td></tr><tr><td><code>offhand-totem-hearts</code></td><td class="def"><code>4.0</code></td><td class="def">0.5 – 10</td><td>Hearts at which a shield off-hand gives way to a totem (offhand: shield only)</td></tr><tr><td><code>mace-totem</code></td><td class="def"><code>true</code></td><td class="def">true / false</td><td>A totem in its main hand while a mace is about to land on it and its off-hand has none</td></tr><tr><td><code>combo-answers</code></td><td class="def"><code>true</code></td><td class="def">true / false</td><td>Being combo&#x27;d gets an answer: a crit back instead of a flat trade, a pearl out once it is clearly lost</td></tr><tr><td><code>hunger-stop</code></td><td class="def"><code>true</code></td><td class="def">true / false</td><td>Stops to eat at three hunger bars whatever it is doing, taking its best plain food</td></tr></tbody></table></div>
+<div class="table-wrap"><table class="settings"><thead><tr><th>Setting</th><th>Default</th><th>Values</th><th>What it does</th></tr></thead><tbody><tr><td><code>web-prediction</code></td><td class="def"><code>false</code></td><td class="def">true / false</td><td>Webs the ground an opponent closing in is about to walk onto, not the ground they are on</td></tr><tr><td><code>head-web</code></td><td class="def"><code>false</code></td><td class="def">true / false</td><td>With a wall behind the opponent, hits them into it and webs the block their head rises into</td></tr><tr><td><code>hit-web</code></td><td class="def"><code>false</code></td><td class="def">true / false</td><td>Half its webs: a knockback hit first, then the web where they land</td></tr><tr><td><code>web-drain-chance</code></td><td class="def"><code>100</code></td><td class="def">0 – 100</td><td>Percent of chances it takes to scoop up someone&#x27;s escape water</td></tr><tr><td><code>web-cut</code></td><td class="def"><code>true</code></td><td class="def">true / false</td><td>Cuts itself out of a web: shears first (keeping the web), a sword when it has no bucket or pearl</td></tr></tbody></table></div>
+<div class="table-wrap"><table class="settings"><thead><tr><th>Setting</th><th>Default</th><th>Values</th><th>What it does</th></tr></thead><tbody><tr><td><code>chorus-escape</code></td><td class="def"><code>false</code></td><td class="def">true / false</td><td>Webbed and boxed in, it eats a chorus fruit to teleport out</td></tr><tr><td><code>fire-escape</code></td><td class="def"><code>false</code></td><td class="def">true / false</td><td>Burning with no fire resistance, it pours water on its own feet and takes the water back</td></tr></tbody></table></div>
+
+<h2 id="regearing">Regearing<a class="anchor" href="#regearing" aria-hidden="true">#</a></h2>
+<p>A bot regears from its <strong>ender chest</strong> the way it's done on an SMP: it pearls away, sets the chest down
+beside it, takes out a shulker, restocks only what it's short of and packs it all back. It waits for room first and
+recovers everything if you catch it mid-way. It can also restock from a shulker box placed nearby, or mine yours out from
+under you.</p>
+<pre><code>/pvpbot restock &lt;bot|all|faction &lt;name&gt;&gt; [instant]   regear now
+/pvpbot view inventory|enderchest &lt;bot&gt;             a bot's bag or ender chest, live and editable</code></pre>
+<div class="table-wrap"><table class="settings"><thead><tr><th>Setting</th><th>Default</th><th>Values</th><th>What it does</th></tr></thead><tbody><tr><td><code>enderchest-regear</code></td><td class="def"><code>true</code></td><td class="def">true / false</td><td>Regears from its ender chest like an SMP player: pearl away, chest down beside it, restock from a shulker, take it all back (needs an ender chest in the bag, a shulker inside it)</td></tr><tr><td><code>regear-distance</code></td><td class="def"><code>20.0</code></td><td class="def">8 – 64</td><td>How far off the opponent must be (or out of sight) before it opens anything</td></tr><tr><td><code>shulker-restock</code></td><td class="def"><code>false</code></td><td class="def">true / false</td><td>Walks to a placed shulker box nearby and takes what it is short of</td></tr><tr><td><code>shulker-steal</code></td><td class="def"><code>false</code></td><td class="def">true / false</td><td>Mines an opponent&#x27;s placed shulker box mid-resupply and takes the drop</td></tr></tbody></table></div>
+
+<h2 id="more-items">More items<a class="anchor" href="#more-items" aria-hidden="true">#</a></h2>
+<p>Each one only when it's on the hotbar: a <strong>fishing rod</strong> to reel a runner in, the <strong>trident</strong>
+(thrown, or ridden with Riptide), <strong>splash potions</strong> of Weakness, Slowness, Harming and Poison,
+<strong>firework crossbow</strong> ammo, the <strong>spear charge</strong>, and <strong>block clutches</strong> (slime,
+hay, cobweb, powder snow) when there's no water.</p>
+<div class="table-wrap"><table class="settings"><thead><tr><th>Setting</th><th>Default</th><th>Values</th><th>What it does</th></tr></thead><tbody><tr><td><code>fishing-rod</code></td><td class="def"><code>true</code></td><td class="def">true / false</td><td>Hooks you with a fishing rod and reels you in - off a ledge, toward lava, back from running</td></tr><tr><td><code>trident</code></td><td class="def"><code>true</code></td><td class="def">true / false</td><td>Throws its trident (and waits for Loyalty to bring it back), rides Riptide in rain or water</td></tr><tr><td><code>crossbow-ammo</code></td><td class="def"><code>true</code></td><td class="def">true / false</td><td>Loads firework rockets from its off-hand into a crossbow for burst damage</td></tr><tr><td><code>throw-potions</code></td><td class="def"><code>true</code></td><td class="def">true / false</td><td>Throws Weakness, Slowness, Harming and Poison at you</td></tr><tr><td><code>spear-charge</code></td><td class="def"><code>false</code></td><td class="def">true / false</td><td>Holds use with a spear as it runs in - the charged spear attack (check it on your version)</td></tr><tr><td><code>block-clutch</code></td><td class="def"><code>true</code></td><td class="def">true / false</td><td>Without water, clutches a fall with a slime block, hay bale, cobweb or powder snow</td></tr></tbody></table></div>
+
+<h2 id="formations-marches-and-uniforms">Formations, marches and uniforms<a class="anchor" href="#formations-marches-and-uniforms" aria-hidden="true">#</a></h2>
+<ul>
+  <li><strong>Formations:</strong> <code>behind</code>, <code>column</code>, <code>line</code>, <code>rows</code>,
+  <code>triangle</code>, <code>wall</code> and <code>open_circle</code> turn with the leader; <code>square</code>,
+  <code>circle</code>, <code>hexagon</code> and <code>grid</code> line up with the world and hold their shape on arrival.
+  Bots carrying an elytra form their own rank at the back.</li>
+  <li><strong>Marches:</strong> <code>faction goto</code> sends a whole faction to a point or a player in formation, then
+  it holds, or attacks a target on arrival.</li>
+  <li><strong>Uniforms:</strong> <code>faction skin</code> puts every bot in a faction in one account's skin. It's kept
+  in <code>factions.yml</code>, so it survives deaths and restarts.</li>
+</ul>
+<pre><code>/pvpbot follow &lt;bots&gt; &lt;target&gt; [formation] [size]
+/pvpbot faction follow &lt;faction&gt; &lt;target|stop&gt; [formation] [size]
+/pvpbot faction goto &lt;faction&gt; &lt;x y z|player|stop|status&gt; [formation] [size] [then attack &lt;target&gt;|then hold]
+/pvpbot faction formation &lt;faction&gt; &lt;shape&gt; [size] | clear
+/pvpbot faction skin &lt;faction&gt; &lt;account&gt;|stop
+/pvpbot faction skin list</code></pre>
+
+<h2 id="team-play-and-armies">Team play and armies<a class="anchor" href="#team-play-and-armies" aria-hidden="true">#</a></h2>
+<ul>
+  <li><strong>Team play:</strong> focus fire on the enemy allies are on and the weakest one; peeling off to save a nearly
+  dead ally; splash heals thrown at allies; regearing one at a time.</li>
+  <li><strong>Reaction ripple:</strong> orders and new targets reach each bot after its own moment, nearest first, so a
+  side doesn't turn on one tick.</li>
+  <li><strong>Pile-on cap:</strong> no more than three on one enemy; the rest take the next or wait at the edge.</li>
+  <li><strong>Skill spread:</strong> each bot's skill sits a little above or below its faction's.</li>
+  <li><strong>Morale:</strong> a side that is outnumbered and losing members breaks, the least brave first. A leader close
+  by holds them and rallies the ones that ran.</li>
+  <li><strong>Roles:</strong> archers hang back, pearl carriers flank, healers stay with the hurt.</li>
+  <li><strong>Loose formations</strong> and <strong>ally care</strong>: slots wobble, stragglers sprint-jump to catch up,
+  and nobody shoots or sweeps through an ally.</li>
+</ul>
+<div class="table-wrap"><table class="settings"><thead><tr><th>Setting</th><th>Default</th><th>Values</th><th>What it does</th></tr></thead><tbody><tr><td><code>focus-fire</code></td><td class="def"><code>true</code></td><td class="def">true / false</td><td>In a faction: goes for the enemy its allies are on, and the weakest - low, broken armour, no totem</td></tr><tr><td><code>peel</code></td><td class="def"><code>true</code></td><td class="def">true / false</td><td>Leaves its own fight to hit whoever is on a nearly dead ally</td></tr><tr><td><code>heal-allies</code></td><td class="def"><code>true</code></td><td class="def">true / false</td><td>Throws its splash healing potions at a hurt ally close by</td></tr><tr><td><code>regear-turns</code></td><td class="def"><code>true</code></td><td class="def">true / false</td><td>Faction members regear one at a time instead of all leaving the fight together</td></tr></tbody></table></div>
+<div class="table-wrap"><table class="settings"><thead><tr><th>Setting</th><th>Default</th><th>Values</th><th>What it does</th></tr></thead><tbody><tr><td><code>reaction-ripple</code></td><td class="def"><code>true</code></td><td class="def">true / false</td><td>Orders, calls and new targets reach each bot after its own moment - nearest first, the odd one late - instead of the whole side turning on one tick</td></tr><tr><td><code>pile-cap</code></td><td class="def"><code>3</code></td><td class="def">0 – 10</td><td>Most bots on one enemy; the rest go for the next or wait at the edge for a way in (0 = no cap)</td></tr><tr><td><code>skill-spread</code></td><td class="def"><code>12</code></td><td class="def">0 – 30</td><td>Each bot&#x27;s skill sits up to this far above or below its faction&#x27;s, by its name (0 = all the same)</td></tr><tr><td><code>morale</code></td><td class="def"><code>true</code></td><td class="def">true / false</td><td>Outnumbered and losing members, the less brave run (a leader close by holds them and rallies them)</td></tr><tr><td><code>roles</code></td><td class="def"><code>true</code></td><td class="def">true / false</td><td>In an army: archers hang back, flankers come round the side, healers stay by the hurt</td></tr><tr><td><code>loose-formations</code></td><td class="def"><code>true</code></td><td class="def">true / false</td><td>Formations wobble round their slots, each bot at its own pace, turns ripple down the column, stragglers sprint-jump to catch up</td></tr><tr><td><code>ally-care</code></td><td class="def"><code>true</code></td><td class="def">true / false</td><td>No arrows through allies, no sword sweep into them, no standing inside each other</td></tr></tbody></table></div>
+
+<h2 id="arena-and-debug-view">Arena and debug view<a class="anchor" href="#arena-and-debug-view" aria-hidden="true">#</a></h2>
+<p><code>/pvpbot arena</code> spawns two bots where you stand and has them fight round after round. It then reports per
+side: wins, time to kill, hits and damage per hit, aimed swings that connected, crits, smashes, best combo, totems
+popped, heals, and mid-fight inventory opens. Change a setting, run it again, compare.</p>
+<p><code>/pvpbot debugview</code> floats a line over a bot showing which part of its AI is in charge, its target and how
+the trade looks, what it has read about you, its aim, and its latest call ("whiffed", "their shield is down: all
+out").</p>
+<pre><code>/pvpbot arena start &lt;kitA&gt; &lt;kitB&gt; [rounds] [skillA] [skillB]
+/pvpbot arena stop | report
+/pvpbot debugview &lt;bot|all&gt;</code></pre>
 
 <h2 id="pvpbot-diagnose-works-on-players"><code>/pvpbot diagnose</code> works on players<a class="anchor" href="#pvpbot-diagnose-works-on-players" aria-hidden="true">#</a></h2>
 <p><code>/pvpbot diagnose &lt;bot&gt;</code> explains why a bot can't fight. The new form answers the opposite question:
 <strong>why bots can't hurt a particular player</strong>.</p>
-<pre><code>/pvpbot diagnose &lt;player&gt;
-/pvpbot diagnose &lt;player&gt; reset</code></pre>
-<p>It reads the player's state the way the game's damage checks see it: game mode, the invulnerable flag, the game's
-own "client still loading" protection, hit invulnerability, a raised shield, a shared scoreboard team, PvP in the world,
-and the client brand and version (through ViaVersion if installed).</p>
-<p>Then it lists every bot within 48 blocks, with whether that bot would fight the player, what it is targeting, and
-whether it can see them.</p>
-<p>From the moment the server starts, every bot hit aimed at a real player is logged. The report shows what became of
-each one:</p>
+<pre><code>/pvpbot diagnose &lt;player&gt; [reset]</code></pre>
+<p>It reads the player's state the way the game's damage checks see it: game mode, the invulnerable flag, the "client
+still loading" protection, hit invulnerability, a raised shield, a shared scoreboard team, PvP in the world, and the
+client version. It lists every bot within 48 blocks, with whether it would fight them and whether it can see them.</p>
+<p>From server start, every bot hit aimed at a real player is logged, and the report shows what became of each one:</p>
 <div class="table-wrap">
 <table>
 <thead><tr><th>Outcome</th><th>What it means</th></tr></thead>
 <tbody>
-<tr><td>Turned away</td><td>The game refused the hit before any plugin saw it. The reason is checked on the spot: hit
-invulnerability, creative or spectator, an invulnerable flag, the loading protection, a team without friendly fire, or
-PvP off.</td></tr>
-<tr><td>Cancelled</td><td>A plugin stopped it. The report says at which event priority, which narrows down the plugin.</td></tr>
+<tr><td>Turned away</td><td>The game refused the hit before any plugin saw it. The reason is checked on the spot.</td></tr>
+<tr><td>Cancelled</td><td>A plugin stopped it, and the report says at which event priority.</td></tr>
 <tr><td>Shield</td><td>Their raised shield took it.</td></tr>
-<tr><td>Zeroed</td><td>It went through with no damage left (a plugin, or armour and resistance).</td></tr>
+<tr><td>Zeroed</td><td>It went through with no damage left.</td></tr>
 <tr><td>Landed</td><td>It hurt them.</td></tr>
 </tbody>
 </table>
 </div>
-<p>It ends with a one-line verdict. <code>reset</code> starts a fresh log. Melee swings, mace smashes, spear jabs and
-elytra strikes are all logged, and so are bot arrows. Both the Paper and the Spigot editions have it.</p>
+<p>It ends with a one-line verdict. <code>reset</code> starts a fresh log.</p>
 
-<h2 id="blinded-bots-can-t-see">Blinded bots can't see<a class="anchor" href="#blinded-bots-can-t-see" aria-hidden="true">#</a></h2>
-<p>A bot with <strong>Blindness</strong> or <strong>Darkness</strong> no longer spots targets by sight. It only notices
-someone who comes within touching distance (about a block and a half). It still remembers who it was already fighting.
-A splash of blindness is now a real way to break off a fight.</p>
+<h2 id="changed-behaviour">Changed behaviour<a class="anchor" href="#changed-behaviour" aria-hidden="true">#</a></h2>
+<ul>
+  <li><strong>Sword crits:</strong> the cooldown trick swung at 84.8% charge, which loses vanilla's crit, sprint
+  knockback and sweep (they need 90%). Bots now swing at 92%, so they combo properly.</li>
+  <li><strong>Fewer fake whiffs:</strong> strafing used to add up to 40 points of miss chance; it's capped at 15.</li>
+  <li><strong>Shield as a read:</strong> the shield goes up only when you can actually hit right now, not in every gap
+  between the bot's own swings.</li>
+  <li><strong>Mace defence:</strong> alone under a mace player, a bot holds its ground near the landing spot ready to
+  shield, and a dodge is a late sidestep. Wind-charge cancels are rare: 10% of launches, never twice in 15 seconds.</li>
+  <li><strong>Spear-macers actually smash:</strong> the spear dash now solves the velocity that lands on the target,
+  and the smash is always swung with the mace.</li>
+  <li>The opening walk-in ends once the gap has been growing for half a second, so a bot chases someone running.</li>
+</ul>
 
-<h2 id="weapon-add-ons">Weapon add-ons<a class="anchor" href="#weapon-add-ons" aria-hidden="true">#</a></h2>
-<p>For plugin developers. PvpBot now has an extension point, <code>BotArsenal</code>, that lets another plugin teach bots
-to use its own gear: guns, grenades, medical items, special armour. With no add-on installed nothing changes.</p>
-<p>A handler registers once and is asked at fixed points in every bot's combat tick:</p>
+<h2 id="for-plugin-developers">For plugin developers<a class="anchor" href="#for-plugin-developers" aria-hidden="true">#</a></h2>
+<p>A new extension point, <code>BotArsenal</code>, lets another plugin teach bots to use its own gear: guns, grenades,
+medical items, special armour. With no add-on installed nothing changes. A handler registers once and is asked at fixed
+points in every bot's combat tick:</p>
 <div class="table-wrap">
 <table>
 <thead><tr><th>Hook</th><th>When</th></tr></thead>
 <tbody>
 <tr><td><code>override</code></td><td>Right after the target is chosen, ahead of eating, pearls and retreats.</td></tr>
-<tr><td><code>fight</code></td><td>With a target, ahead of every built-in attack. Handing the tick back falls through to
-PvpBot's own melee and ranged play.</td></tr>
+<tr><td><code>fight</code></td><td>With a target, ahead of every built-in attack. Returning false falls through to
+PvpBot's own play.</td></tr>
 <tr><td><code>idle</code></td><td>With no target (or while hiding), ahead of guarding and escorting.</td></tr>
 <tr><td><code>blocksSight</code></td><td>Whenever a bot looks for a target: something only the add-on knows about (a smoke
 cloud) can hide a player.</td></tr>
 </tbody>
 </table>
 </div>
-<p>Three more keep PvpBot's own gear logic out of the way: <code>holdsHand</code> stops the weapon auto-equip while the
-add-on holds an item on purpose, <code>reserved</code> keeps the bow and crossbow code off the add-on's items, and
-<code>armourScore</code> lets the armour picker rank the add-on's armour.</p>
-<p>The first add-on is FirearmsBots: its bots fight with guns, grenades, cover, plates, meds and revives.</p>
+<p><code>holdsHand</code>, <code>reserved</code> and <code>armourScore</code> keep PvpBot's own auto-equip, bow code and
+armour picker out of the add-on's way. FirearmsBots is the first add-on built on it.</p>
 <pre><code>BotArsenal.register(new BotArsenal.Handler() {
     @Override
     public boolean fight(Player bot, Entity target, BotSettings settings) {
-        // fight with your gear; return false to let PvpBot fight as usual
-        return false;
+        return false;   // fight with your gear, or hand the tick back
     }
 });</code></pre>
 </article>
 <nav class="pager"><a class="prev" href="quick-start.html"><small>← Previous</small>Quick start</a><a class="next" href="commands.html"><small>Next →</small>Commands</a></nav>
 <footer class="foot"><span>PvpBot · Paper and Spigot 1.21.11 / 26.2</span><a href="https://modrinth.com/plugin/pvp-bot-plugin-pvpbp">Modrinth</a><a href="https://github.com/Nantag/Plugin-PvP-Bot-doc">Edit these docs on GitHub</a></footer>
 </main>
-<aside class="toc"><h5>On this page</h5><a href="#pvpbot-diagnose-works-on-players">/pvpbot diagnose works on players</a><a href="#blinded-bots-can-t-see">Blinded bots can&#x27;t see</a><a href="#weapon-add-ons">Weapon add-ons</a></aside>
+<aside class="toc"><h5>On this page</h5><a href="#difficulty-knobs-and-presets">Difficulty knobs and presets</a><a href="#playstyles">Playstyles</a><a href="#the-settings-chest">The settings chest</a><a href="#aim-that-decides-hits">Aim that decides hits</a><a href="#senses">Senses</a><a href="#fighting-smarter">Fighting smarter</a><a href="#playing-like-a-person">Playing like a person</a><a href="#27-mace-and-spear-techniques">27 mace and spear techniques</a><a href="#survival-webs-and-escapes">Survival, webs and escapes</a><a href="#regearing">Regearing</a><a href="#more-items">More items</a><a href="#formations-marches-and-uniforms">Formations, marches and uniforms</a><a href="#team-play-and-armies">Team play and armies</a><a href="#arena-and-debug-view">Arena and debug view</a><a href="#pvpbot-diagnose-works-on-players">/pvpbot diagnose works on players</a><a href="#changed-behaviour">Changed behaviour</a><a href="#for-plugin-developers">For plugin developers</a></aside>
 </div>
 <script src="assets/search-index.js"></script>
 <script src="assets/app.js"></script>

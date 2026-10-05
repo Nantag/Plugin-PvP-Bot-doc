@@ -286,6 +286,8 @@ tr:last-child td { border-bottom: 0; }
 td:first-child code { white-space: nowrap; }
 td.def { white-space: nowrap; color: var(--text-soft); }
 td.def code { background: none; padding: 0; }
+/* the values column: a list of choices wraps instead of crushing the description */
+table.settings td:nth-child(3) { white-space: normal; min-width: 110px; max-width: 200px; }
 /* the description column never gets squeezed to a sliver; the wrapper scrolls instead */
 td:last-child { min-width: 180px; padding-right: 0; }
 table.cmds td:first-child { width: 44%; }

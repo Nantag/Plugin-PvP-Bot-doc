@@ -11,6 +11,7 @@ and GitHub Pages serves it as is.
 | `content/*.html` | The wiki pages. These are what you edit. |
 | `content/data/settings-schema.json` | PvpBot's settings: name, group, type, limits and default. |
 | `content/data/settings-text.json` | The description shown for each setting. |
+| `content/data/settings-next.json` | Settings in PvpBot's source but not in the Modrinth build, shown on Next update with `{{settings:next-<group>}}`. On release, move them into `settings-schema.json`. |
 | `assets/` | Styles, the script (theme, menu, search) and the generated search index. Type is IBM Plex Sans and Mono, from Google Fonts. |
 | `build.py` | The generator. |
 | `*.html` at the root | The generated pages GitHub Pages publishes. Don't edit them by hand. |
