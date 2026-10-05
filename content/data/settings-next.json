@@ -1,0 +1,1008 @@
+[
+ {
+  "key": "aim",
+  "path": "difficulty.aim",
+  "group": "difficulty",
+  "type": "INT",
+  "min": "-1.0",
+  "max": "100.0",
+  "help": "how straight it aims - swings, pearls, charges, shots (-1 = follow skill)",
+  "default": -1
+ },
+ {
+  "key": "reaction",
+  "path": "difficulty.reaction",
+  "group": "difficulty",
+  "type": "INT",
+  "min": "-1.0",
+  "max": "100.0",
+  "help": "how fast it responds to anything new (-1 = follow skill)",
+  "default": -1
+ },
+ {
+  "key": "crit-timing",
+  "path": "difficulty.crit-timing",
+  "group": "difficulty",
+  "type": "INT",
+  "min": "-1.0",
+  "max": "100.0",
+  "help": "how close to the ideal tick its crits, swings and smashes land (-1 = follow skill)",
+  "default": -1
+ },
+ {
+  "key": "technique",
+  "path": "difficulty.technique",
+  "group": "difficulty",
+  "type": "INT",
+  "min": "-1.0",
+  "max": "100.0",
+  "help": "how often the hard techniques actually come off (-1 = follow skill)",
+  "default": -1
+ },
+ {
+  "key": "tracking",
+  "path": "difficulty.tracking",
+  "group": "difficulty",
+  "type": "INT",
+  "min": "-1.0",
+  "max": "100.0",
+  "help": "how well it keeps its aim on a moving target mid-technique (-1 = follow skill)",
+  "default": -1
+ },
+ {
+  "key": "clutch",
+  "path": "difficulty.clutch",
+  "group": "difficulty",
+  "type": "INT",
+  "min": "-1.0",
+  "max": "100.0",
+  "help": "water-bucket clutch success rate, percent (-1 = follow mistake-chance)",
+  "default": -1
+ },
+ {
+  "key": "shield-disable-speed",
+  "path": "difficulty.shield-disable-speed",
+  "group": "difficulty",
+  "type": "INT",
+  "min": "-1.0",
+  "max": "100.0",
+  "help": "how fast it notices a raised shield and axes it (-1 = follow reaction)",
+  "default": -1
+ },
+ {
+  "key": "shield-charge",
+  "path": "difficulty.shield-charge",
+  "group": "difficulty",
+  "type": "INT",
+  "min": "0.0",
+  "max": "100.0",
+  "help": "attack charge, percent, it waits for before the axe hit on a shield (0 = at once)",
+  "default": 0
+ },
+ {
+  "key": "strafe",
+  "path": "difficulty.strafe",
+  "group": "difficulty",
+  "type": "INT",
+  "min": "0.0",
+  "max": "60.0",
+  "help": "degrees off the straight line it circles you at (0 = walks straight in)",
+  "default": 22
+ },
+ {
+  "key": "reach-flips",
+  "path": "difficulty.reach-flips",
+  "group": "difficulty",
+  "type": "INT",
+  "min": "0.0",
+  "max": "10.0",
+  "help": "how often, in tens of percent, a swing gives up full reach (0 = always full reach)",
+  "default": 0
+ },
+ {
+  "key": "potion-gap",
+  "path": "difficulty.potion-gap",
+  "group": "difficulty",
+  "type": "DOUBLE",
+  "min": "0.0",
+  "max": "10.0",
+  "help": "seconds at least between two healing potions",
+  "default": 2.0
+ },
+ {
+  "key": "cart-skip",
+  "path": "difficulty.cart-skip",
+  "group": "difficulty",
+  "type": "INT",
+  "min": "0.0",
+  "max": "100.0",
+  "help": "percent of cart chances it lets go by",
+  "default": 0
+ },
+ {
+  "key": "elytra-mace-level",
+  "path": "difficulty.elytra-mace-level",
+  "group": "difficulty",
+  "type": "INT",
+  "min": "0.0",
+  "max": "5.0",
+  "help": "elytra-mace skill, 1 (easy) to 5 (professional) - 0 follows skill",
+  "default": 0
+ },
+ {
+  "key": "stun-slam-chance",
+  "path": "difficulty.stun-slam-chance",
+  "group": "difficulty",
+  "type": "INT",
+  "min": "0.0",
+  "max": "100.0",
+  "help": "percent of raised shields it goes for the axe-then-mace stun slam on",
+  "default": 100
+ },
+ {
+  "key": "playstyle",
+  "path": "behaviour.playstyle",
+  "group": "behaviour",
+  "type": "CHOICE",
+  "min": "0.0",
+  "max": "0.0",
+  "help": "temperament: how far it commits, when it runs, how it uses the safety net",
+  "default": "default",
+  "options": [
+   "default",
+   "aggressive",
+   "safe",
+   "defensive",
+   "balanced",
+   "adaptive"
+  ]
+ },
+ {
+  "key": "opening",
+  "path": "behaviour.opening",
+  "group": "behaviour",
+  "type": "BOOL",
+  "min": "0.0",
+  "max": "0.0",
+  "help": "walks a new opponent down the way a player does - drifting, pausing, arcing in - not a straight sprint",
+  "default": true
+ },
+ {
+  "key": "healing",
+  "path": "survival.healing",
+  "group": "survival",
+  "type": "CHOICE",
+  "min": "0.0",
+  "max": "0.0",
+  "help": "how it heals under pressure: advanced buys a gap first (knockback hit, web or short pearl), old just heals where it stands or runs",
+  "default": "advanced",
+  "options": [
+   "advanced",
+   "old"
+  ]
+ },
+ {
+  "key": "offhand",
+  "path": "survival.offhand",
+  "group": "survival",
+  "type": "CHOICE",
+  "min": "0.0",
+  "max": "0.0",
+  "help": "what it keeps in its off-hand: auto (shield while healthy, totem when low), totem, or shield",
+  "default": "auto",
+  "options": [
+   "auto",
+   "totem",
+   "shield"
+  ]
+ },
+ {
+  "key": "offhand-totem-hearts",
+  "path": "survival.offhand-totem-hearts",
+  "group": "survival",
+  "type": "DOUBLE",
+  "min": "0.5",
+  "max": "10.0",
+  "help": "hearts at which a shield off-hand gives way to a totem (offhand: shield only)",
+  "default": 4.0
+ },
+ {
+  "key": "mace-totem",
+  "path": "survival.mace-totem",
+  "group": "survival",
+  "type": "BOOL",
+  "min": "0.0",
+  "max": "0.0",
+  "help": "a totem in its main hand while a mace is about to land on it and its off-hand has none",
+  "default": true
+ },
+ {
+  "key": "combo-answers",
+  "path": "survival.combo-answers",
+  "group": "survival",
+  "type": "BOOL",
+  "min": "0.0",
+  "max": "0.0",
+  "help": "being combo'd gets an answer: a crit back instead of a flat trade, a pearl out once it is clearly lost",
+  "default": true
+ },
+ {
+  "key": "hunger-stop",
+  "path": "survival.hunger-stop",
+  "group": "survival",
+  "type": "BOOL",
+  "min": "0.0",
+  "max": "0.0",
+  "help": "stops to eat at three hunger bars whatever it is doing, taking its best plain food",
+  "default": true
+ },
+ {
+  "key": "web-prediction",
+  "path": "webs.web-prediction",
+  "group": "webs",
+  "type": "BOOL",
+  "min": "0.0",
+  "max": "0.0",
+  "help": "webs the ground an opponent closing in is about to walk onto, not the ground they are on",
+  "default": false
+ },
+ {
+  "key": "head-web",
+  "path": "webs.head-web",
+  "group": "webs",
+  "type": "BOOL",
+  "min": "0.0",
+  "max": "0.0",
+  "help": "with a wall behind the opponent, hits them into it and webs the block their head rises into",
+  "default": false
+ },
+ {
+  "key": "hit-web",
+  "path": "webs.hit-web",
+  "group": "webs",
+  "type": "BOOL",
+  "min": "0.0",
+  "max": "0.0",
+  "help": "half its webs: a knockback hit first, then the web where they land",
+  "default": false
+ },
+ {
+  "key": "web-drain-chance",
+  "path": "webs.web-drain-chance",
+  "group": "webs",
+  "type": "INT",
+  "min": "0.0",
+  "max": "100.0",
+  "help": "percent of chances it takes to scoop up someone's escape water",
+  "default": 100
+ },
+ {
+  "key": "web-cut",
+  "path": "webs.web-cut",
+  "group": "webs",
+  "type": "BOOL",
+  "min": "0.0",
+  "max": "0.0",
+  "help": "cuts itself out of a web: shears first (keeping the web), a sword when it has no bucket or pearl",
+  "default": true
+ },
+ {
+  "key": "chorus-escape",
+  "path": "escapes.chorus-escape",
+  "group": "escapes",
+  "type": "BOOL",
+  "min": "0.0",
+  "max": "0.0",
+  "help": "webbed and boxed in, it eats a chorus fruit to teleport out",
+  "default": false
+ },
+ {
+  "key": "fire-escape",
+  "path": "escapes.fire-escape",
+  "group": "escapes",
+  "type": "BOOL",
+  "min": "0.0",
+  "max": "0.0",
+  "help": "burning with no fire resistance, it pours water on its own feet and takes the water back",
+  "default": false
+ },
+ {
+  "key": "enderchest-regear",
+  "path": "regear.enderchest-regear",
+  "group": "regear",
+  "type": "BOOL",
+  "min": "0.0",
+  "max": "0.0",
+  "help": "regears from its ender chest like an SMP player: pearl away, chest down beside it, restock from a shulker, take it all back (needs an ender chest in the bag, a shulker inside it)",
+  "default": true
+ },
+ {
+  "key": "regear-distance",
+  "path": "regear.regear-distance",
+  "group": "regear",
+  "type": "DOUBLE",
+  "min": "8.0",
+  "max": "64.0",
+  "help": "how far off the opponent must be (or out of sight) before it opens anything",
+  "default": 20.0
+ },
+ {
+  "key": "shulker-restock",
+  "path": "regear.shulker-restock",
+  "group": "regear",
+  "type": "BOOL",
+  "min": "0.0",
+  "max": "0.0",
+  "help": "walks to a placed shulker box nearby and takes what it is short of",
+  "default": false
+ },
+ {
+  "key": "shulker-steal",
+  "path": "regear.shulker-steal",
+  "group": "regear",
+  "type": "BOOL",
+  "min": "0.0",
+  "max": "0.0",
+  "help": "mines an opponent's placed shulker box mid-resupply and takes the drop",
+  "default": false
+ },
+ {
+  "key": "mace-swap",
+  "path": "techniques.mace-swap",
+  "group": "techniques",
+  "type": "BOOL",
+  "min": "0.0",
+  "max": "0.0",
+  "help": "swaps to the mace for its smashes and back to its weapon between them (off: the mace stays out)",
+  "default": true
+ },
+ {
+  "key": "spear-mace-swap",
+  "path": "techniques.spear-mace-swap",
+  "group": "techniques",
+  "type": "BOOL",
+  "min": "0.0",
+  "max": "0.0",
+  "help": "after a spear lunge carries it in, the follow-up hit comes off the mace",
+  "default": false
+ },
+ {
+  "key": "sword-windburst-swap",
+  "path": "techniques.sword-windburst-swap",
+  "group": "techniques",
+  "type": "BOOL",
+  "min": "0.0",
+  "max": "0.0",
+  "help": "no effect: a smash is always swung with the mace (a sword swap there turned every smash into a plain sword hit)",
+  "default": false
+ },
+ {
+  "key": "spear-reach-swap",
+  "path": "techniques.spear-reach-swap",
+  "group": "techniques",
+  "type": "BOOL",
+  "min": "0.0",
+  "max": "0.0",
+  "help": "a target just past sword reach gets the spear's 4.5-block jab instead of a step in",
+  "default": false
+ },
+ {
+  "key": "windcharge-mace",
+  "path": "techniques.windcharge-mace",
+  "group": "techniques",
+  "type": "BOOL",
+  "min": "0.0",
+  "max": "0.0",
+  "help": "a wind charge at its own feet to go up for a smash",
+  "default": true
+ },
+ {
+  "key": "wc-crouch-boost",
+  "path": "techniques.wc-crouch-boost",
+  "group": "techniques",
+  "type": "BOOL",
+  "min": "0.0",
+  "max": "0.0",
+  "help": "throws the launch charge nearly straight under itself: more height, less drift toward them",
+  "default": false
+ },
+ {
+  "key": "cooldown-discipline",
+  "path": "techniques.cooldown-discipline",
+  "group": "techniques",
+  "type": "BOOL",
+  "min": "0.0",
+  "max": "0.0",
+  "help": "never throws a charge still on cooldown, and holds the smash swing for a charged meter",
+  "default": true
+ },
+ {
+  "key": "hit-preference",
+  "path": "techniques.hit-preference",
+  "group": "techniques",
+  "type": "BOOL",
+  "min": "0.0",
+  "max": "0.0",
+  "help": "in a mace play it saves the swing for the smash coming up rather than spending it on a flat hit",
+  "default": true
+ },
+ {
+  "key": "hotbar-shield-tracking",
+  "path": "techniques.hotbar-shield-tracking",
+  "group": "techniques",
+  "type": "BOOL",
+  "min": "0.0",
+  "max": "0.0",
+  "help": "watches for a shield and keeps an axe on its hotbar for it, ready to stun",
+  "default": false
+ },
+ {
+  "key": "elytra-wc-boost",
+  "path": "techniques.elytra-wc-boost",
+  "group": "techniques",
+  "type": "BOOL",
+  "min": "0.0",
+  "max": "0.0",
+  "help": "out of rockets mid-climb, a wind charge under the elytra for the height",
+  "default": false
+ },
+ {
+  "key": "spear-dash",
+  "path": "techniques.spear-dash",
+  "group": "techniques",
+  "type": "BOOL",
+  "min": "0.0",
+  "max": "0.0",
+  "help": "at the top of a launch, a wind charge and the spear on the same tick dash it across the gap",
+  "default": false
+ },
+ {
+  "key": "dash-chain",
+  "path": "techniques.dash-chain",
+  "group": "techniques",
+  "type": "BOOL",
+  "min": "0.0",
+  "max": "0.0",
+  "help": "strings launches and spear dashes together to cover a long approach",
+  "default": false
+ },
+ {
+  "key": "spear-macing",
+  "path": "techniques.spear-macing",
+  "group": "techniques",
+  "type": "BOOL",
+  "min": "0.0",
+  "max": "0.0",
+  "help": "launches for a smash from further out, letting the spear dash carry it in over them",
+  "default": false
+ },
+ {
+  "key": "wc-reset",
+  "path": "techniques.wc-reset",
+  "group": "techniques",
+  "type": "BOOL",
+  "min": "0.0",
+  "max": "0.0",
+  "help": "a smash that lands goes straight back up off a wind charge the same tick",
+  "default": false
+ },
+ {
+  "key": "wc-self-reset",
+  "path": "techniques.wc-self-reset",
+  "group": "techniques",
+  "type": "BOOL",
+  "min": "0.0",
+  "max": "0.0",
+  "help": "a wind charge under itself before a hard landing: the blast resets the fall",
+  "default": false
+ },
+ {
+  "key": "stun-slam-variant",
+  "path": "techniques.stun-slam-variant",
+  "group": "techniques",
+  "type": "CHOICE",
+  "min": "0.0",
+  "max": "0.0",
+  "help": "how the stun slam goes in: one-tick (axe and mace the same tick), easy (axe, then the mace once it charges), optimal (only from a fall, so the mace part is a smash)",
+  "default": "one-tick",
+  "options": [
+   "one-tick",
+   "easy",
+   "optimal"
+  ]
+ },
+ {
+  "key": "ground-backstab",
+  "path": "techniques.ground-backstab",
+  "group": "techniques",
+  "type": "BOOL",
+  "min": "0.0",
+  "max": "0.0",
+  "help": "beats a raised shield by getting behind it: past them, turn, mace their back (alternative to mace-stun)",
+  "default": false,
+  "exclusive": "mace-stun"
+ },
+ {
+  "key": "elytra-backstab",
+  "path": "techniques.elytra-backstab",
+  "group": "techniques",
+  "type": "BOOL",
+  "min": "0.0",
+  "max": "0.0",
+  "help": "an elytra dive at a raised shield comes down behind it instead of pulling out",
+  "default": false
+ },
+ {
+  "key": "spear-stun-slam",
+  "path": "techniques.spear-stun-slam",
+  "group": "techniques",
+  "type": "BOOL",
+  "min": "0.0",
+  "max": "0.0",
+  "help": "axes a raised shield down, then follows with the spear's long jab",
+  "default": false
+ },
+ {
+  "key": "shield-drain",
+  "path": "techniques.shield-drain",
+  "group": "techniques",
+  "type": "BOOL",
+  "min": "0.0",
+  "max": "0.0",
+  "help": "a wind charge into someone turtling behind a shield, to knock them off their stance",
+  "default": false
+ },
+ {
+  "key": "detap-spear-mace",
+  "path": "techniques.detap-spear-mace",
+  "group": "techniques",
+  "type": "BOOL",
+  "min": "0.0",
+  "max": "0.0",
+  "help": "on a low opponent: a spear jab, then the mace the tick their hit protection runs out",
+  "default": false
+ },
+ {
+  "key": "detap-breach",
+  "path": "techniques.detap-breach",
+  "group": "techniques",
+  "type": "BOOL",
+  "min": "0.0",
+  "max": "0.0",
+  "help": "a breach swap, then a second one the tick their hit protection runs out",
+  "default": false
+ },
+ {
+  "key": "spear-double-pop",
+  "path": "techniques.spear-double-pop",
+  "group": "techniques",
+  "type": "BOOL",
+  "min": "0.0",
+  "max": "0.0",
+  "help": "a smash that pops a totem is followed straight away by a spear jab to pop the next",
+  "default": false
+ },
+ {
+  "key": "wc-cancel",
+  "path": "techniques.wc-cancel",
+  "group": "techniques",
+  "type": "BOOL",
+  "min": "0.0",
+  "max": "0.0",
+  "help": "a wind charge into an opponent going up for a smash, knocking them off course",
+  "default": false
+ },
+ {
+  "key": "wc-cancel-chance",
+  "path": "techniques.wc-cancel-chance",
+  "group": "techniques",
+  "type": "INT",
+  "min": "0.0",
+  "max": "100.0",
+  "help": "percent of an opponent's launches wc-cancel goes for (never twice within 15 seconds)",
+  "default": 10
+ },
+ {
+  "key": "rocket-mace",
+  "path": "techniques.rocket-mace",
+  "group": "techniques",
+  "type": "CHOICE",
+  "min": "0.0",
+  "max": "0.0",
+  "help": "the elytra-mace climb-and-drop: climb (the usual), spiral (round them), angled (out, then a long run in), overhead (straight up over them) - or off, no rocket climbs",
+  "default": "climb",
+  "options": [
+   "off",
+   "climb",
+   "spiral",
+   "angled",
+   "overhead"
+  ]
+ },
+ {
+  "key": "elytra-spear",
+  "path": "techniques.elytra-spear",
+  "group": "techniques",
+  "type": "BOOL",
+  "min": "0.0",
+  "max": "0.0",
+  "help": "an elytra pass with the spear: rocket at them and jab on the way through",
+  "default": false
+ },
+ {
+  "key": "pearl-catch",
+  "path": "techniques.pearl-catch",
+  "group": "techniques",
+  "type": "CHOICE",
+  "min": "0.0",
+  "max": "0.0",
+  "help": "the pearl catch for mace-pearl-launch: smart (picks per situation - recommended), standard (straight up), instant (charge from the off-hand, both throws back to back), angle (out over them)",
+  "default": "smart",
+  "options": [
+   "smart",
+   "standard",
+   "instant",
+   "angle"
+  ]
+ },
+ {
+  "key": "aim-hits",
+  "path": "aim.aim-hits",
+  "group": "aim",
+  "type": "BOOL",
+  "min": "0.0",
+  "max": "0.0",
+  "help": "its swing lands where its crosshair is: it aims a moment late, flicks and settles, and whiffs a juke (off: the old in-reach-and-a-dice-roll hit)",
+  "default": true
+ },
+ {
+  "key": "aim-height",
+  "path": "aim.aim-height",
+  "group": "aim",
+  "type": "INT",
+  "min": "30.0",
+  "max": "95.0",
+  "help": "where on the body it aims, percent of height from the feet - each bot a little higher or lower",
+  "default": 70
+ },
+ {
+  "key": "fov",
+  "path": "senses.fov",
+  "group": "senses",
+  "type": "INT",
+  "min": "30.0",
+  "max": "360.0",
+  "help": "how wide it sees, in degrees: someone behind it is not seen until heard or felt (360 = all round)",
+  "default": 120
+ },
+ {
+  "key": "hearing",
+  "path": "senses.hearing",
+  "group": "senses",
+  "type": "INT",
+  "min": "0.0",
+  "max": "32.0",
+  "help": "blocks it hears sprinting, fighting, eating and pearls from, and turns to look (0 = deaf)",
+  "default": 16
+ },
+ {
+  "key": "hotbar-only",
+  "path": "tactics.hotbar-only",
+  "group": "tactics",
+  "type": "BOOL",
+  "min": "0.0",
+  "max": "0.0",
+  "help": "in a fight it uses its hotbar and off-hand; anything in the bag means opening the inventory - standing still for a moment - and it refills its hotbar between fights",
+  "default": true
+ },
+ {
+  "key": "damage-model",
+  "path": "tactics.damage-model",
+  "group": "tactics",
+  "type": "BOOL",
+  "min": "0.0",
+  "max": "0.0",
+  "help": "picks weapons by the damage they do through your armour, and fights, heals and backs off by who is winning the trade and how fast it is losing health",
+  "default": true
+ },
+ {
+  "key": "read-opponent",
+  "path": "tactics.read-opponent",
+  "group": "tactics",
+  "type": "BOOL",
+  "min": "0.0",
+  "max": "0.0",
+  "help": "learns your habits in a fight: axes a shield player every time, crits a jump-resetter, follows your pearls, goes all in when you are low with no totem up",
+  "default": true
+ },
+ {
+  "key": "shield-game",
+  "path": "tactics.shield-game",
+  "group": "tactics",
+  "type": "BOOL",
+  "min": "0.0",
+  "max": "0.0",
+  "help": "lowers its shield to an axe about to land, punishes the five seconds your shield is down, and keeps its distance while its own is",
+  "default": true
+ },
+ {
+  "key": "edge-play",
+  "path": "tactics.edge-play",
+  "group": "tactics",
+  "type": "BOOL",
+  "min": "0.0",
+  "max": "0.0",
+  "help": "lines its hits up to knock you toward the void, lava or a drop, and keeps its own back off edges",
+  "default": true
+ },
+ {
+  "key": "lava-play",
+  "path": "tactics.lava-play",
+  "group": "tactics",
+  "type": "BOOL",
+  "min": "0.0",
+  "max": "0.0",
+  "help": "UHC: pours lava on you and takes it back, and lights fire at your feet (needs a lava bucket / flint and steel; changes blocks)",
+  "default": false
+ },
+ {
+  "key": "block-off",
+  "path": "tactics.block-off",
+  "group": "tactics",
+  "type": "BOOL",
+  "min": "0.0",
+  "max": "0.0",
+  "help": "walls itself off with a couple of blocks while it heals (needs blocks; changes blocks)",
+  "default": false
+ },
+ {
+  "key": "fishing-rod",
+  "path": "items.fishing-rod",
+  "group": "items",
+  "type": "BOOL",
+  "min": "0.0",
+  "max": "0.0",
+  "help": "hooks you with a fishing rod and reels you in - off a ledge, toward lava, back from running",
+  "default": true
+ },
+ {
+  "key": "trident",
+  "path": "items.trident",
+  "group": "items",
+  "type": "BOOL",
+  "min": "0.0",
+  "max": "0.0",
+  "help": "throws its trident (and waits for Loyalty to bring it back), rides Riptide in rain or water",
+  "default": true
+ },
+ {
+  "key": "crossbow-ammo",
+  "path": "items.crossbow-ammo",
+  "group": "items",
+  "type": "BOOL",
+  "min": "0.0",
+  "max": "0.0",
+  "help": "loads firework rockets from its off-hand into a crossbow for burst damage",
+  "default": true
+ },
+ {
+  "key": "throw-potions",
+  "path": "items.throw-potions",
+  "group": "items",
+  "type": "BOOL",
+  "min": "0.0",
+  "max": "0.0",
+  "help": "throws Weakness, Slowness, Harming and Poison at you",
+  "default": true
+ },
+ {
+  "key": "spear-charge",
+  "path": "items.spear-charge",
+  "group": "items",
+  "type": "BOOL",
+  "min": "0.0",
+  "max": "0.0",
+  "help": "holds use with a spear as it runs in - the charged spear attack (check it on your version)",
+  "default": false
+ },
+ {
+  "key": "block-clutch",
+  "path": "items.block-clutch",
+  "group": "items",
+  "type": "BOOL",
+  "min": "0.0",
+  "max": "0.0",
+  "help": "without water, clutches a fall with a slime block, hay bale, cobweb or powder snow",
+  "default": true
+ },
+ {
+  "key": "focus-fire",
+  "path": "team.focus-fire",
+  "group": "team",
+  "type": "BOOL",
+  "min": "0.0",
+  "max": "0.0",
+  "help": "in a faction: goes for the enemy its allies are on, and the weakest - low, broken armour, no totem",
+  "default": true
+ },
+ {
+  "key": "peel",
+  "path": "team.peel",
+  "group": "team",
+  "type": "BOOL",
+  "min": "0.0",
+  "max": "0.0",
+  "help": "leaves its own fight to hit whoever is on a nearly dead ally",
+  "default": true
+ },
+ {
+  "key": "heal-allies",
+  "path": "team.heal-allies",
+  "group": "team",
+  "type": "BOOL",
+  "min": "0.0",
+  "max": "0.0",
+  "help": "throws its splash healing potions at a hurt ally close by",
+  "default": true
+ },
+ {
+  "key": "regear-turns",
+  "path": "team.regear-turns",
+  "group": "team",
+  "type": "BOOL",
+  "min": "0.0",
+  "max": "0.0",
+  "help": "faction members regear one at a time instead of all leaving the fight together",
+  "default": true
+ },
+ {
+  "key": "personality",
+  "path": "human.personality",
+  "group": "human",
+  "type": "BOOL",
+  "min": "0.0",
+  "max": "0.0",
+  "help": "each bot has its own habits from its name - how jumpy, how wide it strafes, its range, rush or turtle, sprint-combo or crit-hunter, and (below skill 45) sometimes spam-clicking",
+  "default": true
+ },
+ {
+  "key": "spacing",
+  "path": "human.spacing",
+  "group": "human",
+  "type": "BOOL",
+  "min": "0.0",
+  "max": "0.0",
+  "help": "out of your reach while its meter refills and yours is full, back in as it fills; now and then hovers at the edge of your reach to draw a swing",
+  "default": true
+ },
+ {
+  "key": "whiff-punish",
+  "path": "human.whiff-punish",
+  "group": "human",
+  "type": "BOOL",
+  "min": "0.0",
+  "max": "0.0",
+  "help": "you swing and miss: it steps straight in for the free hit",
+  "default": true
+ },
+ {
+  "key": "tempo",
+  "path": "human.tempo",
+  "group": "human",
+  "type": "BOOL",
+  "min": "0.0",
+  "max": "0.0",
+  "help": "fights in phases: pushes after landing two, backs off to reset after taking two, a breath after a heavy trade",
+  "default": true
+ },
+ {
+  "key": "show-items",
+  "path": "human.show-items",
+  "group": "human",
+  "type": "BOOL",
+  "min": "0.0",
+  "max": "0.0",
+  "help": "a gapple, potion or pearl is up in its hand a moment before it is used, and now and then the wrong slot comes up first",
+  "default": true
+ },
+ {
+  "key": "panic",
+  "path": "human.panic",
+  "group": "human",
+  "type": "BOOL",
+  "min": "0.0",
+  "max": "0.0",
+  "help": "at three hearts it either locks in (steadier aim) or panics (shaky aim, jumpy, strafing every which way) - better bots lock in more often",
+  "default": true
+ },
+ {
+  "key": "after-fight",
+  "path": "human.after-fight",
+  "group": "human",
+  "type": "BOOL",
+  "min": "0.0",
+  "max": "0.0",
+  "help": "after a kill: crouches over the body (some do), picks the good stuff out of the drop",
+  "default": true
+ },
+ {
+  "key": "idle-fidget",
+  "path": "human.idle-fidget",
+  "group": "human",
+  "type": "BOOL",
+  "min": "0.0",
+  "max": "0.0",
+  "help": "standing about it looks round, glances at people, flicks its hotbar, hops and taps crouch",
+  "default": true
+ },
+ {
+  "key": "reaction-ripple",
+  "path": "army.reaction-ripple",
+  "group": "army",
+  "type": "BOOL",
+  "min": "0.0",
+  "max": "0.0",
+  "help": "orders, calls and new targets reach each bot after its own moment - nearest first, the odd one late - instead of the whole side turning on one tick",
+  "default": true
+ },
+ {
+  "key": "pile-cap",
+  "path": "army.pile-cap",
+  "group": "army",
+  "type": "INT",
+  "min": "0.0",
+  "max": "10.0",
+  "help": "most bots on one enemy; the rest go for the next or wait at the edge for a way in (0 = no cap)",
+  "default": 3
+ },
+ {
+  "key": "skill-spread",
+  "path": "army.skill-spread",
+  "group": "army",
+  "type": "INT",
+  "min": "0.0",
+  "max": "30.0",
+  "help": "each bot's skill sits up to this far above or below its faction's, by its name (0 = all the same)",
+  "default": 12
+ },
+ {
+  "key": "morale",
+  "path": "army.morale",
+  "group": "army",
+  "type": "BOOL",
+  "min": "0.0",
+  "max": "0.0",
+  "help": "outnumbered and losing members, the less brave run (a leader close by holds them and rallies them)",
+  "default": true
+ },
+ {
+  "key": "roles",
+  "path": "army.roles",
+  "group": "army",
+  "type": "BOOL",
+  "min": "0.0",
+  "max": "0.0",
+  "help": "in an army: archers hang back, flankers come round the side, healers stay by the hurt",
+  "default": true
+ },
+ {
+  "key": "loose-formations",
+  "path": "army.loose-formations",
+  "group": "army",
+  "type": "BOOL",
+  "min": "0.0",
+  "max": "0.0",
+  "help": "formations wobble round their slots, each bot at its own pace, turns ripple down the column, stragglers sprint-jump to catch up",
+  "default": true
+ },
+ {
+  "key": "ally-care",
+  "path": "army.ally-care",
+  "group": "army",
+  "type": "BOOL",
+  "min": "0.0",
+  "max": "0.0",
+  "help": "no arrows through allies, no sword sweep into them, no standing inside each other",
+  "default": true
+ }
+]

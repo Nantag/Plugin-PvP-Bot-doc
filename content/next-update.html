@@ -2,71 +2,283 @@
 title: Next update
 section: Getting started
 order: 30
-lead: What is finished on GitHub but not in the Modrinth download yet. It ships with the next release.
+lead: Everything finished on GitHub but not in the Modrinth download yet. It all ships with the next release.
 ---
-<p class="status"><span class="badge">Unreleased</span> Everything on this page is in PvpBot's source but not in the
-build on Modrinth. The rest of this wiki describes the Modrinth build.</p>
+<p class="status"><span class="badge">Unreleased</span> This page lists what is in PvpBot's source but not in the build
+on Modrinth. The rest of the wiki describes the Modrinth build. 97 new settings and a dozen new commands; nothing is
+removed and every existing setting keeps its meaning. Most of the new behaviour is on by default, and the new
+techniques start off.</p>
+
+<p>In short: difficulty is no longer one slider, bots aim and land hits the way a player's crosshair does, and they read
+you, space, bait and tilt like people. They know 27 mace and spear techniques, regear from an ender chest, march in
+formations wearing faction uniforms, and fight in armies that hold or break. And there's a chest menu for every setting.</p>
+
+<h2>Difficulty knobs and presets</h2>
+<p><code>skill</code> is now split into one <strong>knob</strong> per part of it. That way you can build a bot that aims
+perfectly but reacts slowly, or one that never misses a crit but can't clutch. A knob at <code>-1</code> follows
+<code>skill</code>, so a config that only sets <code>skill</code> plays as it did.</p>
+<p>Six presets write every knob at once: <code>easy</code>, <code>medium</code>, <code>hard</code>, <code>expert</code>,
+<code>professional</code> and <code>perfect</code>. Every setting now resolves per bot first, then per faction, then
+globally. A bot's own values are kept by name in <code>bot-settings.yml</code>, so they survive respawns and restarts.</p>
+<pre><code>/pvpbot difficulty [list]
+/pvpbot difficulty preset &lt;easy|medium|hard|expert|professional|perfect&gt;
+/pvpbot difficulty &lt;knob&gt; &lt;value&gt;
+/pvpbot difficulty bot &lt;bot&gt; [list|preset &lt;level&gt;|clear|&lt;knob&gt; &lt;value&gt;]
+/pvpbot difficulty faction &lt;faction&gt; [list|preset &lt;level&gt;|clear|&lt;knob&gt; &lt;value&gt;]</code></pre>
+{{settings:next-difficulty}}
+
+<h2>Playstyles</h2>
+<p>A playstyle sets what a bot <em>wants</em>, on top of how well it plays: when it commits, heals, runs and chases.</p>
+<ul>
+  <li><strong>aggressive</strong> commits and stays in longer.</li>
+  <li><strong>safe</strong> heals and pearls out early.</li>
+  <li><strong>defensive</strong> holds its patch of ground and lets you come to it.</li>
+  <li><strong>adaptive</strong> swings between aggressive and safe with the health race.</li>
+  <li><strong>balanced</strong> sits in the middle, and <strong>default</strong> plays as bots always have.</li>
+</ul>
+<p>Set it per bot (kept by name), per faction or globally. <code>randomplaystyle</code> rolls each bot its own, by weights
+you choose.</p>
+<pre><code>/pvpbot playstyle list
+/pvpbot playstyle &lt;style&gt; &lt;bots&gt;
+/pvpbot playstyle clear &lt;bots&gt;
+/pvpbot playstyle faction &lt;faction&gt; &lt;style|clear&gt;
+/pvpbot randomplaystyle &lt;bots&gt;
+/pvpbot randomplaystylechances [list|reset|&lt;style&gt; &lt;weight&gt;]</code></pre>
+<p>The <strong>opening</strong> is new too. A bot walks a new opponent down the way a player does: drifting side to
+side, pausing to watch, arcing in over the last few blocks and only sprinting near the end. From the first hit either
+way, it fights as always.</p>
+{{settings:next-behaviour}}
+
+<h2>The settings chest</h2>
+<p><code>/pvpbot settings</code> opens a paged chest of every setting, generated from the same list the commands
+validate against, so nothing is ever missing from it.</p>
+<ul>
+  <li>Left-click toggles or steps a value up, right-click steps it down, and shift steps by ten. Q takes a faction's or
+  bot's own value off.</li>
+  <li>Filter by group, search by word, and nudge the whole difficulty a preset up or down from the bottom row.</li>
+  <li>It works on the Spigot edition too.</li>
+</ul>
+<pre><code>/pvpbot settings                                 the chest
+/pvpbot settings search &lt;word&gt;                   only what matches
+/pvpbot settings bot &lt;bot&gt; | faction &lt;faction&gt;   one bot's or one faction's values
+/pvpbot settings list [group|word]               printed in chat instead
+/pvpbot faction settings &lt;faction&gt; [word]        the faction's screen, with what it changes marked</code></pre>
+
+<h2>Aim that decides hits</h2>
+<p>A swing now lands <strong>where the crosshair is</strong>, the way a player's client picks what it hits, instead of
+"in reach, then a dice roll". The bot:</p>
+<ul>
+  <li>sees you a moment late (the <code>tracking</code> knob);</li>
+  <li>flicks onto you like a hand: a touch of overshoot, then it settles;</li>
+  <li>carries a small tremor (<code>aim</code>) and aims at the upper body.</li>
+</ul>
+<p>It holds a ready swing until its crosshair is on you, for as long as its patience lasts. Walking a straight line or
+circling steadily gets you hit; a juke inside its reaction time makes it whiff. A whiff costs it the attack meter, as it
+does a player.</p>
+{{settings:next-aim}}
+
+<h2>Senses</h2>
+<ul>
+  <li><strong>View cone:</strong> someone behind a bot isn't seen until they're heard or they hit it.</li>
+  <li><strong>Hearing:</strong> sprinting (walking at half the range, crouching silent), fighting, a totem going off,
+  eating and pearls make it stop and turn to look. A pursuer it is already fighting is tracked by ear.</li>
+  <li><strong>Blindness and Darkness</strong> blind it: it only notices someone within touching distance, though it
+  remembers who it was fighting.</li>
+</ul>
+{{settings:next-senses}}
+
+<h2>Fighting smarter</h2>
+<ul>
+  <li><strong>Hotbar only:</strong> in a fight it uses its hotbar and off-hand. Anything in the bag means opening the
+  inventory: it stands still, can't swing, and moves the item over. Between fights it refills its hotbar the way its kit
+  laid it out.</li>
+  <li><strong>Damage model:</strong> it ranks weapons by the damage they do through <em>your</em> armour (toughness,
+  Breach, Protection, Resistance, crits) and times heals by how fast it's losing health. It backs off sooner when losing
+  the trade and stays in when winning.</li>
+  <li><strong>Reads you:</strong> how often you shield, jump-reset and strafe each way, when you pearl, how many totems
+  and gapples you use. A shield player gets the axe every time, a jump-resetter gets crits, a pearl gets followed, and
+  low with no totem showing means all in.</li>
+  <li><strong>Shield game:</strong> it drops its shield to a charged axe instead of feeding it, goes all out while yours
+  is down, and keeps out of reach while its own is.</li>
+  <li><strong>Edges:</strong> it walks round to knock you toward the void, lava or a drop, and keeps its own back off
+  edges.</li>
+  <li><strong>UHC tools</strong> (off by default, because they change blocks): lava at your feet taken straight back,
+  fire under you, a couple of blocks to hide behind while it heals.</li>
+</ul>
+{{settings:next-tactics}}
+
+<h2>Playing like a person</h2>
+<ul>
+  <li><strong>Personality:</strong> every bot gets its own habits from its name: how jumpy it is, how wide it strafes,
+  the range it likes, rush or turtle, sprint-comboer or crit-hunter. Weak bots sometimes spam-click air, and pay for it.</li>
+  <li><strong>Spacing and whiffs:</strong> out of your reach while its meter refills, back in as it fills. It hovers at
+  the edge of your reach to bait a swing, and punishes a whiff with a free hit.</li>
+  <li><strong>Tempo:</strong> it pushes after landing two in a row, backs off to reset after taking two, and takes a
+  breath after a heavy trade.</li>
+  <li><strong>Items in hand first:</strong> gapples, potions and pearls come up a moment before use, and now and then the
+  wrong slot comes up first.</li>
+  <li><strong>Panic or clutch:</strong> at three hearts a bot either locks in or falls apart. Better bots lock in more
+  often.</li>
+  <li><strong>After a kill:</strong> some crouch over the body; most pick the totems, pearls, gapples and potions out of
+  the drop.</li>
+  <li><strong>Fidgeting:</strong> standing about, bots look round, glance at people walking past, flick their hotbar and
+  hop.</li>
+</ul>
+{{settings:next-human}}
+
+<h2>27 mace and spear techniques</h2>
+<p>Difficulty is how well a bot plays; techniques are which moves it knows at all. Each technique is an ordinary
+setting. The ones bots already used start on, the new ones start off.</p>
+<ul>
+  <li><strong>Core swaps:</strong> mace swap, spear-mace swap, breach swap, spear reach swap.</li>
+  <li><strong>Fundamentals:</strong> wind-charge mace, crouch boost, cooldown discipline (wind charges now carry vanilla's
+  item cooldown), hit preference, hotbar shield tracking, elytra wind-charge boost.</li>
+  <li><strong>Movement:</strong> spear dash (a held charge and the spear on one click, distance picked by pitch), dash
+  chain, spear-macing, wind-charge reset and self-reset.</li>
+  <li><strong>Anti-shield:</strong> ground and elytra backstab, stun slam (one-tick, easy or optimal), spear stun slam,
+  shield drain.</li>
+  <li><strong>Finishers:</strong> detap spear-mace, detap breach, spear double pop, wind-charge cancel.</li>
+  <li><strong>Rocket mace</strong> with four climb-and-drop patterns, <strong>elytra spear</strong>, and a choice of pearl
+  catch for the pearl launch.</li>
+</ul>
+<pre><code>/pvpbot techniques [bot &lt;bot&gt;|faction &lt;faction&gt;] [&lt;technique&gt; &lt;value&gt;]</code></pre>
+{{settings:next-techniques}}
+
+<h2>Survival, webs and escapes</h2>
+<ul>
+  <li><strong>Advanced healing:</strong> it buys a gap before it heals (a knockback hit, a web on you, or a short
+  pearl) instead of eating in your face. <code>healing: old</code> brings back the previous behaviour.</li>
+  <li><strong>Off-hand preference</strong> (auto, totem or shield), a totem in the main hand when a smash is about to
+  land, answers to being combo'd, and eating at three hunger bars.</li>
+  <li><strong>Webs</strong> are held out, looked at and swung, not a block appearing in a sword hand. They can predict
+  where you walk, web your head against a wall, or knock you back and web where you land.</li>
+  <li><strong>Cutting out of a web:</strong> shears first (keeping the web), then water, a pearl, then a sword.</li>
+  <li><strong>Escapes:</strong> chorus fruit when webbed and boxed in, and water on its own feet when burning.</li>
+</ul>
+{{settings:next-survival}}
+{{settings:next-webs}}
+{{settings:next-escapes}}
+
+<h2>Regearing</h2>
+<p>A bot regears from its <strong>ender chest</strong> the way it's done on an SMP: it pearls away, sets the chest down
+beside it, takes out a shulker, restocks only what it's short of and packs it all back. It waits for room first and
+recovers everything if you catch it mid-way. It can also restock from a shulker box placed nearby, or mine yours out from
+under you.</p>
+<pre><code>/pvpbot restock &lt;bot|all|faction &lt;name&gt;&gt; [instant]   regear now
+/pvpbot view inventory|enderchest &lt;bot&gt;             a bot's bag or ender chest, live and editable</code></pre>
+{{settings:next-regear}}
+
+<h2>More items</h2>
+<p>Each one only when it's on the hotbar: a <strong>fishing rod</strong> to reel a runner in, the <strong>trident</strong>
+(thrown, or ridden with Riptide), <strong>splash potions</strong> of Weakness, Slowness, Harming and Poison,
+<strong>firework crossbow</strong> ammo, the <strong>spear charge</strong>, and <strong>block clutches</strong> (slime,
+hay, cobweb, powder snow) when there's no water.</p>
+{{settings:next-items}}
+
+<h2>Formations, marches and uniforms</h2>
+<ul>
+  <li><strong>Formations:</strong> <code>behind</code>, <code>column</code>, <code>line</code>, <code>rows</code>,
+  <code>triangle</code>, <code>wall</code> and <code>open_circle</code> turn with the leader; <code>square</code>,
+  <code>circle</code>, <code>hexagon</code> and <code>grid</code> line up with the world and hold their shape on arrival.
+  Bots carrying an elytra form their own rank at the back.</li>
+  <li><strong>Marches:</strong> <code>faction goto</code> sends a whole faction to a point or a player in formation, then
+  it holds, or attacks a target on arrival.</li>
+  <li><strong>Uniforms:</strong> <code>faction skin</code> puts every bot in a faction in one account's skin. It's kept
+  in <code>factions.yml</code>, so it survives deaths and restarts.</li>
+</ul>
+<pre><code>/pvpbot follow &lt;bots&gt; &lt;target&gt; [formation] [size]
+/pvpbot faction follow &lt;faction&gt; &lt;target|stop&gt; [formation] [size]
+/pvpbot faction goto &lt;faction&gt; &lt;x y z|player|stop|status&gt; [formation] [size] [then attack &lt;target&gt;|then hold]
+/pvpbot faction formation &lt;faction&gt; &lt;shape&gt; [size] | clear
+/pvpbot faction skin &lt;faction&gt; &lt;account&gt;|stop
+/pvpbot faction skin list</code></pre>
+
+<h2>Team play and armies</h2>
+<ul>
+  <li><strong>Team play:</strong> focus fire on the enemy allies are on and the weakest one; peeling off to save a nearly
+  dead ally; splash heals thrown at allies; regearing one at a time.</li>
+  <li><strong>Reaction ripple:</strong> orders and new targets reach each bot after its own moment, nearest first, so a
+  side doesn't turn on one tick.</li>
+  <li><strong>Pile-on cap:</strong> no more than three on one enemy; the rest take the next or wait at the edge.</li>
+  <li><strong>Skill spread:</strong> each bot's skill sits a little above or below its faction's.</li>
+  <li><strong>Morale:</strong> a side that is outnumbered and losing members breaks, the least brave first. A leader close
+  by holds them and rallies the ones that ran.</li>
+  <li><strong>Roles:</strong> archers hang back, pearl carriers flank, healers stay with the hurt.</li>
+  <li><strong>Loose formations</strong> and <strong>ally care</strong>: slots wobble, stragglers sprint-jump to catch up,
+  and nobody shoots or sweeps through an ally.</li>
+</ul>
+{{settings:next-team}}
+{{settings:next-army}}
+
+<h2>Arena and debug view</h2>
+<p><code>/pvpbot arena</code> spawns two bots where you stand and has them fight round after round. It then reports per
+side: wins, time to kill, hits and damage per hit, aimed swings that connected, crits, smashes, best combo, totems
+popped, heals, and mid-fight inventory opens. Change a setting, run it again, compare.</p>
+<p><code>/pvpbot debugview</code> floats a line over a bot showing which part of its AI is in charge, its target and how
+the trade looks, what it has read about you, its aim, and its latest call ("whiffed", "their shield is down: all
+out").</p>
+<pre><code>/pvpbot arena start &lt;kitA&gt; &lt;kitB&gt; [rounds] [skillA] [skillB]
+/pvpbot arena stop | report
+/pvpbot debugview &lt;bot|all&gt;</code></pre>
 
 <h2><code>/pvpbot diagnose</code> works on players</h2>
 <p><code>/pvpbot diagnose &lt;bot&gt;</code> explains why a bot can't fight. The new form answers the opposite question:
 <strong>why bots can't hurt a particular player</strong>.</p>
-<pre><code>/pvpbot diagnose &lt;player&gt;
-/pvpbot diagnose &lt;player&gt; reset</code></pre>
-<p>It reads the player's state the way the game's damage checks see it: game mode, the invulnerable flag, the game's
-own "client still loading" protection, hit invulnerability, a raised shield, a shared scoreboard team, PvP in the world,
-and the client brand and version (through ViaVersion if installed).</p>
-<p>Then it lists every bot within 48 blocks, with whether that bot would fight the player, what it is targeting, and
-whether it can see them.</p>
-<p>From the moment the server starts, every bot hit aimed at a real player is logged. The report shows what became of
-each one:</p>
+<pre><code>/pvpbot diagnose &lt;player&gt; [reset]</code></pre>
+<p>It reads the player's state the way the game's damage checks see it: game mode, the invulnerable flag, the "client
+still loading" protection, hit invulnerability, a raised shield, a shared scoreboard team, PvP in the world, and the
+client version. It lists every bot within 48 blocks, with whether it would fight them and whether it can see them.</p>
+<p>From server start, every bot hit aimed at a real player is logged, and the report shows what became of each one:</p>
 <div class="table-wrap">
 <table>
 <thead><tr><th>Outcome</th><th>What it means</th></tr></thead>
 <tbody>
-<tr><td>Turned away</td><td>The game refused the hit before any plugin saw it. The reason is checked on the spot: hit
-invulnerability, creative or spectator, an invulnerable flag, the loading protection, a team without friendly fire, or
-PvP off.</td></tr>
-<tr><td>Cancelled</td><td>A plugin stopped it. The report says at which event priority, which narrows down the plugin.</td></tr>
+<tr><td>Turned away</td><td>The game refused the hit before any plugin saw it. The reason is checked on the spot.</td></tr>
+<tr><td>Cancelled</td><td>A plugin stopped it, and the report says at which event priority.</td></tr>
 <tr><td>Shield</td><td>Their raised shield took it.</td></tr>
-<tr><td>Zeroed</td><td>It went through with no damage left (a plugin, or armour and resistance).</td></tr>
+<tr><td>Zeroed</td><td>It went through with no damage left.</td></tr>
 <tr><td>Landed</td><td>It hurt them.</td></tr>
 </tbody>
 </table>
 </div>
-<p>It ends with a one-line verdict. <code>reset</code> starts a fresh log. Melee swings, mace smashes, spear jabs and
-elytra strikes are all logged, and so are bot arrows. Both the Paper and the Spigot editions have it.</p>
+<p>It ends with a one-line verdict. <code>reset</code> starts a fresh log.</p>
 
-<h2>Blinded bots can't see</h2>
-<p>A bot with <strong>Blindness</strong> or <strong>Darkness</strong> no longer spots targets by sight. It only notices
-someone who comes within touching distance (about a block and a half). It still remembers who it was already fighting.
-A splash of blindness is now a real way to break off a fight.</p>
+<h2>Changed behaviour</h2>
+<ul>
+  <li><strong>Sword crits:</strong> the cooldown trick swung at 84.8% charge, which loses vanilla's crit, sprint
+  knockback and sweep (they need 90%). Bots now swing at 92%, so they combo properly.</li>
+  <li><strong>Fewer fake whiffs:</strong> strafing used to add up to 40 points of miss chance; it's capped at 15.</li>
+  <li><strong>Shield as a read:</strong> the shield goes up only when you can actually hit right now, not in every gap
+  between the bot's own swings.</li>
+  <li><strong>Mace defence:</strong> alone under a mace player, a bot holds its ground near the landing spot ready to
+  shield, and a dodge is a late sidestep. Wind-charge cancels are rare: 10% of launches, never twice in 15 seconds.</li>
+  <li><strong>Spear-macers actually smash:</strong> the spear dash now solves the velocity that lands on the target,
+  and the smash is always swung with the mace.</li>
+  <li>The opening walk-in ends once the gap has been growing for half a second, so a bot chases someone running.</li>
+</ul>
 
-<h2>Weapon add-ons</h2>
-<p>For plugin developers. PvpBot now has an extension point, <code>BotArsenal</code>, that lets another plugin teach bots
-to use its own gear: guns, grenades, medical items, special armour. With no add-on installed nothing changes.</p>
-<p>A handler registers once and is asked at fixed points in every bot's combat tick:</p>
+<h2>For plugin developers</h2>
+<p>A new extension point, <code>BotArsenal</code>, lets another plugin teach bots to use its own gear: guns, grenades,
+medical items, special armour. With no add-on installed nothing changes. A handler registers once and is asked at fixed
+points in every bot's combat tick:</p>
 <div class="table-wrap">
 <table>
 <thead><tr><th>Hook</th><th>When</th></tr></thead>
 <tbody>
 <tr><td><code>override</code></td><td>Right after the target is chosen, ahead of eating, pearls and retreats.</td></tr>
-<tr><td><code>fight</code></td><td>With a target, ahead of every built-in attack. Handing the tick back falls through to
-PvpBot's own melee and ranged play.</td></tr>
+<tr><td><code>fight</code></td><td>With a target, ahead of every built-in attack. Returning false falls through to
+PvpBot's own play.</td></tr>
 <tr><td><code>idle</code></td><td>With no target (or while hiding), ahead of guarding and escorting.</td></tr>
 <tr><td><code>blocksSight</code></td><td>Whenever a bot looks for a target: something only the add-on knows about (a smoke
 cloud) can hide a player.</td></tr>
 </tbody>
 </table>
 </div>
-<p>Three more keep PvpBot's own gear logic out of the way: <code>holdsHand</code> stops the weapon auto-equip while the
-add-on holds an item on purpose, <code>reserved</code> keeps the bow and crossbow code off the add-on's items, and
-<code>armourScore</code> lets the armour picker rank the add-on's armour.</p>
-<p>The first add-on is FirearmsBots: its bots fight with guns, grenades, cover, plates, meds and revives.</p>
+<p><code>holdsHand</code>, <code>reserved</code> and <code>armourScore</code> keep PvpBot's own auto-equip, bow code and
+armour picker out of the add-on's way. FirearmsBots is the first add-on built on it.</p>
 <pre><code>BotArsenal.register(new BotArsenal.Handler() {
     @Override
     public boolean fight(Player bot, Entity target, BotSettings settings) {
-        // fight with your gear; return false to let PvpBot fight as usual
-        return false;
+        return false;   // fight with your gear, or hand the tick back
     }
 });</code></pre>
-

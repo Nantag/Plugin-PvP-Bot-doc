@@ -104,15 +104,25 @@ def settings_tables():
     def fmt_range(e):
         if e["type"] == "BOOL":
             return "true / false"
+        if e["type"] == "CHOICE":
+            return " / ".join(e.get("options", []))
         lo, hi = float(e["min"]), float(e["max"])
         f = (lambda x: str(int(x))) if e["type"] == "INT" else (lambda x: ("%g" % x))
         return f"{f(lo)} – {f(hi)}"
+
+    # Settings that are in PvpBot's source but not in the released build: their own file, their own tables
+    # ({{settings:next-<group>}}), so the reference pages keep describing the release.
+    nxt = CONTENT / "data" / "settings-next.json"
+    for e in (json.loads(nxt.read_text(encoding="utf-8")) if nxt.exists() else []):
+        groups.setdefault("next-" + e["group"], []).append(e)
 
     tables = {}
     for group, entries in groups.items():
         rows = []
         for e in entries:
-            desc = described.get(e["key"], e["help"])
+            desc = described.get(e["key"]) or html.escape(e["help"][:1].upper() + e["help"][1:])
+            if e.get("exclusive"):
+                desc += f' (an alternative to <code>{html.escape(e["exclusive"])}</code>: switching one on switches the other off)'
             rows.append(
                 "<tr><td><code>{k}</code></td><td class=\"def\"><code>{d}</code></td><td class=\"def\">{r}</td><td>{h}</td></tr>".format(
                     k=html.escape(e["key"]), d=html.escape(fmt_default(e)), r=html.escape(fmt_range(e)), h=desc))
@@ -219,7 +229,7 @@ def main():
     tables = settings_tables()
     index = []
     for p in pages:
-        body = re.sub(r"\{\{settings:([a-z]+)\}\}", lambda m: tables.get(m.group(1), ""), p["body"])
+        body = re.sub(r"\{\{settings:([a-z-]+)\}\}", lambda m: tables.get(m.group(1), ""), p["body"])
         taken, toc = set(), []
 
         def add_id(m):
