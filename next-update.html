@@ -56,14 +56,14 @@
 <article>
 <div class="crumb">Getting started</div><h1>Next update</h1><p class="lead">Everything finished on GitHub but not in the Modrinth download yet. It all ships with the next release.</p>
 <p class="status"><span class="badge">Unreleased</span> This page lists what is in PvpBot's source but not in the build
-on Modrinth. The rest of the wiki describes the Modrinth build. 98 new settings, a dozen new commands and a chest menu for
-nearly everything. Every existing setting keeps its meaning. One command leaves: <code>/pvpbot tp rift</code> (see
+on Modrinth. The rest of the wiki describes the Modrinth build. 98 new settings, a dozen new commands and a menu for nearly
+everything. Every existing setting keeps its meaning. One command leaves: <code>/pvpbot tp rift</code> (see
 <a href="#leaving-pvpbot">Leaving PvpBot</a>). Most of the new behaviour is on by default, and the new techniques start
 off.</p>
 
 <p>In short: difficulty is no longer one slider, bots aim and land hits the way a player's crosshair does, and they read
 you, space, bait and tilt like people. They know 27 mace and spear techniques, regear from an ender chest, march in
-formations wearing faction uniforms, and fight in armies that hold or break. And there's a chest menu for every setting.</p>
+formations wearing faction uniforms, and fight in armies that hold or break. And there's a menu for every setting.</p>
 
 <h2 id="difficulty-knobs-and-presets">Difficulty knobs and presets<a class="anchor" href="#difficulty-knobs-and-presets" aria-hidden="true">#</a></h2>
 <p><code>skill</code> is now split into one <strong>knob</strong> per part of it. That way you can build a bot that aims
@@ -103,8 +103,8 @@ the last stretch: from further off it sprints and hops in like anyone crossing o
 way, it fights as always.</p>
 <div class="table-wrap"><table class="settings"><thead><tr><th>Setting</th><th>Default</th><th>Values</th><th>What it does</th></tr></thead><tbody><tr><td><code>playstyle</code></td><td class="def"><code>default</code></td><td class="def">default / aggressive / safe / defensive / balanced / adaptive</td><td>Temperament: how far it commits, when it runs, how it uses the safety net</td></tr><tr><td><code>opening</code></td><td class="def"><code>true</code></td><td class="def">true / false</td><td>Walks a new opponent down the way a player does - drifting, pausing, arcing in - not a straight sprint</td></tr></tbody></table></div>
 
-<h2 id="the-settings-chest">The settings chest<a class="anchor" href="#the-settings-chest" aria-hidden="true">#</a></h2>
-<p><code>/pvpbot settings</code> opens a paged chest of every setting, generated from the same list the commands
+<h2 id="the-settings-menu">The settings menu<a class="anchor" href="#the-settings-menu" aria-hidden="true">#</a></h2>
+<p><code>/pvpbot settings</code> opens a paged menu of every setting, generated from the same list the commands
 validate against, so nothing is ever missing from it.</p>
 <ul>
   <li>Left-click toggles or steps a value up, right-click steps it down, and shift steps by ten. Q takes a faction's or
@@ -112,14 +112,14 @@ validate against, so nothing is ever missing from it.</p>
   <li>Filter by group, search by word, and nudge the whole difficulty a preset up or down from the bottom row.</li>
   <li>It works on the Spigot edition too.</li>
 </ul>
-<pre><code>/pvpbot settings                                 the chest
-/pvpbot settings search &lt;word&gt;                   only what matches
+<pre><code>/pvpbot settings                                 the menu
+/pvpbot settings search &lt;word&gt;                   the menu, only what matches
 /pvpbot settings bot &lt;bot&gt; | faction &lt;faction&gt;   one bot's or one faction's values
 /pvpbot settings list [group|word]               printed in chat instead
 /pvpbot faction settings &lt;faction&gt; [word]        the faction's screen, with what it changes marked</code></pre>
 
 <h2 id="menus-and-the-kit-editor">Menus and the kit editor<a class="anchor" href="#menus-and-the-kit-editor" aria-hidden="true">#</a></h2>
-<p><code>/pvpbot menu</code> opens a hub of chest menus, and every button runs the matching <code>/pvpbot</code> command,
+<p><code>/pvpbot menu</code> opens a hub of menus, and every button runs the matching <code>/pvpbot</code> command,
 so permissions and replies are the same as typing it.</p>
 <ul>
   <li><strong>Bots:</strong> a head for each bot. Its panel opens its bag or ender chest live, gives it a kit,
@@ -383,7 +383,7 @@ keep them cheap.</p>
 <nav class="pager"><a class="prev" href="quick-start.html"><small>← Previous</small>Quick start</a><a class="next" href="commands.html"><small>Next →</small>Commands</a></nav>
 <footer class="foot"><span>PvpBot · Paper and Spigot 1.21.11 / 26.2</span><a href="https://modrinth.com/plugin/pvp-bot-plugin-pvpbp">Modrinth</a><a href="https://github.com/Nantag/Plugin-PvP-Bot-doc">Edit these docs on GitHub</a></footer>
 </main>
-<aside class="toc"><h5>On this page</h5><a href="#difficulty-knobs-and-presets">Difficulty knobs and presets</a><a href="#playstyles">Playstyles</a><a href="#the-settings-chest">The settings chest</a><a href="#menus-and-the-kit-editor">Menus and the kit editor</a><a href="#aim-that-decides-hits">Aim that decides hits</a><a href="#senses">Senses</a><a href="#fighting-smarter">Fighting smarter</a><a href="#playing-like-a-person">Playing like a person</a><a href="#27-mace-and-spear-techniques">27 mace and spear techniques</a><a href="#survival-webs-and-escapes">Survival, webs and escapes</a><a href="#regearing">Regearing</a><a href="#more-items">More items</a><a href="#formations-marches-and-uniforms">Formations, marches and uniforms</a><a href="#team-play-and-armies">Team play and armies</a><a href="#arena-and-debug-view">Arena and debug view</a><a href="#pvpbot-diagnose-works-on-players">/pvpbot diagnose works on players</a><a href="#changed-behaviour">Changed behaviour</a><a href="#leaving-pvpbot">Leaving PvpBot</a><a href="#for-plugin-developers">For plugin developers</a></aside>
+<aside class="toc"><h5>On this page</h5><a href="#difficulty-knobs-and-presets">Difficulty knobs and presets</a><a href="#playstyles">Playstyles</a><a href="#the-settings-menu">The settings menu</a><a href="#menus-and-the-kit-editor">Menus and the kit editor</a><a href="#aim-that-decides-hits">Aim that decides hits</a><a href="#senses">Senses</a><a href="#fighting-smarter">Fighting smarter</a><a href="#playing-like-a-person">Playing like a person</a><a href="#27-mace-and-spear-techniques">27 mace and spear techniques</a><a href="#survival-webs-and-escapes">Survival, webs and escapes</a><a href="#regearing">Regearing</a><a href="#more-items">More items</a><a href="#formations-marches-and-uniforms">Formations, marches and uniforms</a><a href="#team-play-and-armies">Team play and armies</a><a href="#arena-and-debug-view">Arena and debug view</a><a href="#pvpbot-diagnose-works-on-players">/pvpbot diagnose works on players</a><a href="#changed-behaviour">Changed behaviour</a><a href="#leaving-pvpbot">Leaving PvpBot</a><a href="#for-plugin-developers">For plugin developers</a></aside>
 </div>
 <script src="assets/search-index.js"></script>
 <script src="assets/app.js"></script>
