@@ -313,7 +313,17 @@
   "type": "BOOL",
   "min": "0.0",
   "max": "0.0",
-  "help": "regears from its ender chest like an SMP player: pearl away, chest down beside it, restock from a shulker, take it all back (needs an ender chest in the bag, a shulker inside it)",
+  "help": "regears from its ender chest like an SMP player: pearl away, chest down beside it, takes what it is short of (loose, or out of a shulker in it), mines it all back up (needs an ender chest in the bag)",
+  "default": true
+ },
+ {
+  "key": "shulker-regear",
+  "path": "regear.shulker-regear",
+  "group": "regear",
+  "type": "BOOL",
+  "min": "0.0",
+  "max": "0.0",
+  "help": "regears from a shulker box it carries: puts it down, restocks, mines it back up (no ender chest needed)",
   "default": true
  },
  {
