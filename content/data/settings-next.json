@@ -640,6 +640,16 @@
   "default": false
  },
  {
+  "key": "elytra-chain",
+  "path": "techniques.elytra-chain",
+  "group": "techniques",
+  "type": "BOOL",
+  "min": "0.0",
+  "max": "0.0",
+  "help": "a Wind Burst smash throws it up: wings out, one rocket back over them and down again, until it misses",
+  "default": true
+ },
+ {
   "key": "pearl-catch",
   "path": "techniques.pearl-catch",
   "group": "techniques",
