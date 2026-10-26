@@ -14,6 +14,13 @@ off.</p>
 you, space, bait and tilt like people. They know 27 mace and spear techniques, regear from an ender chest, march in
 formations wearing faction uniforms, and fight in armies that hold or break. And there's a menu for every setting.</p>
 
+<h2>Minecraft 26.3</h2>
+<p>There are now jars for Paper 26.3 and Spigot 26.3, next to the 1.21.11 and 26.2 ones. Nothing about how bots play
+is different. We ran both on a 26.3 server (spawning, fighting, taking damage) and they worked fine. That was also the
+first run of the <a href="spigot.html">Spigot edition</a> on a real Spigot server. Use the jar that matches your
+server version, the wrong one will tell you in the console and won't spawn bots.</p>
+<p>Performance numbers are on the <a href="benchmarks.html">Benchmarks</a> page.</p>
+
 <h2>Difficulty knobs and presets</h2>
 <p><code>skill</code> is now split into one <strong>knob</strong> per part of it. That way you can build a bot that aims
 perfectly but reacts slowly, or one that never misses a crit but can't clutch. A knob at <code>-1</code> follows
@@ -178,6 +185,10 @@ setting. The ones bots already used start on, the new ones start off.</p>
   where you walk, web your head against a wall, or knock you back and web where you land.</li>
   <li><strong>Cutting out of a web:</strong> shears first (keeping the web), then water, a pearl, then a sword.</li>
   <li><strong>Escapes:</strong> chorus fruit when webbed and boxed in, and water on its own feet when burning.</li>
+  <li><strong>Shields against explosions:</strong> when lit TNT, a TNT minecart, a creeper about to blow or an end
+  crystal next to an enemy is close, the bot turns to it, puts its shield up just before it goes off and stays still
+  until it does. A shield blocks a blast from the front completely. In our test, TNT three blocks away did 15 damage
+  without a shield and under 1 with it.</li>
 </ul>
 {{settings:next-survival}}
 {{settings:next-webs}}
@@ -193,6 +204,13 @@ swing and its sound, opened with the lid moving, emptied one stack at a time, cl
 the real break time (everyone near sees the crack), and then the drop is picked up. How fast it goes follows skill.</p>
 <pre><code>/pvpbot restock &lt;bot|all|faction &lt;name&gt;&gt; [instant]   regear now
 /pvpbot view inventory|enderchest &lt;bot&gt;             a bot's bag or ender chest, live and editable</code></pre>
+<p>Restocking now covers the whole kit. When a bot is given a kit it remembers what was in it (this is stored on the
+bot, so it survives restarts), and a regear tops it back up to that: potions of any kind, spare armour, crystals,
+obsidian, blocks, food, arrows, even orbital rods, each charge kept apart.</p>
+<p>On top of that it always keeps a minimum of 4 totems, 16 pearls, 8 golden apples, 4 healing potions, 2 of each buff
+potion, a spare weapon, a shield and a pickaxe (it needs one to mine its ender chest back up). Worn armour still gets
+swapped out right away. If a bot never got a kit, whatever it's carrying the first time it checks counts as its
+kit.</p>
 {{settings:next-regear}}
 
 <h2>More items</h2>
@@ -201,6 +219,21 @@ the real break time (everyone near sees the crack), and then the drop is picked 
 <strong>firework crossbow</strong> ammo, the <strong>spear charge</strong>, and <strong>block clutches</strong> (slime,
 hay, cobweb, powder snow) when there's no water.</p>
 {{settings:next-items}}
+
+<h2>Orbital Strike Cannon V8</h2>
+<p>Bots can use the V8 rods now, nukes from 5 to 31 charges and stabs from 50 to 275, normal or infinite. Old rods
+still work too.</p>
+<p>V8 doesn't drop the strike where the bobber lands, it drops it wherever you're looking, on the first solid block.
+So before firing, the bot checks that same spot, and keeps checking until the strike goes off. If a wall or a tree is
+in the way and the strike would come down on top of it, it doesn't fire.</p>
+<p>It also only fires from outside the blast. We measured the blasts on a server: a 5-charge nuke reaches about 10
+blocks, 10 charges about 60, 15 about 95, 20 about 135, and 25 or more goes past 150. A stab is a column roughly 5
+blocks wide. The bot stays that far away plus a bit extra, and runs after firing anyway. It won't fire if a teammate or
+a faction it's at peace with is in range, and it will never use an orbital rod to reel someone in like a normal fishing
+rod, since casting one fires it. The datapack's double-click setting can be on or off.</p>
+<div class="callout tip"><span class="t">Big nukes need a server setting</span>
+On Spigot's default <code>max-tnt-per-tick: 100</code> in <code>spigot.yml</code>, nukes of 10 charges or more just
+hang in the air and never land. Set it to something like <code>5000</code> and restart.</div>
 
 <h2>Formations, marches and uniforms</h2>
 <ul>
