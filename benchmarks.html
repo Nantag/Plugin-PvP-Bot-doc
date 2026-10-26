@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Benchmarks · PvpBot docs</title>
-<meta name="description" content="How many bots a Paper 26.2 server carries, what they cost in tick time and memory, whether it stays healthy over a long fight, and how the bots fight.">
+<meta name="description" content="How many bots a Paper 26.2 server can take, what they cost, and how the bots did in our fight tests.">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23a3302a'/%3E%3Cpath d='M11 24V8h6.5a4.5 4.5 0 0 1 0 9H11' fill='none' stroke='%23fff' stroke-width='3'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -55,37 +55,34 @@
 </nav>
 <main class="content">
 <article>
-<div class="crumb">Help</div><h1>Benchmarks</h1><p class="lead">How many bots a Paper 26.2 server carries, what they cost in tick time and memory, whether it stays healthy over a long fight, and how the bots fight.</p>
-<div class="callout tip"><span class="t">In short</span>
-On the test machine a server holds <strong>20 TPS with up to about 300 bots fighting</strong>. 100 fighting bots use
-7 ms of the 50 ms each tick has, and about 3 MB of memory each. Ten minutes of non-stop fighting, with 332 bots
-spawned and 308 killed, gave no errors and no memory growth.</div>
+<div class="crumb">Help</div><h1>Benchmarks</h1><p class="lead">How many bots a Paper 26.2 server can take, what they cost, and how the bots did in our fight tests.</p>
+<p>We tested on a laptop with an Intel i7-14700HX, so a typical server host will handle fewer bots. The numbers still
+give you a good idea of how the cost grows. Short version: the server stayed at 20 TPS with around 300 bots fighting,
+and nothing broke or leaked in a 10 minute fight with bots dying and respawning the whole time.</p>
 
-<h2 id="test-setup">Test setup<a class="anchor" href="#test-setup" aria-hidden="true">#</a></h2>
+<h2 id="setup">Setup<a class="anchor" href="#setup" aria-hidden="true">#</a></h2>
 <div class="table-wrap">
 <table class="facts">
 <tbody>
 <tr><th>Date</th><td>26 October 2026</td></tr>
-<tr><th>Server</th><td>Paper 26.2 build 134, Java 25.0.3, <code>-Xmx4G</code> (6 GB for the 250+ runs)</td></tr>
-<tr><th>PvpBot</th><td>The Paper 26.2 jar built from the current source (next update)</td></tr>
-<tr><th>World</th><td>Flat, no mobs, no structures, view and simulation distance 6, difficulty hard, nobody online</td></tr>
-<tr><th>Plugins</th><td>PvpBot only</td></tr>
-<tr><th>Machine</th><td>Intel Core i7-14700HX laptop (20 cores), 32 GB RAM, Windows 11</td></tr>
+<tr><th>Server</th><td>Paper 26.2 build 134, Java 25.0.3, 4 GB of memory (6 GB for the runs over 250 bots)</td></tr>
+<tr><th>PvpBot</th><td>Current source, the version on the <a href="next-update.html">Next update</a> page</td></tr>
+<tr><th>World</th><td>Flat, no mobs, view and simulation distance 6, hard difficulty, no players online</td></tr>
+<tr><th>Plugins</th><td>Only PvpBot</td></tr>
+<tr><th>Machine</th><td>Intel Core i7-14700HX laptop, 32 GB RAM, Windows 11</td></tr>
 </tbody>
 </table>
 </div>
-<p>A server's main thread runs one core, so a slower CPU gets fewer bots. Treat the numbers as relative: twice the bots
-roughly costs twice the tick time. Every measurement is two 10-second windows of Paper's <code>/mspt</code>, taken
-after the bots had run for 30 seconds. Memory is the live heap after a full garbage collection.</p>
+<p>Tick times come from Paper's <code>/mspt</code>, averaged over 20 seconds after the bots had been running for 30.
+Memory is what was still in use after a full garbage collection. A tick has 50 ms to work with; go over that and TPS
+drops below 20.</p>
 
-<h2 id="load-bots-standing-and-bots-fighting">Load: bots standing and bots fighting<a class="anchor" href="#load-bots-standing-and-bots-fighting" aria-hidden="true">#</a></h2>
-<p><strong>Idle</strong>: the bots stand where they spawned with their AI running and nobody to fight.
-<strong>Brawl</strong>: <code>bot-vs-bot</code> on, every bot fighting those around it. Everyone has Resistance V, so
-nobody dies and the count holds, but every swing, hit, knockback and decision still runs.
-A tick has 50 ms; past that the server drops below 20 TPS.</p>
+<h2 id="load">Load<a class="anchor" href="#load" aria-hidden="true">#</a></h2>
+<p>"Idle" is bots just standing around with nobody to fight. "Brawl" is every bot fighting the ones near it, with
+Resistance V on everyone so the count doesn't drop. They still swing, hit and take knockback like normal.</p>
 <div class="table-wrap">
 <table>
-<thead><tr><th>Bots</th><th>Idle: MSPT</th><th>Idle: worst tick</th><th>Idle: heap</th><th>Brawl: MSPT</th><th>Brawl: worst tick</th><th>Brawl: heap</th><th>TPS</th></tr></thead>
+<thead><tr><th>Bots</th><th>Idle: MSPT</th><th>Idle: worst tick</th><th>Idle: memory</th><th>Brawl: MSPT</th><th>Brawl: worst tick</th><th>Brawl: memory</th><th>TPS</th></tr></thead>
 <tbody>
 <tr><td>0</td><td>0.2 ms</td><td>10.7 ms</td><td>291 MB</td><td>0.3 ms</td><td>10.6 ms</td><td>302 MB</td><td>20</td></tr>
 <tr><td>10</td><td>1.1 ms</td><td>3.3 ms</td><td>329 MB</td><td>1.1 ms</td><td>2.7 ms</td><td>305 MB</td><td>20</td></tr>
@@ -101,21 +98,18 @@ A tick has 50 ms; past that the server drops below 20 TPS.</p>
 </tbody>
 </table>
 </div>
-<ul>
-  <li><strong>Cost per bot</strong>: about 0.07 ms of tick time and 3 MB of memory; a fight adds only 10-20% over
-  standing still. Up to about 200 bots the cost per bot stays flat; past that it climbs, because each bot has more
-  bots around it to look at.</li>
-  <li><strong>The ceiling</strong> on this machine is about 300 fighting bots at 20 TPS; at 350 the server falls to
-  14.5 TPS.</li>
-  <li>Memory is never the limit: 300 bots fit in under 1.7 GB.</li>
-</ul>
+<p>Each bot costs roughly 0.07 ms per tick and 3 MB of memory, and fighting is only 10 to 20% more expensive than
+standing still. That holds up to about 200 bots. After that every bot has more bots around it to keep track of, so
+the cost per bot goes up. On this machine 300 fighting bots was the limit before TPS started dropping. Memory was never
+the problem.</p>
 
-<h2 id="stability-ten-minutes-of-real-fighting">Stability: ten minutes of real fighting<a class="anchor" href="#stability-ten-minutes-of-real-fighting" aria-hidden="true">#</a></h2>
-<p>30 bots, <code>bot-vs-bot</code> on, nothing keeping them alive. A bot that dies is removed, so every 10 seconds
-the count is topped back up to 30. Spawns and removals churn the whole time, which is where leaks show.</p>
+<h2 id="long-fight">Long fight<a class="anchor" href="#long-fight" aria-hidden="true">#</a></h2>
+<p>30 bots fighting for 10 minutes with nothing keeping them alive. PvpBot removes a bot when it dies, so every 10
+seconds we spawned more to get back to 30. That way bots were joining and dying the whole time, which is usually where
+memory leaks show up.</p>
 <div class="table-wrap">
 <table>
-<thead><tr><th>Minute</th><th>MSPT (1 min avg)</th><th>Worst tick</th><th>Bots online</th><th>Heap</th><th>Deaths so far</th><th>Spawned so far</th><th>PvpBot errors</th></tr></thead>
+<thead><tr><th>Minute</th><th>MSPT (1 min avg)</th><th>Worst tick</th><th>Bots online</th><th>Memory</th><th>Deaths so far</th><th>Spawned so far</th><th>Errors</th></tr></thead>
 <tbody>
 <tr><td>1</td><td>3.1 ms</td><td>156 ms</td><td>22</td><td>371 MB</td><td>29</td><td>50</td><td>0</td></tr>
 <tr><td>2</td><td>2.2 ms</td><td>138 ms</td><td>29</td><td>375 MB</td><td>59</td><td>87</td><td>0</td></tr>
@@ -130,56 +124,46 @@ the count is topped back up to 30. Spawns and removals churn the whole time, whi
 </tbody>
 </table>
 </div>
-<ul>
-  <li><strong>No errors</strong> from PvpBot in the whole run.</li>
-  <li><strong>No leak</strong>: the heap held at 370-410 MB from start to finish while 332 bots came and went, and
-  every one that died was cleaned out of the roster.</li>
-  <li><strong>The worst ticks are spawning.</strong> Each top-up spawned up to 10 bots in one go, and a bot logging in
-  is an expensive tick: about 120-150 ms for a batch, once one 416 ms. The averages stay at 2-3 ms. With nothing
-  spawning, the worst tick at 25 fighting bots is 2.7 ms (the load table above). On a live server, spawn large groups
-  a few at a time.</li>
-</ul>
+<p>No errors at all, and memory stayed between 370 and 410 MB from start to finish even with 332 bots coming and going.
+The high worst-tick numbers are from spawning: each top-up added up to 10 bots at once, and a batch like that takes a
+tick of 120 to 150 ms (one took 416). The average stayed around 2 ms, and without any spawning going on the worst tick
+at 25 bots is under 3 ms. If you're putting a lot of bots on a live server, spawn them a few at a time.</p>
 
 <h2 id="fight-tests">Fight tests<a class="anchor" href="#fight-tests" aria-hidden="true">#</a></h2>
-<p>Four scripted fights between bots, measured hit by hit with pass lines, on the shipped config. These are the tests
-run before every combat change.</p>
+<p>These are four fights between bots that we run before every combat change, with a minimum each one has to hit.
+Default config.</p>
 <div class="table-wrap">
 <table>
-<thead><tr><th>Fight</th><th>Measured</th><th>Pass line</th><th>Result</th></tr></thead>
+<thead><tr><th>Fight</th><th>Result</th><th>Needed</th><th></th></tr></thead>
 <tbody>
-<tr><td>Two spear-mace bots, 45 s</td><td>3 mace smashes landed</td><td>2 or more</td><td>Pass</td></tr>
-<tr><td>Sword and shield each, no axes, 45 s</td><td>29 sword hits; 21% of them on a raised shield. Shields up 63% and 72% of the time in range</td><td>10 or more hits (nobody froze); 20% or more on the shield</td><td>Pass</td></tr>
-<tr><td>Sword and axe against a shield held up for good, 45 s</td><td>8 shield breaks; 2 sword swings into the shield; the sword back 0.5 ticks after a break (median); 7.1 hits in each 5 s window after a break</td><td>4 or more breaks; at most 4 swings into it; back within 4 ticks; 4.5 or more hits per window</td><td>Pass</td></tr>
-<tr><td>Shield bot walking in on an archer 22 blocks off, 40 s</td><td>25 arrows shot; 96% of those that reached it (22 of 23) taken on the shield; 16 melee hits once there</td><td>50% or more on the shield; 5 or more hits</td><td>Pass</td></tr>
+<tr><td>Two spear and mace bots, 45 s</td><td>3 smashes landed</td><td>2</td><td>Pass</td></tr>
+<tr><td>Sword and shield vs sword and shield, 45 s</td><td>29 sword hits, 21% of them blocked. The bots had their shields up 63% and 72% of the time when close</td><td>10 hits, 20% blocked</td><td>Pass</td></tr>
+<tr><td>Sword and axe vs someone holding a shield up the whole time, 45 s</td><td>8 shield breaks, only 2 sword swings wasted on the shield, back to the sword half a tick after a break, about 7 hits in the 5 seconds after each break</td><td>4 breaks, 4 wasted swings at most, back within 4 ticks, 4.5 hits</td><td>Pass</td></tr>
+<tr><td>Sword and shield bot walking up to an archer 22 blocks away, 40 s</td><td>22 of the 23 arrows that reached it blocked (96%), then 16 hits on the archer</td><td>Half blocked, 5 hits</td><td>Pass</td></tr>
 </tbody>
 </table>
 </div>
-<p>Every fight also checks for stalls (in reach, attack meter full, no swing for 3 seconds) and for any PvpBot error in
-the log. There were none in any of them.</p>
+<p>Every fight also checks that no bot froze up (close, ready to swing and not swinging for 3 seconds) and that
+PvpBot didn't throw any errors. None did.</p>
 
-<h2 id="sizing-a-server">Sizing a server<a class="anchor" href="#sizing-a-server" aria-hidden="true">#</a></h2>
-<ul>
-  <li><strong>Up to 50 bots</strong>: unnoticeable, about 3 ms a tick.</li>
-  <li><strong>100 bots</strong>: about 7 ms, comfortable alongside a normal player count.</li>
-  <li><strong>200 bots</strong>: about 20 ms, under half the tick, if the rest of the server is light.</li>
-  <li><strong>Over 250</strong>: near the limit even on a fast desktop CPU, and lower on most hosts.</li>
-  <li>Spawn big groups in batches of a few at a time rather than all at once, and give the server about 3 MB a bot on
-  top of what it already needs.</li>
-</ul>
+<h2 id="how-many-bots-should-i-run">How many bots should I run?<a class="anchor" href="#how-many-bots-should-i-run" aria-hidden="true">#</a></h2>
+<p>Up to 50 you won't notice them, that's about 3 ms a tick. 100 is around 7 ms and fine on most servers with players
+on. 200 is around 20 ms, which works if the rest of your server is light. Past 250 you're close to the limit even on a
+fast CPU, and most hosts are slower than this laptop. Plan for about 3 MB of extra memory per bot.</p>
 
 <h2 id="running-them-yourself">Running them yourself<a class="anchor" href="#running-them-yourself" aria-hidden="true">#</a></h2>
-<p>The scripts are in PvpBot's source, next to the plugin:</p>
-<pre><code>python pvpbot-paper/bench/bench.py                    # the load table: idle and brawl, 10 to 200 bots
+<p>The scripts are in PvpBot's source:</p>
+<pre><code>python pvpbot-paper/bench/bench.py                    # load: idle and brawl, 10 to 200 bots
 python pvpbot-paper/bench/bench.py --only brawl --steps 250 300 350 400 --xmx 6G
 python pvpbot-paper/bench/soak.py --bots 30 --minutes 10
-python pvpbot-paper/fighttest/fighttest.py            # the fight tests</code></pre>
-<p>Each one starts its own throwaway server from an unpacked Paper install (<code>PAPER_HOME</code>), needs an
-accepted <code>eula.txt</code> (<code>EULA_FILE</code>) and writes its results to <code>.cache/</code>.</p>
+python pvpbot-paper/fighttest/fighttest.py            # fight tests</code></pre>
+<p>Each one sets up its own test server from an unpacked Paper install (<code>PAPER_HOME</code>), needs an
+<code>eula.txt</code> you've accepted (<code>EULA_FILE</code>), and saves its results in <code>.cache/</code>.</p>
 </article>
 <nav class="pager"><a class="prev" href="spigot.html"><small>← Previous</small>Spigot edition</a><span></span></nav>
 <footer class="foot"><span>PvpBot · Paper and Spigot 1.21.11 / 26.2</span><a href="https://modrinth.com/plugin/pvp-bot-plugin-pvpbp">Modrinth</a><a href="https://github.com/Nantag/Plugin-PvP-Bot-doc">Edit these docs on GitHub</a></footer>
 </main>
-<aside class="toc"><h5>On this page</h5><a href="#test-setup">Test setup</a><a href="#load-bots-standing-and-bots-fighting">Load: bots standing and bots fighting</a><a href="#stability-ten-minutes-of-real-fighting">Stability: ten minutes of real fighting</a><a href="#fight-tests">Fight tests</a><a href="#sizing-a-server">Sizing a server</a><a href="#running-them-yourself">Running them yourself</a></aside>
+<aside class="toc"><h5>On this page</h5><a href="#setup">Setup</a><a href="#load">Load</a><a href="#long-fight">Long fight</a><a href="#fight-tests">Fight tests</a><a href="#how-many-bots-should-i-run">How many bots should I run?</a><a href="#running-them-yourself">Running them yourself</a></aside>
 </div>
 <script src="assets/search-index.js"></script>
 <script src="assets/app.js"></script>
