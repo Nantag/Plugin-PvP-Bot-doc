@@ -233,6 +233,9 @@ setting. The ones bots already used start on, the new ones start off.</p>
   pearl) instead of eating in your face. <code>healing: old</code> brings back the previous behaviour.</li>
   <li><strong>Off-hand preference</strong> (auto, totem or shield), a totem in the main hand when a smash is about to
   land, answers to being combo'd, and eating at three hunger bars.</li>
+  <li><strong>No more starving on golden apples:</strong> bots keep golden apples for healing, so a bot whose only
+  food was golden apples used to just go hungry and take starvation damage. Now, with nothing else to eat, it eats a
+  plain one at three hunger bars, and an enchanted one only at one bar.</li>
   <li><strong>Webs</strong> are held out, looked at and swung, not a block appearing in a sword hand. They can predict
   where you walk, web your head against a wall, or knock you back and web where you land.</li>
   <li><strong>Cutting out of a web:</strong> shears first (keeping the web), then water, a pearl, then a sword.</li>
@@ -286,6 +289,19 @@ rod, since casting one fires it. The datapack's double-click setting can be on o
 <div class="callout tip"><span class="t">Big nukes need a server setting</span>
 On Spigot's default <code>max-tnt-per-tick: 100</code> in <code>spigot.yml</code>, nukes of 10 charges or more just
 hang in the air and never land. Set it to something like <code>5000</code> and restart.</div>
+
+<h2 id="commands-on-patrol-waypoints">Commands on patrol waypoints<a class="anchor" href="#commands-on-patrol-waypoints" aria-hidden="true">#</a></h2>
+<p>A waypoint on a patrol route can run commands when a bot gets there. They run from the console, once each time a
+bot arrives, so you can open a gate, play a sound or start the next part of an event as the patrol passes. Use the
+waypoint numbers from <code>/pvpbot path list &lt;path&gt;</code>.</p>
+<pre><code>/pvpbot path command &lt;path&gt; &lt;waypoint&gt; add &lt;command...&gt;
+/pvpbot path command &lt;path&gt; &lt;waypoint&gt; list
+/pvpbot path command &lt;path&gt; &lt;waypoint&gt; remove &lt;n&gt;
+/pvpbot path command &lt;path&gt; &lt;waypoint&gt; clear</code></pre>
+<p>You can use <code>{bot}</code>, <code>{path}</code>, <code>{index}</code>, <code>{x}</code>, <code>{y}</code>,
+<code>{z}</code> and <code>{world}</code> in the command, for example
+<code>/pvpbot path command walls 2 add say {bot} reached the gate</code>. The commands are saved with the waypoint, so
+removing a waypoint removes its commands too.</p>
 
 <h2 id="formations-marches-and-uniforms">Formations, marches and uniforms<a class="anchor" href="#formations-marches-and-uniforms" aria-hidden="true">#</a></h2>
 <ul>
@@ -439,7 +455,7 @@ keep them cheap.</p>
 <nav class="pager"><a class="prev" href="quick-start.html"><small>← Previous</small>Quick start</a><a class="next" href="commands.html"><small>Next →</small>Commands</a></nav>
 <footer class="foot"><span>PvpBot · Paper and Spigot 1.21.11 / 26.2</span><a href="https://modrinth.com/plugin/pvp-bot-plugin-pvpbp">Modrinth</a><a href="https://github.com/Nantag/Plugin-PvP-Bot-doc">Edit these docs on GitHub</a></footer>
 </main>
-<aside class="toc"><h5>On this page</h5><a href="#minecraft-26-3">Minecraft 26.3</a><a href="#difficulty-knobs-and-presets">Difficulty knobs and presets</a><a href="#playstyles">Playstyles</a><a href="#the-settings-menu">The settings menu</a><a href="#menus-and-the-kit-editor">Menus and the kit editor</a><a href="#aim-that-decides-hits">Aim that decides hits</a><a href="#senses">Senses</a><a href="#fighting-smarter">Fighting smarter</a><a href="#playing-like-a-person">Playing like a person</a><a href="#27-mace-and-spear-techniques">27 mace and spear techniques</a><a href="#survival-webs-and-escapes">Survival, webs and escapes</a><a href="#regearing">Regearing</a><a href="#more-items">More items</a><a href="#orbital-strike-cannon-v8">Orbital Strike Cannon V8</a><a href="#formations-marches-and-uniforms">Formations, marches and uniforms</a><a href="#team-play-and-armies">Team play and armies</a><a href="#arena-and-debug-view">Arena and debug view</a><a href="#pvpbot-diagnose-works-on-players">/pvpbot diagnose works on players</a><a href="#changed-behaviour">Changed behaviour</a><a href="#leaving-pvpbot">Leaving PvpBot</a><a href="#for-plugin-developers">For plugin developers</a></aside>
+<aside class="toc"><h5>On this page</h5><a href="#minecraft-26-3">Minecraft 26.3</a><a href="#difficulty-knobs-and-presets">Difficulty knobs and presets</a><a href="#playstyles">Playstyles</a><a href="#the-settings-menu">The settings menu</a><a href="#menus-and-the-kit-editor">Menus and the kit editor</a><a href="#aim-that-decides-hits">Aim that decides hits</a><a href="#senses">Senses</a><a href="#fighting-smarter">Fighting smarter</a><a href="#playing-like-a-person">Playing like a person</a><a href="#27-mace-and-spear-techniques">27 mace and spear techniques</a><a href="#survival-webs-and-escapes">Survival, webs and escapes</a><a href="#regearing">Regearing</a><a href="#more-items">More items</a><a href="#orbital-strike-cannon-v8">Orbital Strike Cannon V8</a><a href="#commands-on-patrol-waypoints">Commands on patrol waypoints</a><a href="#formations-marches-and-uniforms">Formations, marches and uniforms</a><a href="#team-play-and-armies">Team play and armies</a><a href="#arena-and-debug-view">Arena and debug view</a><a href="#pvpbot-diagnose-works-on-players">/pvpbot diagnose works on players</a><a href="#changed-behaviour">Changed behaviour</a><a href="#leaving-pvpbot">Leaving PvpBot</a><a href="#for-plugin-developers">For plugin developers</a></aside>
 </div>
 <script src="assets/search-index.js"></script>
 <script src="assets/app.js"></script>
