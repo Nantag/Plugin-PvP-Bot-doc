@@ -212,7 +212,7 @@ def page_html(p, pages, body, toc):
 {body}
 </article>
 {pager}
-<footer class="foot"><span>PvpBot · Paper and Spigot 1.21.11 / 26.2</span><a href="https://modrinth.com/plugin/pvp-bot-plugin-pvpbp">Modrinth</a><a href="https://github.com/Nantag/Plugin-PvP-Bot-doc">Edit these docs on GitHub</a></footer>
+<footer class="foot"><span>PvpBot · Paper and Spigot 1.21.11 / 26.2 / 26.3</span><a href="https://modrinth.com/plugin/pvp-bot-plugin-pvpbp">Modrinth</a><a href="https://github.com/Nantag/Plugin-PvP-Bot-doc">Edit these docs on GitHub</a></footer>
 </main>
 <aside class="toc">{toc_html}</aside>
 </div>

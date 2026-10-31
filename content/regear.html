@@ -1,0 +1,30 @@
+---
+title: Regearing
+section: Features
+order: 35
+lead: How bots restock their kit mid-session: from an ender chest, a shulker box, or with one command.
+---
+<h2>From an ender chest</h2>
+<p>A bot regears the way it's done on an SMP: it pearls away, sets its <strong>ender chest</strong> down beside it, takes
+what it's short of (loose, or out of a shulker box inside) and packs it all back. It waits for room first and gets
+everything back if you catch it halfway.</p>
+<p>A <strong>shulker box in its bag</strong> works too, without an ender chest. It can also restock from a shulker box
+placed nearby, or mine yours out from under you.</p>
+<p>Every step is played out by hand, so you can watch it: the chest or box comes up in its hand and is placed with a
+swing and its sound, opened with the lid moving, emptied one stack at a time, closed, and mined with its best pickaxe over
+the real break time (everyone near sees the crack). Then it picks the drop up. How fast it goes follows skill.</p>
+
+<h2>What it restocks</h2>
+<p>When a bot is given a kit it remembers what was in it. This is stored on the bot, so it survives restarts. A regear
+tops it back up to that: potions of every kind (drink, splash, lingering), spare armour, crystals, obsidian, blocks,
+food, arrows, even orbital rods, each charge counted apart.</p>
+<p>On top of that it always keeps a minimum of 4 totems, 16 pearls, 8 golden apples, 4 healing potions, 2 of each buff
+potion, a spare weapon, a shield and a pickaxe (it needs one to mine its ender chest back up). Worn armour still gets
+swapped out right away. If a bot never got a kit, whatever it's carrying the first time it checks counts as its kit.</p>
+
+<h2>Commands</h2>
+<pre><code>/pvpbot restock &lt;bot|all|faction &lt;name&gt;&gt; [instant]   regear now (alias: regear)
+/pvpbot view inventory|enderchest &lt;bot&gt;             a bot's bag or ender chest, live and editable</code></pre>
+<p><code>instant</code> skips the show and fills the bot up at once. In a team, bots <a href="factions.html#team-play-and-armies">take
+turns</a> to regear so the line isn't left empty.</p>
+{{settings:regear}}

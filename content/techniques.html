@@ -1,0 +1,41 @@
+---
+title: Mace and spear techniques
+section: Features
+order: 12
+lead: The 27 mace, spear, wind charge and elytra moves a bot can know, each one its own switch.
+---
+<p>Difficulty is how well a bot plays; techniques are which moves it knows at all. Each technique is an ordinary
+<a href="settings.html">setting</a>, so it can be on for one bot or faction and off for the rest. The moves bots already
+used start on; the newer ones start off.</p>
+<pre><code>/pvpbot techniques                                    every technique, on or off
+/pvpbot techniques bot &lt;bot&gt;                          one bot's
+/pvpbot techniques faction &lt;faction&gt;                  one faction's
+/pvpbot techniques [bot &lt;bot&gt;|faction &lt;f&gt;] &lt;technique&gt; &lt;on|off|variant&gt;</code></pre>
+<p>They're also on a page of the <a href="menus.html">menu</a>.</p>
+
+<h2>The moves</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Group</th><th>Techniques</th></tr></thead>
+<tbody>
+<tr><td>Core swaps</td><td>Mace swap, spear-mace swap, breach swap, spear reach swap.</td></tr>
+<tr><td>Fundamentals</td><td>Wind-charge mace, crouch boost, cooldown discipline (wind charges carry vanilla's item cooldown), hit preference, hotbar shield tracking, elytra wind-charge boost.</td></tr>
+<tr><td>Movement</td><td>Spear dash (a held charge and the spear on one click, distance picked by pitch), dash chain, spear-macing, wind-charge reset and self-reset.</td></tr>
+<tr><td>Anti-shield</td><td>Ground and elytra backstab, stun slam (one-tick, easy or optimal), spear stun slam, shield drain.</td></tr>
+<tr><td>Finishers</td><td>Detap spear-mace, detap breach, spear double pop, wind-charge cancel.</td></tr>
+<tr><td>Rocket mace and elytra</td><td>Rocket mace with four climb-and-drop patterns, elytra spear, chained elytra mace, and a choice of pearl catch for the pearl launch.</td></tr>
+</tbody></table></div>
+
+<h3>Notes on a few</h3>
+<ul>
+  <li><strong>Spear-macers actually smash:</strong> the spear dash solves the velocity that lands on the target, and the
+  smash is always swung with the mace.</li>
+  <li><strong>Wind-charge cancels are rare:</strong> 10% of an opponent's launches (<code>wc-cancel-chance</code>), never
+  twice within 15 seconds.</li>
+  <li><strong>Chained elytra mace</strong> (<code>elytra-chain</code>, on by default): when a Wind Burst smash throws a
+  bot up, it opens its elytra at the top, fires one rocket back over you and drops again. It keeps going until it
+  misses, runs out of rockets or lands four hits, and each hit after the first is harder to land.</li>
+  <li><strong>Rocket mace</strong> picks how it climbs: <code>climb</code> (the usual), <code>spiral</code> (round you),
+  <code>angled</code> (out, then a long run in) or <code>overhead</code> (straight up over you).</li>
+  <li><strong>Pearl catch</strong> for the pearl launch: <code>smart</code> picks per situation and is the one to use.</li>
+</ul>
+{{settings:techniques}}

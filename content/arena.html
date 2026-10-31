@@ -1,0 +1,29 @@
+---
+title: Arena, stats and debug view
+section: Help
+order: 15
+lead: Test a setting with repeatable bot duels, keep score of every fight with a bot, and see what a bot is thinking.
+---
+<h2>Arena</h2>
+<p><code>/pvpbot arena</code> spawns two bots where you stand and has them fight round after round. It then reports per
+side: wins, time to kill, hits and damage per hit, aimed swings that connected, crits, smashes, best combo, totems popped,
+heals, and mid-fight inventory opens. Change a setting, run it again, compare.</p>
+<pre><code>/pvpbot arena start &lt;kitA&gt; &lt;kitB&gt; [rounds] [skillA] [skillB]
+/pvpbot arena stop
+/pvpbot arena report</code></pre>
+
+<h2>Debug view</h2>
+<p><code>/pvpbot debugview</code> floats a line over a bot showing which part of its AI is in charge, its target and how
+the trade looks, what it has read about you, its aim, and its latest call ("whiffed", "their shield is down: all
+out").</p>
+<pre><code>/pvpbot debugview &lt;bot|all&gt;</code></pre>
+
+<h2>Stats</h2>
+<p>PvpBot keeps score of every fight with a bot on at least one side: kills, deaths, hits, damage and melee accuracy
+(swings against hits landed), for every bot and every player who fights one. It's a scoreboard for the bots, not for the
+whole server's PvP. The numbers are kept across restarts in <code>stats.yml</code>.</p>
+<pre><code>/pvpbot stats [name]                              yours, or anyone's
+/pvpbot stats top [kills|kd|accuracy|damage]      the top ten
+/pvpbot stats reset &lt;name|all&gt;                    needs pvpbot.admin</code></pre>
+<p>Seeing stats needs only <code>pvpbot.stats</code>, which every player has by default; resetting them needs
+<code>pvpbot.admin</code>.</p>

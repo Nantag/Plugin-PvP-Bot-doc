@@ -39,17 +39,23 @@
 <a href="commands.html">Commands</a>
 <a href="selectors.html">Selectors</a>
 <a href="settings.html">Settings</a>
+<a href="addons.html">Add-on API</a>
 <h4>Features</h4>
+<a href="difficulty.html">Difficulty and playstyles</a>
 <a href="combat.html">Combat</a>
+<a href="techniques.html">Mace and spear techniques</a>
 <a href="factions.html">Factions</a>
 <a href="kits-and-presets.html" class="active">Kits and presets</a>
+<a href="regear.html">Regearing</a>
 <a href="movement.html">Movement and orders</a>
+<a href="menus.html">Menus</a>
 <a href="scripts.html">Scripts</a>
 <a href="companions.html">Companions</a>
 <a href="skins.html">Skins and names</a>
 <a href="ghosts.html">Ghosts</a>
 <h4>Help</h4>
 <a href="troubleshooting.html">Troubleshooting</a>
+<a href="arena.html">Arena, stats and debug view</a>
 <a href="spigot.html">Spigot edition</a>
 <a href="benchmarks.html">Benchmarks</a>
 </nav>
@@ -57,13 +63,18 @@
 <article>
 <div class="crumb">Features</div><h1>Kits and presets</h1><p class="lead">Saved loadouts to hand to bots, and behaviour profiles to apply to the whole server in one command.</p>
 <h2 id="kits">Kits<a class="anchor" href="#kits" aria-hidden="true">#</a></h2>
-<p>A kit is a snapshot of an inventory: hotbar, inventory, armour and offhand. Enchantments, names and item components
-all survive.</p>
+<p>A kit is a snapshot of an inventory: hotbar, inventory, armour and offhand, and the ender chest that goes with it.
+Enchantments, names and every item component survive (shield banner patterns included).</p>
 <pre><code>/pvpbot kit save diamond
 /pvpbot kit save mace Marco
+/pvpbot kit edit diamond
+/pvpbot kit rename diamond diamond_v2
 /pvpbot kit list
 /pvpbot kit delete diamond</code></pre>
-<p>The first command saves your inventory, the second saves the bot <code>Marco</code>'s.</p>
+<p>The first command saves your inventory, the second saves the bot <code>Marco</code>'s. <code>kit edit</code> opens the
+<a href="menus.html#the-kit-editor">kit editor</a>: the kit laid out like an inventory, with a second page for its ender
+chest (a new name makes a new, empty kit). <code>kit rename</code> renames it, and faction kit tables follow the new
+name.</p>
 
 <h3 id="giving-a-kit">Giving a kit<a class="anchor" href="#giving-a-kit" aria-hidden="true">#</a></h3>
 <pre><code>/pvpbot kit give diamond Marco
@@ -75,6 +86,7 @@ all survive.</p>
   <a href="selectors.html">selector</a>.</li>
   <li><code>givefaction</code> takes a faction name or a selector.</li>
   <li>The kit <strong>replaces</strong> whatever the receiver was carrying.</li>
+  <li>A bot remembers the kit it was given, and <a href="regear.html">regears</a> back up to it.</li>
 </ul>
 <p>To hand out different kits at random inside a faction, use <a href="factions.html#random-kits-per-faction">per-faction
 kit tables</a>.</p>
@@ -85,7 +97,9 @@ different build may fail to load: PvpBot then starts without kits and says so in
 new server.</div>
 
 <h2 id="presets">Presets<a class="anchor" href="#presets" aria-hidden="true">#</a></h2>
-<p>A preset is a named set of <a href="settings.html">settings</a> applied to every bot on the server in one go.</p>
+<p>A preset is a named set of <a href="settings.html">settings</a> applied to every bot on the server in one go. (The
+six <a href="difficulty.html#difficulty-presets">difficulty presets</a>, <code>/pvpbot difficulty preset</code>, only set
+the skill knobs; these set anything.)</p>
 <pre><code>/pvpbot preset
 /pvpbot preset sweaty
 /pvpbot preset off</code></pre>
@@ -99,7 +113,10 @@ when you change preset.</p>
 <thead><tr><th>Preset</th><th>For</th><th>What it sets</th></tr></thead>
 <tbody>
 <tr><td><code>casual</code></td><td>Beginners: slow, sloppy bots.</td><td>skill 25, miss-chance 30, mistake-chance 35, attack-cooldown 18, reaction-ticks 60; no crits, pearls or cobwebs.</td></tr>
-<tr><td><code>normal</code></td><td>The default behaviour, as a preset.</td><td>skill 50, miss-chance 10, mistake-chance 12, attack-cooldown 12, reaction-ticks 30, crits.</td></tr>
+<tr><td><code>easy</code></td><td>A beginner: slow, misses a lot.</td><td>Every knob around 10–15; no webs, pearls, shield breaking, reads or tricks; the old healing.</td></tr>
+<tr><td><code>normal</code></td><td>An average player.</td><td>Knobs around 35–40; the basics: crits, jump resets, shield and axe, webs, pearls; few reads.</td></tr>
+<tr><td><code>hard</code></td><td>A good player.</td><td>Knobs around 55–60; hit select, crit chains, reads you, predicted and head webs, the damage model, edge play, elytra mace.</td></tr>
+<tr><td><code>expert</code></td><td>A sweat.</td><td>Knobs around 75–80; every trick on: hit-webs, d-taps, whiff punishes, chained elytra mace, weapon swapping, cart PvP, a 25 ms connection.</td></tr>
 <tr><td><code>sweaty</code></td><td>Everything on and sharp, but still human.</td><td>skill 85, miss-chance 3, mistake-chance 5, attack-cooldown 10, ping 25 ms, reaction-ticks 8; crits, axe against shields, buff potions, cobwebs, pearl launch, weapon swapping, elytra mace and cart PvP.</td></tr>
 <tr><td><code>passive</code></td><td>Scenes and training dummies.</td><td>They don't look for targets, don't wander and don't fight other bots; they only hit back when hit.</td></tr>
 </tbody></table></div>
@@ -116,8 +133,8 @@ preset: apply it, change what you want with <code>/pvpbot set</code>, and save i
 <p>Presets live in <code>config.yml</code> under <code>presets:</code> and can be written by hand too, using the same
 names as <code>/pvpbot set</code>.</p>
 </article>
-<nav class="pager"><a class="prev" href="factions.html"><small>← Previous</small>Factions</a><a class="next" href="movement.html"><small>Next →</small>Movement and orders</a></nav>
-<footer class="foot"><span>PvpBot · Paper and Spigot 1.21.11 / 26.2</span><a href="https://modrinth.com/plugin/pvp-bot-plugin-pvpbp">Modrinth</a><a href="https://github.com/Nantag/Plugin-PvP-Bot-doc">Edit these docs on GitHub</a></footer>
+<nav class="pager"><a class="prev" href="factions.html"><small>← Previous</small>Factions</a><a class="next" href="regear.html"><small>Next →</small>Regearing</a></nav>
+<footer class="foot"><span>PvpBot · Paper and Spigot 1.21.11 / 26.2 / 26.3</span><a href="https://modrinth.com/plugin/pvp-bot-plugin-pvpbp">Modrinth</a><a href="https://github.com/Nantag/Plugin-PvP-Bot-doc">Edit these docs on GitHub</a></footer>
 </main>
 <aside class="toc"><h5>On this page</h5><a href="#kits">Kits</a><a href="#giving-a-kit" class="sub">Giving a kit</a><a href="#presets">Presets</a><a href="#built-in-presets" class="sub">Built-in presets</a><a href="#making-one" class="sub">Making one</a></aside>
 </div>

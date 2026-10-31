@@ -6,14 +6,13 @@ lead: AI-driven PvP bots for Paper and Spigot servers.
 hero: true
 ---
 <header class="intro">
-  <p class="eyebrow">Paper &amp; Spigot · 1.21.11 and 26.2</p>
+  <p class="eyebrow">Paper &amp; Spigot · 1.21.11, 26.2 and 26.3</p>
   <h1>PvpBot</h1>
   <p class="lead">Bots that join your server as real players and fight the way people do: jump crits, shields, the
   mace, bows, pearls, cobwebs and water buckets. Built to train against and record with, not to win every fight.</p>
   <p class="actions">
     <a class="btn primary" href="https://modrinth.com/plugin/pvp-bot-plugin-pvpbp">Download on Modrinth</a>
     <a class="btn" href="quick-start.html">Quick start</a>
-    <a class="next-link" href="next-update.html">What's in the next update →</a>
   </p>
 </header>
 
@@ -22,7 +21,10 @@ hero: true
 person like anyone else: it has an inventory, armour, hunger, potion effects and a skin, and it takes knockback and
 damage the vanilla way.</p>
 <p>Nothing it does is frame-perfect. One <code>skill</code> dial, from 0 to 100, sets how quickly it reacts, how well it
-times a swing and how far off its aim lands. Even at 100 there is a gap to play around.</p>
+times a swing and how far off its aim lands, and it splits into <a href="difficulty.html">knobs</a> when you want finer
+control. Even at 100 there is a gap to play around. Bots read you, space, bait and tilt like people, know 27 mace and
+spear techniques, regear from an ender chest, march in formations and fight in armies that hold or break. And there's a
+menu for every setting.</p>
 
 <h2>The manual</h2>
 <div class="index">
@@ -39,15 +41,20 @@ times a swing and how far off its aim lands. Even at 100 there is a gap to play 
     <dl>
       <dt><a href="commands.html">Commands</a></dt><dd>Every <code>/pvpbot</code> and <code>/ghost</code> command.</dd>
       <dt><a href="selectors.html">Selectors</a></dt><dd>Ordering one bot, a faction or a random group.</dd>
-      <dt><a href="settings.html">Settings</a></dt><dd>All 116 options, with defaults and limits.</dd>
+      <dt><a href="settings.html">Settings</a></dt><dd>All 215 options, with defaults and limits.</dd>
+      <dt><a href="addons.html">Add-on API</a></dt><dd>Teach bots to use another plugin's gear.</dd>
     </dl>
   </section>
   <section>
     <p class="index-h">Features</p>
     <dl>
-      <dt><a href="combat.html">Combat</a></dt><dd>Melee, mace, elytra mace, cart PvP, bows, shields.</dd>
+      <dt><a href="difficulty.html">Difficulty and playstyles</a></dt><dd>Skill knobs, presets, playstyles, human habits.</dd>
+      <dt><a href="combat.html">Combat</a></dt><dd>Aim, senses, melee, mace, elytra mace, cart PvP, bows, survival.</dd>
+      <dt><a href="techniques.html">Mace and spear techniques</a></dt><dd>27 moves, each its own switch.</dd>
       <dt><a href="movement.html">Movement</a></dt><dd>Pathfinding, bridging, boats, guards and patrols.</dd>
-      <dt><a href="factions.html">Factions</a></dt><dd>War, peace, alliances, leaders and overfactions.</dd>
+      <dt><a href="factions.html">Factions</a></dt><dd>War, peace, alliances, formations, marches and armies.</dd>
+      <dt><a href="regear.html">Regearing</a></dt><dd>Restocking from an ender chest or a shulker box.</dd>
+      <dt><a href="menus.html">Menus</a></dt><dd>Every setting, bot, kit and faction in a menu.</dd>
       <dt><a href="kits-and-presets.html">Kits and presets</a></dt><dd>Saved loadouts and difficulty profiles.</dd>
       <dt><a href="scripts.html">Scripts</a></dt><dd>Whole scenarios saved under a name.</dd>
       <dt><a href="companions.html">Companions</a></dt><dd>Bots a player orders around in chat.</dd>
@@ -59,6 +66,7 @@ times a swing and how far off its aim lands. Even at 100 there is a gap to play 
     <p class="index-h">Help</p>
     <dl>
       <dt><a href="troubleshooting.html">Troubleshooting</a></dt><dd>Bots that are immortal, stuck or won't attack.</dd>
+      <dt><a href="arena.html">Arena, stats and debug view</a></dt><dd>Test settings, keep score, see what a bot thinks.</dd>
       <dt><a href="spigot.html">Spigot edition</a></dt><dd>What differs from the Paper build.</dd>
       <dt><a href="benchmarks.html">Benchmarks</a></dt><dd>How many bots a server can handle.</dd>
     </dl>
@@ -69,9 +77,9 @@ times a swing and how far off its aim lands. Even at 100 there is a gap to play 
 <div class="table-wrap">
 <table class="facts">
 <tbody>
-<tr><th>Servers</th><td>Paper 1.21.11 and 26.2, Spigot 1.21.11 and 26.2 (one jar each)</td></tr>
+<tr><th>Servers</th><td>Paper 1.21.11, 26.2 and 26.3, Spigot 1.21.11, 26.2 and 26.3 (one jar each)</td></tr>
 <tr><th>Commands</th><td><code>/pvpbot</code> (alias <code>/bot</code>) and <code>/ghost</code></td></tr>
-<tr><th>Permission</th><td><code>pvpbot.admin</code>, ops by default</td></tr>
+<tr><th>Permission</th><td><code>pvpbot.admin</code>, ops by default (<code>pvpbot.stats</code> for <code>/pvpbot stats</code>, everyone by default)</td></tr>
 <tr><th>Dependencies</th><td>None. SkinsRestorer is used if it is installed.</td></tr>
 <tr><th>Download</th><td><a href="https://modrinth.com/plugin/pvp-bot-plugin-pvpbp">modrinth.com/plugin/pvp-bot-plugin-pvpbp</a></td></tr>
 </tbody>

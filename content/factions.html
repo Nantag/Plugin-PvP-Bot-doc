@@ -46,19 +46,66 @@ out is still the leader when they come back.</p>
 
 <h2>Following as a group</h2>
 <pre><code>/pvpbot faction follow bandits Boss circle
+/pvpbot faction follow bandits Boss rows 4
 /pvpbot faction follow bandits stop</code></pre>
+<p>The spacing is <code>follow-distance</code>. Followers fight when attacked, then fall back in. They keep up: a
+follower more than a few blocks off its spot sprints back; close to it, it walks at full speed while the leader walks,
+and it only eases in when the leader stops.</p>
+
+<h3>Formations</h3>
 <div class="table-wrap"><table>
 <thead><tr><th>Formation</th><th>Layout</th></tr></thead>
 <tbody>
 <tr><td><code>behind</code></td><td>Behind whoever they follow (default).</td></tr>
-<tr><td><code>circle</code></td><td>A ring all around.</td></tr>
+<tr><td><code>column</code></td><td>Single file.</td></tr>
+<tr><td><code>line</code></td><td>Side by side.</td></tr>
+<tr><td><code>rows</code></td><td>Ranks of <code>size</code> abreast.</td></tr>
+<tr><td><code>triangle</code></td><td>A wedge with the leader at the point.</td></tr>
+<tr><td><code>wall</code></td><td>A shield wall in front.</td></tr>
 <tr><td><code>open_circle</code></td><td>A ring that leaves the front clear.</td></tr>
+<tr><td><code>square</code>, <code>circle</code>, <code>hexagon</code>, <code>grid</code></td><td>Lined up with the world rather than with the leader, and they hold their shape on arrival.</td></tr>
 </tbody></table></div>
-<p>The spacing is <code>follow-distance</code>. Followers fight when attacked, then fall back in.</p>
+<p>The first seven turn with the leader. Bots carrying an elytra form their own rank at the back. A faction keeps a
+standing formation with <code>/pvpbot faction formation &lt;faction&gt; &lt;shape&gt; [size]</code> (<code>clear</code>
+takes it off). Slots wobble a little and stragglers sprint-jump to catch up, so it looks like people, not a grid.</p>
+
+<h3>Marches</h3>
+<pre><code>/pvpbot faction goto bandits 100 64 -200 wall
+/pvpbot faction goto bandits Steve rows 4 then attack Steve
+/pvpbot faction goto bandits status
+/pvpbot faction goto bandits stop</code></pre>
+<p><code>goto</code> sends a whole faction to a point or a player in formation. On arrival it holds there
+(<code>then hold</code>), or attacks a target (<code>then attack &lt;target&gt;</code>).</p>
+
+<h3>Uniforms</h3>
+<pre><code>/pvpbot faction skin bandits SomeAccount
+/pvpbot faction skin bandits stop
+/pvpbot faction skin list</code></pre>
+<p>Puts every bot in the faction in one account's skin. It's kept in <code>factions.yml</code>, so it survives deaths and
+restarts.</p>
+
+<h2>Team play and armies</h2>
+<ul>
+  <li><strong>Team play:</strong> focus fire on the enemy allies are on and the weakest one; peeling off to save a nearly
+  dead ally; splash heals thrown at allies; <a href="regear.html">regearing</a> one at a time.</li>
+  <li><strong>Reaction ripple:</strong> orders and new targets reach each bot after its own moment, nearest first, so a
+  side doesn't turn on one tick.</li>
+  <li><strong>Pile-on cap:</strong> no more than three on one enemy; the rest take the next or wait at the edge.</li>
+  <li><strong>Skill spread:</strong> each bot's skill sits a little above or below its faction's.</li>
+  <li><strong>Morale:</strong> a side that is outnumbered and losing members breaks, the least brave first. A leader close
+  by holds them and rallies the ones that ran.</li>
+  <li><strong>Roles:</strong> archers hang back, pearl carriers flank, healers stay with the hurt.</li>
+  <li><strong>Ally care:</strong> nobody shoots or sweeps through an ally.</li>
+</ul>
+{{settings:team}}
+{{settings:army}}
 
 <h2>Per-faction settings</h2>
 <p>Any <a href="settings.html">setting</a> can be changed for one faction only. Whatever the faction doesn't set comes
-from the active preset or from <code>config.yml</code>.</p>
+from the active preset or from <code>config.yml</code>. <code>/pvpbot faction settings &lt;faction&gt;</code> opens the
+faction's own <a href="menus.html#the-settings-menu">settings screen</a>, with what it changes marked, and the difficulty,
+playstyle and techniques have <code>faction</code> forms too (see <a href="difficulty.html">Difficulty and
+playstyles</a>).</p>
 <pre><code>/pvpbot faction set rookies skill 20
 /pvpbot faction set rookies miss-chance 40
 /pvpbot faction set veterans skill 90

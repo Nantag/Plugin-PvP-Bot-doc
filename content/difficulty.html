@@ -1,0 +1,80 @@
+---
+title: Difficulty and playstyles
+section: Features
+order: 5
+lead: How well a bot plays (the difficulty knobs and presets), what it wants (its playstyle), and the habits that make it play like a person.
+---
+<h2>Skill and the knobs</h2>
+<p>No move a bot makes is frame-perfect. <code>skill</code> (0–100, default 50) is the master dial, and it is split into
+one <strong>knob</strong> per part of playing well: aim, reaction, crit timing, technique, tracking, clutch and more. That
+way you can build a bot that aims perfectly but reacts slowly, or one that never misses a crit but can't clutch.</p>
+<p>A knob at <code>-1</code> follows <code>skill</code>, so a config that only sets <code>skill</code> plays exactly as
+it always did. Even at 100 there is a gap to play around: reach is a player's, aim turns at a limited speed and
+<code>ping-millis</code> adds a real connection's delay.</p>
+
+<h3>Difficulty presets</h3>
+<p>Six presets write every knob at once: <code>easy</code>, <code>medium</code>, <code>hard</code>, <code>expert</code>,
+<code>professional</code> and <code>perfect</code>.</p>
+<pre><code>/pvpbot difficulty [list]
+/pvpbot difficulty preset &lt;easy|medium|hard|expert|professional|perfect&gt;
+/pvpbot difficulty &lt;knob&gt; &lt;value&gt;
+/pvpbot difficulty bot &lt;bot&gt; [list|preset &lt;level&gt;|clear|&lt;knob&gt; &lt;value&gt;]
+/pvpbot difficulty faction &lt;faction&gt; [list|preset &lt;level&gt;|clear|&lt;knob&gt; &lt;value&gt;]</code></pre>
+<p>These are separate from the <a href="kits-and-presets.html#presets">settings presets</a>
+(<code>/pvpbot preset</code>), which change more than difficulty: which tricks are on, pearls, webs and so on.</p>
+
+<h3>Per bot, per faction, everywhere</h3>
+<p>Every setting, not only difficulty, resolves <strong>per bot first, then per faction, then globally</strong>. A bot's
+own values are kept by name in <code>bot-settings.yml</code>, so they survive respawns and restarts. See
+<a href="settings.html#which-value-wins">Which value wins</a>.</p>
+{{settings:difficulty}}
+
+<h2>Playstyles</h2>
+<p>A playstyle sets what a bot <em>wants</em>, on top of how well it plays: when it commits, heals, runs and chases.</p>
+<div class="table-wrap"><table>
+<thead><tr><th>Playstyle</th><th>How it plays</th></tr></thead>
+<tbody>
+<tr><td><code>default</code></td><td>As bots always have.</td></tr>
+<tr><td><code>aggressive</code></td><td>Commits and stays in longer.</td></tr>
+<tr><td><code>safe</code></td><td>Heals and pearls out early.</td></tr>
+<tr><td><code>defensive</code></td><td>Stands its ground: blocks more, punishes your mistakes, never chases past a few blocks (it stops, faces you and lets you come back), never backs off to reset, and heals where it stands.</td></tr>
+<tr><td><code>adaptive</code></td><td>Swings between aggressive and safe with the health race.</td></tr>
+<tr><td><code>balanced</code></td><td>Sits in the middle.</td></tr>
+</tbody></table></div>
+<p>Set it per bot (kept by name), per faction or globally. <code>randomplaystyle</code> rolls each bot its own, by weights
+you choose.</p>
+<pre><code>/pvpbot playstyle list
+/pvpbot playstyle &lt;style&gt; &lt;bots&gt;
+/pvpbot playstyle clear &lt;bots&gt;
+/pvpbot playstyle faction &lt;faction&gt; &lt;style|clear&gt;
+/pvpbot randomplaystyle &lt;bots&gt;
+/pvpbot randomplaystylechances [list|reset|&lt;style&gt; &lt;weight&gt;]</code></pre>
+
+<h3>The opening</h3>
+<p>A bot walks a new opponent down the way a player does: drifting side to side, pausing to watch, arcing in over the
+last few blocks and only sprinting near the end. That careful walk is only the last stretch: from further off it sprints
+and hops in like anyone crossing open ground. From the first hit either way, it fights as always. The walk-in ends once
+the gap has been growing for half a second, so a bot still chases someone who runs.</p>
+{{settings:behaviour}}
+
+<h2>Playing like a person</h2>
+<ul>
+  <li><strong>Personality:</strong> every bot gets its own habits from its name: how jumpy it is, how wide it strafes,
+  the range it likes, rush or turtle, sprint-comboer or crit-hunter. Weak bots sometimes spam-click air, and pay for it.</li>
+  <li><strong>Spacing and whiffs:</strong> out of your reach while its attack meter refills, back in as it fills. It
+  hovers at the edge of your reach to bait a swing, and punishes a whiff with a free hit.</li>
+  <li><strong>Tempo:</strong> it pushes after landing two in a row, backs off to reset after taking two, and takes a
+  breath after a heavy trade.</li>
+  <li><strong>Items in hand first:</strong> gapples, potions and pearls come up a moment before use, and now and then the
+  wrong slot comes up first.</li>
+  <li><strong>Panic or clutch:</strong> at three hearts a bot either locks in or falls apart. Better bots lock in more
+  often.</li>
+  <li><strong>Outgeared bots play it smart:</strong> when your kit clearly beats theirs (armour, weapon, totems,
+  gapples), a bot stops trading straight. It waits for you to swing first and punishes the gap, goes for crits, blocks
+  more, and heals and backs off sooner.</li>
+  <li><strong>After a kill:</strong> some crouch over the body; most pick the totems, pearls, gapples and potions out of
+  the drop.</li>
+  <li><strong>Fidgeting:</strong> standing about, bots look round, glance at people walking past, flick their hotbar and
+  hop.</li>
+</ul>
+{{settings:human}}

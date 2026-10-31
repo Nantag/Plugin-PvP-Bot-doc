@@ -39,17 +39,23 @@
 <a href="commands.html">Commands</a>
 <a href="selectors.html">Selectors</a>
 <a href="settings.html">Settings</a>
+<a href="addons.html">Add-on API</a>
 <h4>Features</h4>
+<a href="difficulty.html">Difficulty and playstyles</a>
 <a href="combat.html">Combat</a>
+<a href="techniques.html">Mace and spear techniques</a>
 <a href="factions.html">Factions</a>
 <a href="kits-and-presets.html">Kits and presets</a>
+<a href="regear.html">Regearing</a>
 <a href="movement.html" class="active">Movement and orders</a>
+<a href="menus.html">Menus</a>
 <a href="scripts.html">Scripts</a>
 <a href="companions.html">Companions</a>
 <a href="skins.html">Skins and names</a>
 <a href="ghosts.html">Ghosts</a>
 <h4>Help</h4>
 <a href="troubleshooting.html">Troubleshooting</a>
+<a href="arena.html">Arena, stats and debug view</a>
 <a href="spigot.html">Spigot edition</a>
 <a href="benchmarks.html">Benchmarks</a>
 </nav>
@@ -72,6 +78,8 @@ they collide, take knockback and fall like a real player.</p>
   <li><strong>Boats:</strong> boards a boat, places one if needed and steers it across water.</li>
   <li><strong>Wandering</strong> (<code>wander</code>): walks around when there's nothing to do.</li>
   <li><code>speed</code> sets the pace (1.0 = sprint).</li>
+  <li><strong>Looks where it works:</strong> it looks at a block before it places or breaks it, and its arm swings like
+  a click, so water clutches and bridges look like a player's.</li>
 </ul>
 
 <h2 id="building">Building<a class="anchor" href="#building" aria-hidden="true">#</a></h2>
@@ -91,10 +99,11 @@ GriefPrevention, claim plugins and block loggers see it and can refuse it. The p
 <h2 id="following">Following<a class="anchor" href="#following" aria-hidden="true">#</a></h2>
 <pre><code>/pvpbot follow Marco Steve
 /pvpbot follow latest Steve circle
+/pvpbot follow faction guards Steve rows 4
 /pvpbot follow stop all</code></pre>
-<p>Formations: <code>behind</code>, <code>circle</code>, <code>open_circle</code> (see
-<a href="factions.html#following-as-a-group">Factions</a>). It's an escort, not a leash: followers fight when attacked,
-then fall back in.</p>
+<p>Followers can take any of eleven <a href="factions.html#formations">formations</a> (<code>behind</code> by default),
+with an optional size. It's an escort, not a leash: followers fight when attacked, then fall back in. A follower that
+falls behind sprints back to its spot, so a formation keeps up once the leader moves.</p>
 
 <h2 id="guarding">Guarding<a class="anchor" href="#guarding" aria-hidden="true">#</a></h2>
 <pre><code>/pvpbot guard faction guards 15
@@ -113,6 +122,19 @@ chase someone into a cave and get lost.</p>
 <p>Each <code>path add</code> adds the spot you're standing on, so you build the route by walking it. At the last point
 the bots turn back instead of jumping to the first. <code>path list walls</code> shows the points, <code>path remove
 walls 2</code> removes one, and <code>path stop</code> ends the patrol.</p>
+
+<h3 id="commands-on-waypoints">Commands on waypoints<a class="anchor" href="#commands-on-waypoints" aria-hidden="true">#</a></h3>
+<p>A waypoint can run commands when a bot gets there. They run from the console, once each time a bot arrives, so you
+can open a gate, play a sound or start the next part of an event as the patrol passes. Use the waypoint numbers from
+<code>/pvpbot path list &lt;path&gt;</code>.</p>
+<pre><code>/pvpbot path command &lt;path&gt; &lt;waypoint&gt; add &lt;command...&gt;
+/pvpbot path command &lt;path&gt; &lt;waypoint&gt; list
+/pvpbot path command &lt;path&gt; &lt;waypoint&gt; remove &lt;n&gt;
+/pvpbot path command &lt;path&gt; &lt;waypoint&gt; clear</code></pre>
+<p>You can use <code>{bot}</code>, <code>{path}</code>, <code>{index}</code>, <code>{x}</code>, <code>{y}</code>,
+<code>{z}</code> and <code>{world}</code> in the command, for example
+<code>/pvpbot path command walls 2 add say {bot} reached the gate</code>. The commands are saved with the waypoint in
+<code>paths.yml</code>, so removing a waypoint removes its commands too.</p>
 
 <h2 id="retreat">Retreat<a class="anchor" href="#retreat" aria-hidden="true">#</a></h2>
 <pre><code>/pvpbot retreat faction bandits
@@ -157,16 +179,16 @@ wandering off or starting a fight. <code>/pvpbot pause</code> with no argument l
 <h2 id="teleporting">Teleporting<a class="anchor" href="#teleporting" aria-hidden="true">#</a></h2>
 <pre><code>/pvpbot tp all Steve
 /pvpbot tp portal ground faction bandits Steve 40
-/pvpbot tp pearl latest 100 70 -300
-/pvpbot tp rift big overfaction north Steve</code></pre>
-<p>Plain <code>tp</code> is instant. <code>portal</code>, <code>pearl</code> and <code>rift</code> bring the squad in with
-some style, scattered within a range (default 100) around the destination. Details on
+/pvpbot tp pearl latest 100 70 -300</code></pre>
+<p>Plain <code>tp</code> is instant. <code>portal</code> and <code>pearl</code> bring the squad in with some style,
+scattered within a range (default 100) around the destination. (<code>tp rift</code> is no longer part of
+PvpBot.) Details on
 <a href="commands.html#squad-teleport">Commands</a>.</p>
 </article>
-<nav class="pager"><a class="prev" href="kits-and-presets.html"><small>← Previous</small>Kits and presets</a><a class="next" href="scripts.html"><small>Next →</small>Scripts</a></nav>
-<footer class="foot"><span>PvpBot · Paper and Spigot 1.21.11 / 26.2</span><a href="https://modrinth.com/plugin/pvp-bot-plugin-pvpbp">Modrinth</a><a href="https://github.com/Nantag/Plugin-PvP-Bot-doc">Edit these docs on GitHub</a></footer>
+<nav class="pager"><a class="prev" href="regear.html"><small>← Previous</small>Regearing</a><a class="next" href="menus.html"><small>Next →</small>Menus</a></nav>
+<footer class="foot"><span>PvpBot · Paper and Spigot 1.21.11 / 26.2 / 26.3</span><a href="https://modrinth.com/plugin/pvp-bot-plugin-pvpbp">Modrinth</a><a href="https://github.com/Nantag/Plugin-PvP-Bot-doc">Edit these docs on GitHub</a></footer>
 </main>
-<aside class="toc"><h5>On this page</h5><a href="#how-they-walk">How they walk</a><a href="#building">Building</a><a href="#following">Following</a><a href="#guarding">Guarding</a><a href="#patrols">Patrols</a><a href="#retreat">Retreat</a><a href="#hiding">Hiding</a><a href="#tether">Tether (leash)</a><a href="#pause">Pause</a><a href="#teleporting">Teleporting</a></aside>
+<aside class="toc"><h5>On this page</h5><a href="#how-they-walk">How they walk</a><a href="#building">Building</a><a href="#following">Following</a><a href="#guarding">Guarding</a><a href="#patrols">Patrols</a><a href="#commands-on-waypoints" class="sub">Commands on waypoints</a><a href="#retreat">Retreat</a><a href="#hiding">Hiding</a><a href="#tether">Tether (leash)</a><a href="#pause">Pause</a><a href="#teleporting">Teleporting</a></aside>
 </div>
 <script src="assets/search-index.js"></script>
 <script src="assets/app.js"></script>

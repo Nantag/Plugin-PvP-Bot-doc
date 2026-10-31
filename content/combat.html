@@ -6,8 +6,8 @@ lead: How a bot picks targets, how it hits, and which techniques it uses.
 ---
 <h2>A human opponent</h2>
 <p>PvpBot is built for training and recording, not for winning at all costs. No move is frame-perfect:
-<code>skill</code> (0–100, default 50) sets the speed of the reactions, the timing and the aim of <em>every</em>
-technique.</p>
+<code>skill</code> (0–100, default 50) and its <a href="difficulty.html">difficulty knobs</a> set the speed of the
+reactions, the timing and the aim of <em>every</em> technique.</p>
 <ul>
   <li>Mace smashes and elytra hits land a little early or late; crit hops are sometimes mistimed.</li>
   <li>The axe against a shield comes <em>after</em> the shield is seen; the shield against a smash goes up a reaction late.</li>
@@ -18,7 +18,21 @@ technique.</p>
 from the eyes to the hitbox), aim turns at a limited speed (<code>turn-speed</code>) and <code>ping-millis</code>
 simulates a real connection's latency.</p>
 <p>On top of that come <code>miss-chance</code> (swings missed on purpose) and <code>mistake-chance</code> (hesitating
-or panicking at the decisive moment).</p>
+or panicking at the decisive moment). Strafing adds at most 15 points of miss chance, so a strafing bot doesn't whiff
+for show.</p>
+
+<h2>Aim that decides hits</h2>
+<p>A swing lands <strong>where the crosshair is</strong>, the way a player's client picks what it hits, not "in reach,
+then a dice roll". The bot:</p>
+<ul>
+  <li>sees you a moment late (the <code>tracking</code> knob);</li>
+  <li>flicks onto you like a hand: a touch of overshoot, then it settles;</li>
+  <li>carries a small tremor (<code>aim</code>) and aims at the upper body.</li>
+</ul>
+<p>It holds a ready swing until its crosshair is on you, for as long as its patience lasts. Walking a straight line or
+circling steadily gets you hit; a juke inside its reaction time makes it whiff. A whiff costs it the attack meter, as it
+does a player.</p>
+{{settings:aim}}
 
 <h2>Picking a target</h2>
 <ul>
@@ -39,9 +53,20 @@ or panicking at the decisive moment).</p>
 <p>After losing sight it remembers the target for <code>detection-memory-ticks</code>. Crouching, being invisible or
 wearing no armour shortens the distance you're noticed at.</p>
 
+<h3>Senses</h3>
+<ul>
+  <li><strong>View cone:</strong> someone behind a bot isn't seen until they're heard or they hit it.</li>
+  <li><strong>Hearing:</strong> sprinting (walking at half the range, crouching silent), fighting, a totem going off,
+  eating and pearls make it stop and turn to look. A pursuer it is already fighting is tracked by ear.</li>
+  <li><strong>Blindness and Darkness</strong> blind it: it only notices someone within touching distance, though it
+  remembers who it was fighting.</li>
+</ul>
+{{settings:senses}}
+
 <h3>It doesn't attack at once</h3>
 <p>A new bot leaves players alone for <code>spawn-grace</code> seconds. When it notices a player by itself, it sizes
-them up for <code>reaction-ticks</code> before attacking. A hit, an order or a faction war is answered at once.</p>
+them up for <code>reaction-ticks</code> before attacking. A hit, an order or a faction war is answered at once. The
+<a href="difficulty.html#the-opening">opening</a> walk-in comes after that.</p>
 
 <h2>Melee</h2>
 <p>Swords, axes and spears. The bot keeps a fighting distance (<code>melee-standoff</code>) instead of walking into you,
@@ -51,7 +76,7 @@ and swings every <code>attack-cooldown</code> ticks.</p>
 <thead><tr><th>Setting</th><th>Technique</th></tr></thead>
 <tbody>
 <tr><td><code>crits</code>, <code>crit-chain</code></td><td>Crits from a real jump, back to back if wanted.</td></tr>
-<tr><td><code>cooldown-trick</code></td><td>Swings at 84.8% cooldown: full damage and knockback, but sooner.</td></tr>
+<tr><td><code>cooldown-trick</code></td><td>Swings at 92% cooldown: sooner than a full charge, but still past the 90% vanilla needs for a crit, sprint knockback and a sweep, so it combos properly.</td></tr>
 <tr><td><code>hit-select</code></td><td>Waits for a favourable angle and spacing.</td></tr>
 <tr><td><code>d-tap</code></td><td>Sideways sprint reset after a hit.</td></tr>
 <tr><td><code>mirror-punish</code></td><td>Hits back mid-air off your own knockback.</td></tr>
@@ -59,9 +84,34 @@ and swings every <code>attack-cooldown</code> ticks.</p>
 <tr><td><code>shield-disable</code></td><td>Switches to an axe against a raised shield (<code>shield-disable-chance</code> of the time).</td></tr>
 <tr><td><code>shield-read-windup</code></td><td>Raises the shield when it reads your crit windup.</td></tr>
 </tbody></table></div>
+<p>The shield goes up only when you can actually hit it right now, not in every gap between the bot's own swings.</p>
+
+<h2>Fighting smarter</h2>
+<ul>
+  <li><strong>Hotbar only:</strong> in a fight it uses its hotbar and off-hand. Anything in the bag means opening the
+  inventory: it stands still, can't swing, and moves the item over. That takes about 0.2–0.45 s for a good bot and
+  0.7 s for a weak one, with the odd fumble, and with you close it backs off a few blocks first. Between fights it refills
+  its hotbar the way its kit laid it out.</li>
+  <li><strong>Damage model:</strong> it ranks weapons by the damage they do through <em>your</em> armour (toughness,
+  Breach, Protection, Resistance, crits) and times heals by how fast it's losing health. It backs off sooner when losing
+  the trade and stays in when winning.</li>
+  <li><strong>Reads you:</strong> how often you shield, jump-reset and strafe each way, when you pearl, how many totems
+  and gapples you use. A shield player gets the axe every time, a jump-resetter gets crits, a pearl gets followed, and
+  low with no totem showing means all in.</li>
+  <li><strong>Shield game:</strong> it drops its shield to a charged axe instead of feeding it, goes all out while yours
+  is down, and keeps out of reach while its own is.</li>
+  <li><strong>Edges:</strong> it walks round to knock you toward the void, lava or a drop, and keeps its own back off
+  edges.</li>
+  <li><strong>UHC tools</strong> (off by default, because they change blocks): lava at your feet taken straight back,
+  fire under you, a couple of blocks to hide behind while it heals.</li>
+  <li><strong>Looks at what it uses:</strong> it looks at the block before it places water or a block, scoops water
+  back, or breaks something, and its arm swings like a click.</li>
+</ul>
+{{settings:tactics}}
 
 <h2>Mace</h2>
-<p>With <code>mace</code> on, the bot uses the mace with tactics, not at every chance:</p>
+<p>With <code>mace</code> on, the bot uses the mace with tactics, not at every chance. The individual moves (swaps,
+dashes, stun slams, finishers) are on <a href="techniques.html">Mace and spear techniques</a>.</p>
 <ul>
   <li><strong>Launch and smash:</strong> it launches with a wind charge or a jump only when the smash can land: close
   enough, shield down, target not running, and a few seconds between launches.</li>
@@ -72,8 +122,9 @@ and swings every <code>attack-cooldown</code> ticks.</p>
   <li><strong>Wind Burst:</strong> a smash with a Wind Burst mace throws it back up for the next one
   (<code>jump-reset</code> chains smashes).</li>
   <li><strong>Defence:</strong> against an incoming smash it raises a shield (<code>mace-defence-shield</code>), gets out
-  of the way (<code>mace-defence-flee</code>) or takes it. <code>mace-totem-chance</code> of the time it keeps a totem
-  in the offhand instead of a shield.</li>
+  of the way (<code>mace-defence-flee</code>) or takes it. Alone under a mace player it holds its ground near the landing
+  spot, ready to shield, and a dodge is a late sidestep. <code>mace-totem-chance</code> of the time it keeps a totem in
+  the offhand instead of a shield, and with a smash about to land it may take a totem in the main hand.</li>
 </ul>
 
 <h3>Elytra mace</h3>
@@ -84,9 +135,19 @@ and swings every <code>attack-cooldown</code> ticks.</p>
   <li>smashes without landing: it drops the glide for the swing and picks it up again straight after, as a player does;</li>
   <li>climbs back up for another pass.</li>
 </ol>
-<p>A last-moment sidestep gets out of the way.</p>
-<p>With no rockets it uses whatever height it has: if Wind Burst, a wind charge, a pearl or a drop takes it up high, it
-opens the elytra, glides over you and dives.</p>
+<p>Rocket-speed dives often overshoot, whatever the skill, and turn wider; a last-moment sidestep gets out of the way.
+With rockets it makes two passes a flight at most and rests 9 to 14 seconds after one. Coming down is a steep spiral and
+a short drop, so bots don't glide on until they hit the ground. With <code>elytra-chain</code> a Wind Burst smash
+chains straight into the next pass (see <a href="techniques.html#notes-on-a-few">techniques</a>).</p>
+<p>With no rockets it builds a real smash from whatever height it has: if Wind Burst, a wind charge, a pearl or a drop
+takes it up high, it glides toward you, then closes its wings and drops once a fall would land on you, so every block
+counts. A Wind Burst hit throws it up for another go, three at most.</p>
+
+<h3>Against someone on an elytra</h3>
+<p>A bot on the ground watches the glider and reads the dive from how they fly, not from what's in their hand. It gets
+under a roof if there's one close, and otherwise keeps moving. It shoots you while you climb. When you dive, it puts its
+shield up facing you or sprints across your line once you're committed. It heals in the gap between dives and drops a
+bite when a dive is coming. When you land, it fights you normally.</p>
 
 <h2>Cart PvP</h2>
 <p>With <code>cart-pvp</code> (needs a Flame bow, arrows, rails and TNT minecarts) the bot:</p>
@@ -103,6 +164,9 @@ Protection, difficulty). It only goes ahead if:</p>
   <li>not even the worst roll can kill it (unless it holds a totem);</li>
   <li>no ally is in the blast.</li>
 </ul>
+<p>The bow only comes up once there's a spot that works, so it doesn't stand there with a drawn bow. When shooting first
+would hurt it too much it <em>sets and pops</em>: rail and cart down next to you, out of its own blast, then a quick arrow
+while you're still on it.</p>
 
 <h2>Weapon swapping</h2>
 <p><code>attribute-swap</code> is the master switch for three techniques:</p>
@@ -111,7 +175,8 @@ Protection, difficulty). It only goes ahead if:</p>
   <li><code>mace-stun</code>: an axe to break the shield, then the mace straight after;</li>
   <li><code>spear-lunge</code>: chained spear jabs to close distance (needs Lunge).</li>
 </ul>
-<p>The rate limit is <code>swap-cooldown</code>.</p>
+<p>The rate limit is <code>swap-cooldown</code>. The newer swaps are on
+<a href="techniques.html">Mace and spear techniques</a>.</p>
 
 <h2>Bows and crossbows</h2>
 <ul>
@@ -121,30 +186,70 @@ Protection, difficulty). It only goes ahead if:</p>
   <li>Against mace users: if it saw you holding a mace in the last few seconds, it loads a Slow Falling arrow first.</li>
 </ul>
 
+<h2>More items</h2>
+<p>Each one only when it's on the hotbar: a <strong>fishing rod</strong> to reel a runner in, the <strong>trident</strong>
+(thrown, or ridden with Riptide), <strong>splash potions</strong> of Weakness, Slowness, Harming and Poison,
+<strong>firework crossbow</strong> ammo, the <strong>spear charge</strong>, and <strong>block clutches</strong> (slime,
+hay, cobweb, powder snow) when there's no water.</p>
+{{settings:items}}
+
 <h2>Survival</h2>
 <ul>
   <li><strong>Totems</strong> (<code>auto-totem</code>): into the hand under <code>totem-health</code>, after a short
-  pause (<code>totem-delay-ticks</code>).</li>
-  <li><strong>Food, shield, potions:</strong> eats without waste, blocks when hurt, drinks healing potions and eats golden
-  apples. It won't use an enchanted apple while it has a plain one. Buff potions (<code>buff-potions</code>) only when
-  there's actually a fight.</li>
-  <li><strong>Retreat</strong> (<code>retreat</code>): backs off when low.</li>
+  pause (<code>totem-delay-ticks</code>). The off-hand can prefer a totem, a shield or pick for itself.</li>
+  <li><strong>Food, shield, potions:</strong> eats without waste (at three hunger bars), blocks when hurt, drinks healing
+  potions and eats golden apples. It won't use an enchanted apple while it has a plain one. Buff potions
+  (<code>buff-potions</code>) only when there's actually a fight.</li>
+  <li><strong>No starving on golden apples:</strong> bots keep golden apples for healing, but with nothing else to eat a
+  bot eats a plain one at three hunger bars, and an enchanted one only at one bar.</li>
+  <li><strong>Healing:</strong> it buys a gap before it heals (a knockback hit, a web on you, or a short pearl) instead
+  of eating in your face; <code>healing: old</code> brings back the plain behaviour. While a gapple or potion is up it
+  eases back facing you, strafing from side to side, and each heal starts at a slightly different health.</li>
+  <li><strong>Retreat</strong> (<code>retreat</code>): backs off when low, along the open ground rather than a straight
+  line: the most open way out that still leads away from you (never into a wall or off a drop). It runs a few blocks on a
+  weaving line, glances back and heals on the move, circles at a distance if it has to wait, and comes back once the
+  heal has taken. Cornered, it turns and fights instead of pressing into the wall.</li>
+  <li><strong>Answers to combos:</strong> it reacts to being comboed instead of eating every hit.</li>
   <li><strong>Pearls</strong> (<code>pearls</code>): to escape when nearly dead or to chase someone running away.</li>
-  <li><strong>Cobwebs</strong> (<code>cobwebs</code>): <code>cobweb-global-cooldown</code> stops a squad from chain-webbing
-  you.</li>
-  <li><strong>Water:</strong> an MLG bucket on long falls (<code>water-clutch</code>), scoops up the water you place
-  (<code>drain</code>), and when webbed tries to escape with water, sometimes fumbling.</li>
+  <li><strong>Water:</strong> an MLG bucket on long falls (<code>water-clutch</code>), looking where it places it, and
+  scoops up the water you place (<code>drain</code>).</li>
   <li><strong>Repair</strong> (<code>auto-repair</code>): mends gear with Mending by collecting XP.</li>
   <li><strong>Enemy stashes</strong> (<code>break-stashes</code>): breaks the shulker box or ender chest you place
   mid-fight.</li>
+  <li><strong>Shields against explosions:</strong> when lit TNT, a TNT minecart, a creeper about to blow or an end
+  crystal next to an enemy is close, the bot turns to it, puts its shield up just before it goes off and stays still
+  until it does. A shield blocks a blast from the front completely: in our test, TNT three blocks away did 15 damage
+  without a shield and under 1 with it.</li>
+  <li><strong>Running low:</strong> it <a href="regear.html">regears</a> from its ender chest or a shulker box.</li>
 </ul>
+{{settings:survival}}
 
-<h2>Other</h2>
-<ul>
-  <li><strong>Orbital Strike Cannon</strong> (<code>orbital</code>): if the bot has the datapack's rods, it uses them
-  without blowing itself up. It won't fire at anyone inside the blast radius, runs after firing, and holds fire if an
-  ally is in the area.</li>
-  <li><strong>Stasis</strong> (<code>stasis</code>, off by default): blocks a killing hit and pulls the bot away like a
-  pearl, healing it to half health. It's used per faction (<code>/pvpbot faction set bosses stasis true</code>) for
-  characters that must not die.</li>
-</ul>
+<h3>Cobwebs</h3>
+<p>With <code>cobwebs</code> on, webs are held out, looked at and swung, not a block appearing in a sword hand. They can
+predict where you walk, web your head against a wall, or knock you back and web where you land.
+<code>cobweb-global-cooldown</code> stops a squad from chain-webbing you.</p>
+<p>Cutting out of a web: shears first (keeping the web), then water, a pearl, then a sword.</p>
+{{settings:webs}}
+
+<h3>Escapes</h3>
+<p>Chorus fruit when webbed and boxed in, and water on its own feet when burning.</p>
+{{settings:escapes}}
+
+<h2>Orbital Strike Cannon</h2>
+<p>With <code>orbital</code> on, a bot carrying the datapack's rods uses them without blowing itself up. It works with
+the V8 rods (nukes from 5 to 31 charges, stabs from 50 to 275, normal or infinite) as well as the old ones.</p>
+<p>V8 doesn't drop the strike where the bobber lands, it drops it wherever the bot is looking, on the first solid block.
+So before firing, the bot checks that same spot, and keeps checking until the strike goes off. If a wall or a tree is in
+the way and the strike would come down on top of it, it doesn't fire.</p>
+<p>It only fires from outside the blast. We measured the blasts on a server: a 5-charge nuke reaches about 10 blocks,
+10 charges about 60, 15 about 95, 20 about 135, and 25 or more goes past 150. A stab is a column roughly 5 blocks wide.
+The bot stays that far away plus a bit extra, and runs after firing anyway. It won't fire if a teammate or a faction
+it's at peace with is in range, and it never uses an orbital rod to reel someone in like a normal fishing rod, since
+casting one fires it. The datapack's double-click setting can be on or off.</p>
+<div class="callout tip"><span class="t">Big nukes need a server setting</span>
+On Spigot's default <code>max-tnt-per-tick: 100</code> in <code>spigot.yml</code>, nukes of 10 charges or more just
+hang in the air and never land. Set it to something like <code>5000</code> and restart.</div>
+
+<h2>Stasis</h2>
+<p><code>stasis</code> (off by default) blocks a killing hit and pulls the bot away like a pearl, healing it to half
+health. It's used per faction (<code>/pvpbot faction set bosses stasis true</code>) for characters that must not die.</p>

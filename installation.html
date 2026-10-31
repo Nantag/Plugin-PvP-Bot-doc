@@ -39,17 +39,23 @@
 <a href="commands.html">Commands</a>
 <a href="selectors.html">Selectors</a>
 <a href="settings.html">Settings</a>
+<a href="addons.html">Add-on API</a>
 <h4>Features</h4>
+<a href="difficulty.html">Difficulty and playstyles</a>
 <a href="combat.html">Combat</a>
+<a href="techniques.html">Mace and spear techniques</a>
 <a href="factions.html">Factions</a>
 <a href="kits-and-presets.html">Kits and presets</a>
+<a href="regear.html">Regearing</a>
 <a href="movement.html">Movement and orders</a>
+<a href="menus.html">Menus</a>
 <a href="scripts.html">Scripts</a>
 <a href="companions.html">Companions</a>
 <a href="skins.html">Skins and names</a>
 <a href="ghosts.html">Ghosts</a>
 <h4>Help</h4>
 <a href="troubleshooting.html">Troubleshooting</a>
+<a href="arena.html">Arena, stats and debug view</a>
 <a href="spigot.html">Spigot edition</a>
 <a href="benchmarks.html">Benchmarks</a>
 </nav>
@@ -60,14 +66,16 @@
 <div class="table-wrap"><table>
 <thead><tr><th>Server</th><th>Version</th><th>Java</th><th>Jar</th></tr></thead>
 <tbody>
+<tr><td>Paper</td><td>26.3</td><td>25 or newer</td><td>Paper 26.3 edition</td></tr>
 <tr><td>Paper</td><td>26.2</td><td>25 or newer</td><td>Paper edition</td></tr>
 <tr><td>Paper</td><td>1.21.11</td><td>21 or newer</td><td>Paper edition (1.21.11 build)</td></tr>
+<tr><td>Spigot</td><td>26.3</td><td>25 or newer</td><td>Spigot 26.3 edition</td></tr>
 <tr><td>Spigot</td><td>26.2</td><td>25 or newer</td><td>Spigot 26.2 edition</td></tr>
 <tr><td>Spigot</td><td>1.21.11</td><td>21 or newer</td><td>Spigot 1.21.11 edition</td></tr>
 </tbody></table></div>
 <p>Each jar only works on its own platform and version: PvpBot uses server internals to create the bots, so a Paper jar
 won't start on Spigot and vice versa. The features are the same in every edition (see
-<a href="spigot.html">Spigot edition</a>).</p>
+<a href="spigot.html">Spigot edition</a>). The wrong jar says so in the console and won't spawn bots.</p>
 
 <h2 id="steps">Steps<a class="anchor" href="#steps" aria-hidden="true">#</a></h2>
 <ol>
@@ -119,11 +127,28 @@ isn't enough.</p>
 <h3 id="protection-worldguard-griefprevention-claims">Protection (WorldGuard, GriefPrevention, claims)<a class="anchor" href="#protection-worldguard-griefprevention-claims" aria-hidden="true">#</a></h3>
 <p>Every block a bot places or breaks goes through the server's normal events, so protection plugins see it and can
 refuse it. The same goes for the rails and carts of cart PvP.</p>
+
+<h2 id="language-updates-and-metrics">Language, updates and metrics<a class="anchor" href="#language-updates-and-metrics" aria-hidden="true">#</a></h2>
+<p>The top of <code>config.yml</code> has three switches under <code>plugin:</code>:</p>
+<div class="table-wrap"><table>
+<thead><tr><th>Key</th><th>Default</th><th>What it does</th></tr></thead>
+<tbody>
+<tr><td><code>plugin.language</code></td><td><code>en</code></td><td>The language PvpBot talks in: <code>en</code> or <code>it</code>.</td></tr>
+<tr><td><code>plugin.update-check</code></td><td><code>true</code></td><td>Says in the console, and to admins as they join, when a newer PvpBot is out.</td></tr>
+<tr><td><code>plugin.metrics</code></td><td><code>true</code></td><td>Sends anonymous usage numbers through <a href="https://bstats.org">bStats</a> (how many servers, which versions, how many bots). Also off if <code>plugins/bStats/config.yml</code> says so.</td></tr>
+</tbody></table></div>
+<p>To change what PvpBot says, copy a line's key from the language file into <code>plugins/PvpBot/messages.yml</code> and
+write your version. Only the lines you put there change, so updates never overwrite them. <code>{0}</code>,
+<code>{1}</code>… are the values filled in. <code>/pvpbot reload</code> picks up changes.</p>
+<pre><code>chat:
+  following: "{0} is on your six."
+err:
+  no-bot: "There's no bot called {0} - /pvpbot list shows them all."</code></pre>
 </article>
 <nav class="pager"><a class="prev" href="index.html"><small>← Previous</small>Home</a><a class="next" href="quick-start.html"><small>Next →</small>Quick start</a></nav>
-<footer class="foot"><span>PvpBot · Paper and Spigot 1.21.11 / 26.2</span><a href="https://modrinth.com/plugin/pvp-bot-plugin-pvpbp">Modrinth</a><a href="https://github.com/Nantag/Plugin-PvP-Bot-doc">Edit these docs on GitHub</a></footer>
+<footer class="foot"><span>PvpBot · Paper and Spigot 1.21.11 / 26.2 / 26.3</span><a href="https://modrinth.com/plugin/pvp-bot-plugin-pvpbp">Modrinth</a><a href="https://github.com/Nantag/Plugin-PvP-Bot-doc">Edit these docs on GitHub</a></footer>
 </main>
-<aside class="toc"><h5>On this page</h5><a href="#requirements">Requirements</a><a href="#steps">Steps</a><a href="#permissions">Permissions</a><a href="#plugin-files">Plugin files</a><a href="#compatible-plugins">Compatible plugins</a><a href="#skinsrestorer" class="sub">SkinsRestorer</a><a href="#login-plugins-authme-loginto" class="sub">Login plugins (AuthMe, LoginTo)</a><a href="#protection-worldguard-griefprevention-claims" class="sub">Protection (WorldGuard, GriefPrevention, claims)</a></aside>
+<aside class="toc"><h5>On this page</h5><a href="#requirements">Requirements</a><a href="#steps">Steps</a><a href="#permissions">Permissions</a><a href="#plugin-files">Plugin files</a><a href="#compatible-plugins">Compatible plugins</a><a href="#skinsrestorer" class="sub">SkinsRestorer</a><a href="#login-plugins-authme-loginto" class="sub">Login plugins (AuthMe, LoginTo)</a><a href="#protection-worldguard-griefprevention-claims" class="sub">Protection (WorldGuard, GriefPrevention, claims)</a><a href="#language-updates-and-metrics">Language, updates and metrics</a></aside>
 </div>
 <script src="assets/search-index.js"></script>
 <script src="assets/app.js"></script>

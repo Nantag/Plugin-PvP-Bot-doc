@@ -4,19 +4,21 @@ section: Reference
 order: 30
 lead: Every option that changes how bots behave, with its default and limits.
 ---
-<div class="callout"><span class="t">Coming in the next update</span>
-98 more settings, for difficulty knobs, playstyles, aim, senses, tactics, techniques and more. They're listed with their
-defaults on <a href="next-update.html">Next update</a>.</div>
-
 <h2>Changing settings</h2>
 <ul>
   <li><strong>In game:</strong> <code>/pvpbot set &lt;name&gt; &lt;value&gt;</code>. Applies to every bot at once and
   is written to <code>config.yml</code>.</li>
   <li><strong>For one faction:</strong> <code>/pvpbot faction set &lt;faction&gt; &lt;name&gt; &lt;value&gt;</code>.
   Applies only to that faction's bots.</li>
+  <li><strong>For one bot:</strong> the difficulty knobs, playstyles and techniques can be set per bot
+  (<code>/pvpbot difficulty bot</code>, <code>/pvpbot playstyle</code>, <code>/pvpbot techniques bot</code>), and the
+  settings menu edits any setting for one bot with <code>/pvpbot settings bot &lt;bot&gt;</code>. A bot's own values are
+  kept by name in <code>bot-settings.yml</code>.</li>
+  <li><strong>In a menu:</strong> <code>/pvpbot settings</code> opens a paged menu of every setting. See
+  <a href="menus.html#the-settings-menu">Menus</a>.</li>
   <li><strong>In the file:</strong> edit <code>plugins/PvpBot/config.yml</code>, then run <code>/pvpbot reload</code>.</li>
-  <li><strong>To see them:</strong> <code>/pvpbot settings</code>, or <code>/pvpbot settings combat</code> for one group,
-  or <code>/pvpbot settings pearl</code> to filter by name.</li>
+  <li><strong>To see them in chat:</strong> <code>/pvpbot settings list</code>, or <code>/pvpbot settings list
+  combat</code> for one group, or <code>/pvpbot settings list pearl</code> to filter by name.</li>
 </ul>
 <p>Values outside the limits are refused. Times are in <strong>ticks</strong> (20 ticks = 1 second), distances in blocks,
 and health in half-hearts (20 = full health).</p>
@@ -26,8 +28,11 @@ and health in half-hearts (20 = full health).</p>
 <ol>
   <li><code>config.yml</code> (or the default, if the key isn't there);</li>
   <li>the active <a href="kits-and-presets.html#presets">preset</a>, if any;</li>
-  <li>the bot's <a href="factions.html">faction</a> settings.</li>
+  <li>the bot's <a href="factions.html">faction</a> settings;</li>
+  <li>the bot's own settings.</li>
 </ol>
+<p>So a value is read per bot first, then per faction, then globally. The difficulty knobs at <code>-1</code> follow
+<code>skill</code> at whichever layer it's set.</p>
 <div class="callout warn"><span class="t">Active preset</span>
 If the active preset sets the same key, <code>/pvpbot set</code> writes it to <code>config.yml</code> but the preset's
 value still wins. The command tells you so: use <code>/pvpbot preset off</code>, or save the preset again with
@@ -64,6 +69,66 @@ sand, gravel, clay, leaves, undergrowth, cobwebs), never stone, ore, builds or c
 1 means you have to be closer to be seen.</p>
 {{settings:detection}}
 
+<h2>Difficulty</h2>
+<p>Group <code>difficulty</code>: <code>skill</code> split into knobs. <code>-1</code> follows <code>skill</code>. See
+<a href="difficulty.html">Difficulty and playstyles</a>.</p>
+{{settings:difficulty}}
+
+<h2>Behaviour</h2>
+<p>Group <code>behaviour</code>: playstyle and the opening.</p>
+{{settings:behaviour}}
+
+<h2>Aim</h2>
+<p>Group <code>aim</code>: crosshair-based hits. See <a href="combat.html#aim-that-decides-hits">Aim that decides
+hits</a>.</p>
+{{settings:aim}}
+
+<h2>Senses</h2>
+<p>Group <code>senses</code>: view cone and hearing.</p>
+{{settings:senses}}
+
+<h2>Tactics</h2>
+<p>Group <code>tactics</code>: hotbar discipline, the damage model, reading you, the shield game, edges and UHC tools.
+See <a href="combat.html#fighting-smarter">Fighting smarter</a>.</p>
+{{settings:tactics}}
+
+<h2>Playing like a person</h2>
+<p>Group <code>human</code>: personality, spacing, tempo, clutch and fidgeting.</p>
+{{settings:human}}
+
+<h2>Techniques</h2>
+<p>Group <code>techniques</code>: the mace, spear, wind charge and elytra moves. See
+<a href="techniques.html">Mace and spear techniques</a>.</p>
+{{settings:techniques}}
+
+<h2>Survival</h2>
+<p>Group <code>survival</code>: healing, off-hand and combo answers.</p>
+{{settings:survival}}
+
+<h2>Webs</h2>
+<p>Group <code>webs</code>.</p>
+{{settings:webs}}
+
+<h2>Escapes</h2>
+<p>Group <code>escapes</code>.</p>
+{{settings:escapes}}
+
+<h2>Regear</h2>
+<p>Group <code>regear</code>. See <a href="regear.html">Regearing</a>.</p>
+{{settings:regear}}
+
+<h2>Items</h2>
+<p>Group <code>items</code>: rods, tridents, splash potions, fireworks, the spear charge and block clutches.</p>
+{{settings:items}}
+
+<h2>Team play</h2>
+<p>Group <code>team</code>. See <a href="factions.html#team-play-and-armies">Team play and armies</a>.</p>
+{{settings:team}}
+
+<h2>Armies</h2>
+<p>Group <code>army</code>: reaction ripple, pile-on cap, skill spread, morale and roles.</p>
+{{settings:army}}
+
 <h2>Other parts of config.yml</h2>
 <p>These parts of <code>config.yml</code> can't be changed with <code>/pvpbot set</code>: edit the file, then run
 <code>/pvpbot reload</code>.</p>
@@ -71,7 +136,10 @@ sand, gravel, clay, leaves, undergrowth, cobwebs), never stone, ore, builds or c
 <thead><tr><th>Key</th><th>Default</th><th>What it does</th></tr></thead>
 <tbody>
 <tr><td><code>active-preset</code></td><td><code>''</code></td><td>The active preset. Changed with <code>/pvpbot preset</code>.</td></tr>
-<tr><td><code>presets</code></td><td>casual, normal, sweaty, passive</td><td>The saved presets. See <a href="kits-and-presets.html#presets">Presets</a>.</td></tr>
+<tr><td><code>presets</code></td><td>casual, sweaty, passive, easy, normal, hard, expert</td><td>The saved presets. See <a href="kits-and-presets.html#presets">Presets</a>.</td></tr>
+<tr><td><code>plugin.language</code></td><td><code>en</code></td><td>The language PvpBot talks in: <code>en</code> or <code>it</code>. Single lines can be changed in <code>messages.yml</code>. See <a href="installation.html#language-updates-and-metrics">Installation</a>.</td></tr>
+<tr><td><code>plugin.update-check</code></td><td><code>true</code></td><td>Says in the console, and to admins as they join, when a newer PvpBot is out.</td></tr>
+<tr><td><code>plugin.metrics</code></td><td><code>true</code></td><td>Anonymous usage numbers through bStats.</td></tr>
 <tr><td><code>skins.random</code></td><td><code>missing</code></td><td><code>missing</code>, <code>always</code> or <code>off</code>. See <a href="skins.html">Skins and names</a>.</td></tr>
 <tr><td><code>skins.built-in-pool</code></td><td><code>true</code></td><td>Use the few hundred skins that ship with the plugin.</td></tr>
 <tr><td><code>skins.pool</code></td><td><code>[]</code></td><td>Extra account names whose skins bots can wear.</td></tr>
