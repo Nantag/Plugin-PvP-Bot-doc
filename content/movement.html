@@ -20,6 +20,8 @@ they collide, take knockback and fall like a real player.</p>
   <li><strong>Boats:</strong> boards a boat, places one if needed and steers it across water.</li>
   <li><strong>Wandering</strong> (<code>wander</code>): walks around when there's nothing to do.</li>
   <li><code>speed</code> sets the pace (1.0 = sprint).</li>
+  <li><strong>Looks where it works:</strong> it looks at a block before it places or breaks it, and its arm swings like
+  a click, so water clutches and bridges look like a player's.</li>
 </ul>
 
 <h2>Building</h2>
@@ -39,10 +41,11 @@ GriefPrevention, claim plugins and block loggers see it and can refuse it. The p
 <h2>Following</h2>
 <pre><code>/pvpbot follow Marco Steve
 /pvpbot follow latest Steve circle
+/pvpbot follow faction guards Steve rows 4
 /pvpbot follow stop all</code></pre>
-<p>Formations: <code>behind</code>, <code>circle</code>, <code>open_circle</code> (see
-<a href="factions.html#following-as-a-group">Factions</a>). It's an escort, not a leash: followers fight when attacked,
-then fall back in.</p>
+<p>Followers can take any of eleven <a href="factions.html#formations">formations</a> (<code>behind</code> by default),
+with an optional size. It's an escort, not a leash: followers fight when attacked, then fall back in. A follower that
+falls behind sprints back to its spot, so a formation keeps up once the leader moves.</p>
 
 <h2>Guarding</h2>
 <pre><code>/pvpbot guard faction guards 15
@@ -61,6 +64,19 @@ chase someone into a cave and get lost.</p>
 <p>Each <code>path add</code> adds the spot you're standing on, so you build the route by walking it. At the last point
 the bots turn back instead of jumping to the first. <code>path list walls</code> shows the points, <code>path remove
 walls 2</code> removes one, and <code>path stop</code> ends the patrol.</p>
+
+<h3 id="commands-on-waypoints">Commands on waypoints</h3>
+<p>A waypoint can run commands when a bot gets there. They run from the console, once each time a bot arrives, so you
+can open a gate, play a sound or start the next part of an event as the patrol passes. Use the waypoint numbers from
+<code>/pvpbot path list &lt;path&gt;</code>.</p>
+<pre><code>/pvpbot path command &lt;path&gt; &lt;waypoint&gt; add &lt;command...&gt;
+/pvpbot path command &lt;path&gt; &lt;waypoint&gt; list
+/pvpbot path command &lt;path&gt; &lt;waypoint&gt; remove &lt;n&gt;
+/pvpbot path command &lt;path&gt; &lt;waypoint&gt; clear</code></pre>
+<p>You can use <code>{bot}</code>, <code>{path}</code>, <code>{index}</code>, <code>{x}</code>, <code>{y}</code>,
+<code>{z}</code> and <code>{world}</code> in the command, for example
+<code>/pvpbot path command walls 2 add say {bot} reached the gate</code>. The commands are saved with the waypoint in
+<code>paths.yml</code>, so removing a waypoint removes its commands too.</p>
 
 <h2>Retreat</h2>
 <pre><code>/pvpbot retreat faction bandits
@@ -105,8 +121,8 @@ wandering off or starting a fight. <code>/pvpbot pause</code> with no argument l
 <h2>Teleporting</h2>
 <pre><code>/pvpbot tp all Steve
 /pvpbot tp portal ground faction bandits Steve 40
-/pvpbot tp pearl latest 100 70 -300
-/pvpbot tp rift big overfaction north Steve</code></pre>
-<p>Plain <code>tp</code> is instant. <code>portal</code>, <code>pearl</code> and <code>rift</code> bring the squad in with
-some style, scattered within a range (default 100) around the destination. Details on
+/pvpbot tp pearl latest 100 70 -300</code></pre>
+<p>Plain <code>tp</code> is instant. <code>portal</code> and <code>pearl</code> bring the squad in with some style,
+scattered within a range (default 100) around the destination. (<code>tp rift</code> is no longer part of
+PvpBot.) Details on
 <a href="commands.html#squad-teleport">Commands</a>.</p>

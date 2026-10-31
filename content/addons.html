@@ -1,0 +1,39 @@
+---
+title: Add-on API
+section: Reference
+order: 50
+lead: For plugin developers: teach bots to use your own gear and ways of getting about.
+---
+<p>An add-on API, <code>BotAddons</code>, lets another plugin teach bots to use its own gear and ways of getting about:
+guns, grenades, medical items, special armour, a lift or a launcher. With no add-on installed nothing changes.</p>
+
+<h2>Hooks</h2>
+<p>An add-on implements <code>BotAddon</code> (every hook defaults to "not mine") and is asked at fixed points in every
+bot's tick:</p>
+<div class="table-wrap">
+<table>
+<thead><tr><th>Hook</th><th>When</th></tr></thead>
+<tbody>
+<tr><td><code>override</code></td><td>Right after the target is chosen, ahead of eating, pearls and retreats.</td></tr>
+<tr><td><code>fight</code></td><td>With a target, ahead of every built-in attack. Returning false falls through to
+PvpBot's own play.</td></tr>
+<tr><td><code>idle</code></td><td>With no target, ahead of guarding, escorting and wandering.</td></tr>
+<tr><td><code>route</code></td><td>Whenever a bot walks somewhere, ahead of its own pathfinding: a transport the add-on
+runs.</td></tr>
+<tr><td><code>blocksSight</code></td><td>Whenever a bot looks for a target: something only the add-on knows about (a smoke
+cloud) can hide a player.</td></tr>
+</tbody>
+</table>
+</div>
+<p><code>holdsHand</code>, <code>reserved</code> and <code>armourScore</code> keep PvpBot's own auto-equip, hotbar
+sorting, bow code and armour picker out of the add-on's way. Add-ons are asked in the order they registered, the first to
+claim something has it, and a plugin's add-ons are dropped when it is disabled. The hooks run on the main thread for every
+bot every tick, so keep them cheap.</p>
+
+<h2>Example</h2>
+<pre><code>BotAddons.register(plugin, new BotAddon() {
+    @Override
+    public boolean fight(Player bot, Entity target, BotSettings settings) {
+        return false;   // fight with your gear, or hand the tick back
+    }
+});</code></pre>

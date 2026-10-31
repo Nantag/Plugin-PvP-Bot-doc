@@ -39,17 +39,23 @@
 <a href="commands.html">Commands</a>
 <a href="selectors.html">Selectors</a>
 <a href="settings.html">Settings</a>
+<a href="addons.html">Add-on API</a>
 <h4>Features</h4>
+<a href="difficulty.html">Difficulty and playstyles</a>
 <a href="combat.html">Combat</a>
+<a href="techniques.html">Mace and spear techniques</a>
 <a href="factions.html">Factions</a>
 <a href="kits-and-presets.html">Kits and presets</a>
+<a href="regear.html">Regearing</a>
 <a href="movement.html">Movement and orders</a>
+<a href="menus.html">Menus</a>
 <a href="scripts.html">Scripts</a>
 <a href="companions.html">Companions</a>
 <a href="skins.html">Skins and names</a>
 <a href="ghosts.html">Ghosts</a>
 <h4>Help</h4>
 <a href="troubleshooting.html">Troubleshooting</a>
+<a href="arena.html">Arena, stats and debug view</a>
 <a href="spigot.html" class="active">Spigot edition</a>
 <a href="benchmarks.html">Benchmarks</a>
 </nav>
@@ -57,7 +63,7 @@
 <article>
 <div class="crumb">Help</div><h1>Spigot edition</h1><p class="lead">How the Paper and Spigot jars differ, and how to build the Spigot edition.</p>
 <h2 id="one-plugin-two-jars">One plugin, two jars<a class="anchor" href="#one-plugin-two-jars" aria-hidden="true">#</a></h2>
-<p>The Spigot edition (1.21.11 and 26.2) has the same AI, commands, config and features as the Paper edition. It's
+<p>The Spigot edition (1.21.11, 26.2 and 26.3) has the same AI, commands, config and features as the Paper edition. It's
 built from the same source, with a few files swapped for Spigot versions.</p>
 <p>It's a separate jar so the Paper build loses nothing: Paper keeps its own faster calls, and neither jar carries code
 for the other server.</p>
@@ -79,11 +85,12 @@ for the other server.</p>
 <p>You need Spigot's <a href="https://www.spigotmc.org/wiki/buildtools/">BuildTools</a>, run with
 <code>--remapped</code> for each version:</p>
 <pre><code>java -jar BuildTools.jar --rev 1.21.11 --remapped
-java -jar BuildTools.jar --rev 26.2 --remapped</code></pre>
+java -jar BuildTools.jar --rev 26.2 --remapped
+java -jar BuildTools.jar --rev 26.3 --remapped</code></pre>
 <ol>
   <li>Copy the <code>spigot-&lt;version&gt;.jar</code> files BuildTools produces into <code>.spigot/</code> at the repo
   root.</li>
-  <li>Run <code>pvpbot-spigot/build.sh 1.21.11 26.2</code>.</li>
+  <li>Run <code>pvpbot-spigot/build.sh 1.21.11 26.2 26.3</code>.</li>
   <li>The jars end up in <code>pvpbot-spigot/dist-&lt;version&gt;/PvpBot-&lt;version&gt;.jar</code>.</li>
 </ol>
 <p>If BuildTools rejects <code>--remapped</code> for a version, build that version without it: the script then compiles
@@ -93,16 +100,18 @@ against the server jar directly.</p>
 <tbody>
 <tr><td><code>SPIGOT_JARS</code></td><td><code>.spigot/</code></td><td>Where the Spigot jars are.</td></tr>
 <tr><td><code>M2</code></td><td><code>~/.m2/repository</code></td><td>The local Maven repository (where <code>--remapped</code> installs the mappings).</td></tr>
-<tr><td><code>JDK</code></td><td><code>java</code> on the <code>PATH</code></td><td>At least 21 for 1.21.11, at least 25 for 26.2.</td></tr>
+<tr><td><code>JDK</code></td><td><code>java</code> on the <code>PATH</code></td><td>At least 21 for 1.21.11, at least 25 for 26.2 and 26.3.</td></tr>
 </tbody></table></div>
 <p>The script works on Linux, macOS and Git Bash on Windows.</p>
 
 <h2 id="status">Status<a class="anchor" href="#status" aria-hidden="true">#</a></h2>
 <p>Every change to the Spigot edition is checked against the Bukkit API, and the check fails if it uses anything only
-Paper has. It hasn't been run on a live Spigot server yet: if you hit a problem, please report it.</p>
+Paper has. It has been run on a live Spigot 26.3 server (bots spawn, fight and take damage with no errors). If you hit a
+problem, please report it.</p>
+<p>The menus, including the settings menu and the kit editor, work on Spigot too.</p>
 </article>
-<nav class="pager"><a class="prev" href="troubleshooting.html"><small>← Previous</small>Troubleshooting</a><a class="next" href="benchmarks.html"><small>Next →</small>Benchmarks</a></nav>
-<footer class="foot"><span>PvpBot · Paper and Spigot 1.21.11 / 26.2</span><a href="https://modrinth.com/plugin/pvp-bot-plugin-pvpbp">Modrinth</a><a href="https://github.com/Nantag/Plugin-PvP-Bot-doc">Edit these docs on GitHub</a></footer>
+<nav class="pager"><a class="prev" href="arena.html"><small>← Previous</small>Arena, stats and debug view</a><a class="next" href="benchmarks.html"><small>Next →</small>Benchmarks</a></nav>
+<footer class="foot"><span>PvpBot · Paper and Spigot 1.21.11 / 26.2 / 26.3</span><a href="https://modrinth.com/plugin/pvp-bot-plugin-pvpbp">Modrinth</a><a href="https://github.com/Nantag/Plugin-PvP-Bot-doc">Edit these docs on GitHub</a></footer>
 </main>
 <aside class="toc"><h5>On this page</h5><a href="#one-plugin-two-jars">One plugin, two jars</a><a href="#what-differs-inside">What differs inside</a><a href="#building-the-spigot-edition">Building the Spigot edition</a><a href="#status">Status</a></aside>
 </div>

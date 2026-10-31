@@ -1,0 +1,40 @@
+---
+title: Menus
+section: Features
+order: 45
+lead: The in-game menus: every setting, every bot, kits and factions, without typing commands.
+---
+<p>Every button runs the matching <code>/pvpbot</code> command, so permissions and replies are the same as typing it.
+The menus work on the <a href="spigot.html">Spigot edition</a> too.</p>
+
+<h2>The hub</h2>
+<pre><code>/pvpbot menu</code></pre>
+<ul>
+  <li><strong>Bots:</strong> a head for each bot. Its panel opens its bag or ender chest live, gives it a kit, restocks
+  it, sets its faction, sends it to follow or fight, pauses or removes it.</li>
+  <li><strong>Kits:</strong> edit, wear, hand out, delete, or make a new one (named in chat).</li>
+  <li><strong>Factions:</strong> members, kit odds, recruit bots nearby, follow, formation, war, peace and alliance,
+  uniform, disband.</li>
+  <li><strong>Presets, settings and techniques.</strong></li>
+</ul>
+
+<h2>The settings menu</h2>
+<p><code>/pvpbot settings</code> opens a paged menu of every setting. It's built from the same list the commands check
+against, so nothing is ever missing from it.</p>
+<ul>
+  <li>Left-click toggles or steps a value up, right-click steps it down, and shift steps by ten. Q takes a faction's or
+  bot's own value off.</li>
+  <li>Filter by group, search by word, and nudge the whole difficulty a preset up or down from the bottom row.</li>
+</ul>
+<pre><code>/pvpbot settings                                 the menu
+/pvpbot settings search &lt;word&gt;                   the menu, only what matches
+/pvpbot settings bot &lt;bot&gt; | faction &lt;faction&gt;   one bot's or one faction's values
+/pvpbot settings list [group|word]               printed in chat instead
+/pvpbot faction settings &lt;faction&gt; [word]        the faction's screen, with what it changes marked</code></pre>
+
+<h2>The kit editor</h2>
+<p>The kit editor lays a kit out like an inventory (bag, hotbar, armour, off-hand), with a second page for the kit's
+ender chest. A new name makes a new, empty kit.</p>
+<pre><code>/pvpbot kit edit &lt;name&gt;
+/pvpbot kit rename &lt;old&gt; &lt;new&gt;      faction kit tables follow the new name</code></pre>
+<p>More on kits on <a href="kits-and-presets.html">Kits and presets</a>.</p>
